@@ -24,11 +24,12 @@ CREATE TABLE Persona (
     tipoPersona CHAR(1),/*C cliente, A administrador, E empleado*/
     telefono VARCHAR(19),
     email VARCHAR(30),
-    direccion VARCHAR(30)
+    direccion VARCHAR(30),
+    password VARCHAR(30)
 );
 
 INSERT INTO Persona VALUES 
-(1,'David Leonardo','Espinosa Ochoa','A','123456','david.espinosa@uptc.edu.co','Clle 1 #2-3');
+(1,'David Leonardo','Espinosa Ochoa','A','123456','david.espinosa@uptc.edu.co','Clle 1 #2-3','12345');
 
 DROP TABLE Categoria;
 DROP TABLE Producto;

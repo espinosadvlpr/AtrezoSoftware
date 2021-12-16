@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: '12345',
     database: 'tcampo'
 });
 
@@ -17,10 +17,32 @@ app.get('/', (req, res) => {
     res.send('Welcome to my API!');
 });
 
+//CORS-Access
+const cors = require("cors");
+const corsOptions = {
+    origin: '*',
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+}
+
+app.use(cors(corsOptions))
 
 // Usuarios
 app.get('/user', (req, res) => {
     const sql = 'SELECT * FROM Persona';
+
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
+
+app.get('/admin', (req, res) => {
+    const sql = 'SELECT * FROM Persona WHERE tipoPersona = "A"';
 
     connection.query(sql, (error, results) => {
         if (error) throw error;
