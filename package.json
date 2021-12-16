@@ -1,0 +1,16 @@
+{
+  "name": "atrezo-back",
+  "version": "1.0.0",
+  "description": "servidor programado en express para el manejo de datos",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Espinosa",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15"
+  }
+}
