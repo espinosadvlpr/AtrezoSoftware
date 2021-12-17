@@ -1,0 +1,95 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="../js/cargarProductos.js" type="text/javascript"></script>
+<link rel="stylesheet" href="../css/homedos.css"/>
+
+<body onload="cargarProductoYCategorias()">
+	<div class="row">
+		<div class="col-md-3">
+			<div class="contact-info">
+				<div class="contact-img"><img src="../images/logo.png"  class="card-img-top" alt="texto descriptivo"></div>
+				<div id="wrapper">
+					<div id="sidebar-wrapper">
+						<aside id="sidebar">
+							<ul id="sidemenu" class="sidebar-nav">
+								<li>
+									<a href="../home/index.html">
+										<span class="sidebar-icon"><img src="../images/usuario.png"  class="icons" alt="texto descriptivo"></span>
+										<span class="sidebar-title"><font size=5 face=" Lucida Bright">Usuarios</font></span>
+									</a>
+								</li>
+								<li>
+									<a href="../productos/productos.html">
+										<span class="sidebar-icon"><img src="../images/carrito.png"  class="icons" alt="texto descriptivo"></span>
+										<span class="sidebar-title"><font size=5 face=" Lucida Bright">Productos</font></span>
+								
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span class="sidebar-icon"><img src="../images/etiqueta.png"  class="icons" alt="texto descriptivo"></span>
+										<span class="sidebar-title"><font size=5 face=" Lucida Bright">Ventas</font></span>
+								
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span class="sidebar-icon"><img src="../images/reporte.png"  class="icons" alt="texto descriptivo"></span>
+										<span class="sidebar-title"><font size=5 face=" Lucida Bright">Reportes</font></span>
+								
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span class="sidebar-icon"><img src="../images/cerrarsesion.png"  class="icons" alt="texto descriptivo"></span>
+										<span class="sidebar-title"><font size=5 face=" Lucida Bright">Cerrar sesión</font></span>
+								
+									</a>
+								</li>
+							</ul>
+						</aside>
+					</div>
+				</div>
+		</div>
+		</div>
+		<div class="col-md-9">
+			< class="contact-form">
+				<font color="white" face=" Lucida Bright">
+					<div id="contenedor">
+						<form action="/actualizar_producto" method="POST">
+							<label for="codigoProducto">Codigo Producto (Requerido)</label>
+							<input type="number" id="codigoProducto" name="codigoProducto"  min="1" required>
+							
+							<label for="cantidadDisponible">Cantidad Disponible (Requerido)</label>
+							<input type="number" id="cantidadDisponible" name="cantidadDisponible"  min="1" required>
+
+							<label for="nombreProducto">Nombre Producto (Requerido)</label>
+							<input type="text" id="nombreProducto" name="nombreProducto" required>
+							
+							<label for="precioDeCompra">Precio De Compra</label>
+							<input type="number" id="precioDeCompra" name="precioDeCompra"  min="1000">
+
+							<label for="precioDeVenta">Precio De Venta</label>
+							<input type="number" id="precioDeVenta" name="precioDeVenta" min="1000">
+
+							<label for="descripcionProducto">Descripcion Producto </label>
+							<input type="text" id="descripcionProducto" name="descripcionProducto" >
+
+							<label for="Categoria">Categoria</label>
+							<select id="Categoria" name="Categoria" required>
+							  
+							</select>
+							
+							<label for="urlImagen">Imagen </label>
+							<input type="text" id="urlImagen" name="urlImagen" required>
+
+							<input type="submit" value="Editar producto">
+						  </form>
+                    </div>
+				</font>
+			</div>
+		</div>
+	</div>
+
+</body>
