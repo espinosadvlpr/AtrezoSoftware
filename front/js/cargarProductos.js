@@ -8,16 +8,15 @@ function cargarTodosLosProductos() {
             for (let value of data) {
                 var TextJSON = JSON.stringify(value) + '';
                 console.log(TextJSON);
+                var editar = '<a id="linkEditarProducto" href="../producto/crearEditarProducto.html" onClick=\'cambiarIdProducto('
+                + TextJSON+');\' style="color:rgb(0, 0, 0);" >';
                 var clase = '<div class="lista-productos">';
-                var image = '<img src="' + value.urlImagen + '" width="700" height="450">';
+                var image = '<img src="' + value.urlImagen + '" width="260" height="150">';
                 var nombreProducto = '<h1 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '</h1>';
-                var precio = '<h4 style="color:rgb(60, 60, 60);"> Precio de Venta: $ ' + value.precioDeVenta + ' COP</h4>';
-                var cantidadDisponible = '<p style="color:rgb(120, 120, 120);"> Cantidad disponible: ' + value.cantidadDisponible + '</p>';
-                var editar = '<a href="../producto/crearEditarProducto.html" onClick=\'cambiarIdProducto('+ TextJSON
-                +');\' style="color:rgb(0, 0, 0);" >Editar Producto</a>';
-                var cerrarDiv = '</div>';
-                var bloqueCompleto = clase + image + nombreProducto + precio + cantidadDisponible + editar + cerrarDiv;
-                $('#contenedor').append(bloqueCompleto);
+                var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
+                var precio = '<h3 style="color:rgb(60, 60, 60);">  $ ' + value.precioDeVenta + ' COP</h3>';
+                var cerrarDiv = editar + clase + image + nombreProducto + cantidadDisponible + precio + '</div> </a>';
+                $('#contenedor').append(cerrarDiv);
             }
         })
 }

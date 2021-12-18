@@ -1,3 +1,11 @@
+#linkEditarProducto{
+    color: black;
+    text-decoration: none;
+}
+
+img {
+    float: right;
+}
 
 .contact{
     padding: 4%;
