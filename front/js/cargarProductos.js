@@ -8,7 +8,7 @@ function cargarTodosLosProductos() {
             for (let value of data) {
                 var TextJSON = JSON.stringify(value) + '';
                 console.log(TextJSON);
-                var editar = '<a id="linkEditarProducto" href="../producto/crearEditarProducto.html" onClick=\'cambiarIdProducto('
+                var editar = '<a id="linkEditarProducto" href="../editarProducto.html" onClick=\'cambiarIdProducto('
                 + TextJSON+');\' style="color:rgb(0, 0, 0);" >';
                 var clase = '<div class="lista-productos">';
                 var image = '<img src="' + value.urlImagen + '" width="260" height="150">';
@@ -69,5 +69,5 @@ function getCodigoProducto() {
     document.getElementById("urlImagen").value=objetoProducto.urlImagen;
 }
 function chageToAddProduct(){
-    window.location = "../producto/crearProducto.html";
+    window.location = "../crearProducto.html";
 }
