@@ -1,0 +1,83 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row dense;
+  grid-template-areas:
+    "Foto_Producto Foto_Producto Codigo_Producto Codigo_Producto"
+    "Foto_Producto Foto_Producto texto_cantidad_disponible cantidad_disponible"
+    "nombre_producto nombre_producto categoria categoria"
+    "precio_venta precio_venta descripcion_producto descripcion_producto"
+    "precio_compra precio_compra descripcion_producto descripcion_producto"
+    "crear_producto crear_producto cancelar_creacion_producto cancelar_creacion_producto";
+}
+
+.Foto_Producto {
+  grid-area: Foto_Producto;
+}
+
+.Codigo_Producto {
+  grid-area: Codigo_Producto;
+}
+
+.texto_cantidad_disponible {
+  grid-area: texto_cantidad_disponible;
+}
+
+.cantidad_disponible {
+  grid-area: cantidad_disponible;
+}
+
+.nombre_producto {
+  grid-area: nombre_producto;
+}
+
+.precio_venta {
+  grid-area: precio_venta;
+}
+
+.precio_compra {
+  grid-area: precio_compra;
+}
+
+.categoria {
+  grid-area: categoria;
+}
+
+.descripcion_producto {
+  grid-area: descripcion_producto;
+}
+
+.crear_producto {
+  grid-area: crear_producto;
+}
+
+.cancelar_creacion_producto {
+  grid-area: cancelar_creacion_producto;
+}
+
+#cantidadDisponible {
+  width: 85%;
+  height: 60%;
+  padding: 5%;
+  margin: 2em;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 9px;
+  box-sizing: border-box;
+}
+
+#T1 {
+  width: 85%;
+  height: 60%;
+  padding: 5%;
+  margin: 2em;
+}
+
+#camara {
+  display: block;
+  margin-left: 90px;
+  margin-right: auto;
+}

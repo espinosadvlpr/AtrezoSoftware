@@ -1,4 +1,4 @@
-#linkEditarProducto{
+#linkEditarProducto {
     color: black;
     text-decoration: none;
 }
@@ -7,60 +7,69 @@ img {
     float: right;
 }
 
-.contact{
+.contact {
     padding: 4%;
     height: 400px;
 }
 
 
-.card-img-top{
-   
-    width:150px;
-    height:150px;
-    border-radius:150px;
-   }
-  
-.col-md-3{
+.card-img-top {
+
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+}
+
+.col-md-3 {
     background: #ff434e;
     padding: 4%;
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
 }
-.contact-info{
-    margin-top:10%;
+
+.contact-info {
+    margin-top: 10%;
 }
-.contact-img{
-    margin-top:-50px;
-    margin-left:50px; 
+
+.contact-img {
+    margin-top: -50px;
+    margin-left: 50px;
 }
-.contact-info img{
+
+.contact-info img {
     margin-bottom: 15%;
 }
-.contact-info h2{
+
+.contact-info h2 {
     margin-bottom: 10%;
 }
-.col-md-9{
+
+.col-md-9 {
     background: #292929;
-    padding: 5%;
+    padding: 3%;
 }
-.contact-form label{
-    font-weight:600;
+
+.contact-form label {
+    font-weight: 600;
 }
-.icon-card{
-    width:32px;
-    height:32px;
+
+.icon-card {
+    width: 32px;
+    height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-   }
-.contact-form button{
+}
+
+.contact-form button {
     background: #25274d;
     color: #ff434e;
     font-weight: 600;
     width: 25%;
 }
-.contact-form button:focus{
-    box-shadow:none;
+
+.contact-form button:focus {
+    box-shadow: none;
 }
 
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
@@ -77,7 +86,7 @@ body {
 
 
 #wrapper {
-  
+
     padding-left: 50px;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
@@ -156,10 +165,10 @@ body {
 }
 
 #sidebar-wrapper .sidebar-nav li a .caret {
-  position: absolute;
-  right: 23px;
-  top: auto;
-  margin-top: 20px;
+    position: absolute;
+    right: 23px;
+    top: auto;
+    margin-top: 20px;
 }
 
 #sidebar-wrapper .sidebar-nav li ul.panel-collapse {
@@ -184,6 +193,7 @@ body {
     #wrapper #sidebar-wrapper {
         width: 45px;
     }
+
     #wrapper #sidebar-wrapper #sidebar #sidemenu li ul {
         position: fixed;
         left: 45px;
@@ -193,11 +203,13 @@ body {
         height: 0;
     }
 }
-.icons{
-    width:32px;
-    height:32px;
+
+.icons {
+    width: 32px;
+    height: 32px;
 
 }
+
 .sidebar-nav li:first-child a {
     background: #ff434e !important;
     color: #fff !important;
@@ -223,7 +235,7 @@ body {
     color: #fff !important;
 }
 
-  
+
 .lista-productos {
     background: #fff;
     border-radius: 4px;
@@ -235,48 +247,86 @@ body {
     width: 1000px;
     margin-bottom: 20px;
 }
-  
+
 button {
-    width: 100%;
+    width: 55%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
-    border-radius: 4px;
+    border-radius: 9px;
     cursor: pointer;
+    position: fixed;
+    bottom: 0px;
+    right: 200px;
 }
 
 input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    width: 95%;
+    height: 88%;
+    padding: 5%;
+    margin: 1em;
     display: inline-block;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 9px;
     box-sizing: border-box;
-  }
+}
+
+
 
 input[type=number], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    width: 95%;
+    padding: 5%;
+    margin: 1em;
     display: inline-block;
     border: 1px solid #ccc;
-    border-radius: 4px;
+    border-radius: 9px;
     box-sizing: border-box;
 }
+
 input[type=submit] {
-    width: 100%;
+    width: 95%;
     background-color: #4CAF50;
     color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
+    padding: 5%;
+    margin: 1em;
     border: none;
-    border-radius: 4px;
+    border-radius: 9px;
     cursor: pointer;
 }
-  
+
 input[type=submit]:hover {
-   background-color: #45a049;
+    background-color: #2b7e2f;
+}
+
+input[type=reset] {
+    width: 95%;
+    background-color: #7e8188;
+    color: white;
+    padding: 5%;
+    margin: 1em;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+input[type=reset]:hover {
+    background-color: #424246;
+}
+
+.eliminar{
+    background-color: #af4c4c;
+    position: relative;
+    right: 0px;
+    width: 95%;
+    height: 49%;
+    padding: 5%;
+    margin: 1em;
+    border: none;
+    border-radius: 9px;
+}
+
+.eliminar:hover{
+    background-color: #ad2828;
 }

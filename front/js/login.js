@@ -8,6 +8,8 @@ function sendLogin() {
             for (let value of data) {
                 if (email === value.email && password === value.password) {
                     window.location = "home/index.html";
+                }else {
+                    alert("Usuario o contraseña incorrectos !");
                 }
             }
         })

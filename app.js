@@ -3,6 +3,9 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3050;
 const app = express();
+const fs = require('fs');
+const multer = require('multer');
+const upload = multer({ dest: 'front/producto/productos/images' });
 //app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({
@@ -14,7 +17,7 @@ app.use(express.static(__dirname + "/front"));
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'santiago',
-    password: 'abC@1534',
+    password: 'a123',
     database: 'tcampo'
 });
 
@@ -109,30 +112,35 @@ app.put('/update_user/:id', (req, res) => {
     });
 });
 
-app.post('/actualizar_producto', (req, res) => {
-    console.log(req.body);
-    console.log(req.body.codigoProducto);
-    console.log(req.body.cantidadDisponible);
-    console.log(req.body.nombreProducto);
-    console.log(req.body.precioDeCompra);
-    console.log(req.body.precioDeVenta);
-    console.log(req.body.descripcionProducto);
-    console.log(req.body.Categoria);
-    console.log(req.body.urlImagen);
+app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => {
+    if(req.file == null){
+        const sql = `UPDATE Producto 
+        SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible}, nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
+        precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', idCategoria = ${req.body.Categoria}
+        WHERE codigoProducto = ${req.body.codigoProducto}`; 
+        connection.query(sql, error => {
+            if (error) throw error;
+            res.send('Producto actualizado!');
+        });
+    }else {
+        var rutaImagen = req.file.path + '.' + req.file.mimetype.split('/')[1];
+        fs.renameSync(req.file.path, rutaImagen);
+        const sql = `UPDATE Producto 
+        SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible}, nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
+        precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', idCategoria = ${req.body.Categoria}, imagenProducto = '${rutaImagen.split('/')[4]}'
+        WHERE codigoProducto = ${req.body.codigoProducto}`; 
+        connection.query(sql, error => {
+            if (error) throw error;
+            res.send('Producto actualizado!');
+        });
+    }
     
-    const sql = `UPDATE Producto 
-    SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible}, nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
-    precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', idCategoria = ${req.body.Categoria}, urlImagen = '${req.body.urlImagen}'
-    WHERE codigoProducto = ${req.body.codigoProducto}`; 
-    connection.query(sql, error => {
-        if (error) throw error;
-        res.send('Producto actualizado!');
-    });
 });
 
-app.post('/add_product', (req, res) => {
+app.post('/add_product', upload.single('imagenProducto'), (req, res) => {
+    var rutaImagen = req.file.path + '.' + req.file.mimetype.split('/')[1];
+    fs.renameSync(req.file.path, rutaImagen);
     const sql = 'INSERT INTO Producto SET ?';
-
     const product_data = {
         codigoProducto: req.body.codigoProducto,
         cantidadDisponible: req.body.cantidadDisponible,
@@ -140,8 +148,8 @@ app.post('/add_product', (req, res) => {
         precioDeCompra: req.body.precioDeCompra,
         precioDeVenta: req.body.precioDeVenta,
         descripcionProducto: req.body.descripcionProducto,
-        idCategoria: req.body.Categoria,
-        urlImagen: req.body.urlImagen
+        imagenProducto: rutaImagen.split('/')[4],
+        idCategoria: req.body.Categoria
     };
 
     connection.query(sql, product_data, error => {
@@ -184,7 +192,7 @@ app.delete('/delete_product/:id', (req, res) => {
 
     connection.query(sql, error => {
         if (error) throw error;
-        res.send('User deleted!');
+        res.send('Producto eliminado!');
     });
 });
 
