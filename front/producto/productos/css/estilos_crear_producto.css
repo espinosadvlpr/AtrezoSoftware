@@ -80,4 +80,6 @@
   display: block;
   margin-left: 90px;
   margin-right: auto;
+  max-width: 100%;
+  height: auto;
 }

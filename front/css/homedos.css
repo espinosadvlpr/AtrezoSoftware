@@ -238,13 +238,13 @@ body {
 
 .lista-productos {
     background: #fff;
-    border-radius: 4px;
+    border-radius: 19px;
     padding: 20px;
     font-size: 25px;
     text-align: center;
     transition: all 0.2s;
     margin: 0 auto;
-    width: 1000px;
+    width: 90%;
     margin-bottom: 20px;
 }
 
@@ -329,4 +329,20 @@ input[type=reset]:hover {
 
 .eliminar:hover{
     background-color: #ad2828;
+}
+
+input[type=search] {
+    background: #fff;
+    border-radius: 9px;
+    padding: 20px;
+    font-size: 25px;
+    text-align: center;
+    transition: all 0.2s;
+    margin: 0 auto;
+    width: -moz-available;
+    margin-bottom: 20px;
+}
+
+.filtro{
+    display: none;
 }

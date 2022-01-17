@@ -1,12 +1,10 @@
 const express = require('express');
 const mysql = require('mysql2');
-const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3050;
 const app = express();
 const fs = require('fs');
 const multer = require('multer');
 const upload = multer({ dest: 'front/producto/productos/images' });
-//app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -173,7 +171,6 @@ app.delete('/delete_user/:id', (req, res) => {
 // Productos
 app.get('/product', (req, res) => {
     const sql = 'SELECT * FROM Producto';
-
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -184,7 +181,22 @@ app.get('/product', (req, res) => {
     });
 });
 
+/**
+ * Obtener lista de productos pero solo por una categoria
+ */
+app.get('/product/:idCategoria', (req, res) => {
+    const { idCategoria } = req.params;
+    const sql = `SELECT * FROM Producto WHERE idCategoria = ${idCategoria}`;
+    connection.query(sql, (error, result) => {
+        if (error) throw error;
 
+        if (result.length > 0) {
+            res.json(result);
+        } else {
+            res.send('Not result');
+        }
+    });
+});
 
 app.delete('/delete_product/:id', (req, res) => {
     const { id } = req.params;
