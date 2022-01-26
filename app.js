@@ -14,7 +14,7 @@ app.use(express.static(__dirname + "/front"));
 // Conexion MySql
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'santiago',
+    user: 'Santiago',
     password: 'a123',
     database: 'tcampo'
 });
@@ -186,7 +186,12 @@ app.get('/product', (req, res) => {
  */
 app.get('/product/:idCategoria', (req, res) => {
     const { idCategoria } = req.params;
-    const sql = `SELECT * FROM Producto WHERE idCategoria = ${idCategoria}`;
+    var sql = "";
+    if(idCategoria == -1){
+        sql = `SELECT * FROM Producto`;
+    }else {
+        sql = `SELECT * FROM Producto WHERE idCategoria = ${idCategoria}`;
+    }
     connection.query(sql, (error, result) => {
         if (error) throw error;
 
