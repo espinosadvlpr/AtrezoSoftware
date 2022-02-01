@@ -34,7 +34,7 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 // Usuarios
-app.get('/user', (req, res) => {
+app.get('/users', (req, res) => {
     const sql = 'SELECT * FROM Persona';
 
     connection.query(sql, (error, results) => {
@@ -88,23 +88,28 @@ app.get('/user/:id', (req, res) => {
 
 app.post('/add_user', (req, res) => {
     const sql = 'INSERT INTO Persona SET ?';
-
     const user_data = {
-        name: req.body.name // faltan datos
+        nombres: req.body.nombres,
+        Apellidos: req.body.Apellidos,
+        tipoPersona: req.body.Tipo_usuario,
+        telefono: req.body.telefono,
+        email: req.body.Email,
+        direccion: req.body.direccion,
+        password: req.body.password
     };
-
     connection.query(sql, user_data, error => {
         if (error) throw error;
         res.send('User created!');
     });
 });
 
-app.put('/update_user/:id', (req, res) => {
-    const { id } = req.params;
-    const { name } = req.body;
-    const sql = `UPDATE Persona SET nombres = '${name}'`; //mejorar query
-
-    connection.query(sql, error => {
+app.post('/update_user', (req, res) => {
+    const sql = `UPDATE Persona 
+        SET nombres = '${req.body.nombres}', Apellidos = '${req.body.Apellidos}', tipoPersona = '${req.body.Tipo_usuario}',
+        telefono = ${req.body.telefono},email = '${req.body.Email}', direccion = '${req.body.direccion}',
+        password = '${req.body.password}'
+        WHERE idPersona = ${req.body.userID}`; 
+        connection.query(sql, error => {
         if (error) throw error;
         res.send('User updated!');
     });
@@ -159,7 +164,7 @@ app.post('/add_product', upload.single('imagenProducto'), (req, res) => {
 
 app.delete('/delete_user/:id', (req, res) => {
     const { id } = req.params;
-    const sql = `DELETE FROM Persona WHERE id= ${id}`;
+    const sql = `DELETE FROM Persona WHERE idPersona= ${id}`;
 
     connection.query(sql, error => {
         if (error) throw error;
@@ -170,7 +175,7 @@ app.delete('/delete_user/:id', (req, res) => {
 
 // Productos
 app.get('/product', (req, res) => {
-    const sql = 'SELECT * FROM Producto';
+    const sql = 'SELECT * from Producto;';
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {

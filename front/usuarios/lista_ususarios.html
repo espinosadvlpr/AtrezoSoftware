@@ -7,10 +7,12 @@
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="../js/cargarUsuarios.js" type="text/javascript"></script>
 	<link rel="stylesheet" href="../css/homedos.css" />
+	<link rel="stylesheet" href="./css/estilosUsuarios.css" />
 </head>
 
-<body>
+<body onload="cargarTodosLosUsuarios()">
 	<div class="row">
 		<div class="col-md-3">
 			<div class="contact-info">
@@ -21,7 +23,7 @@
 						<aside id="sidebar">
 							<ul id="sidemenu" class="sidebar-nav">
 								<li>
-									<a href="../usuarios/lista_ususarios.html">
+									<a href="#">
 										<span class="sidebar-icon"><img src="../images/usuario.png" class="icons"
 												alt="texto descriptivo"></span>
 										<span class="sidebar-title">
@@ -76,22 +78,13 @@
 			</div>
 		</div>
 		<div class="col-md-9">
-			< class="contact-form">
+            <class="contact-form">
 				<font color="white" face=" Lucida Bright">
-					<p>
-					<h1 align="center"><b>Hola (usuario)</b></h1>
-					</p>
-					<br> <br>
-					<br> <br>
-					<p>
-					<h1 align="center">Bienvenido a</h1>
-					<h1 align="center"> ATREZO DISTRIBUCIONES</h1>
-					</p>
-					<br> <br>
-					<br> <br>
-					<p>
-					<h1 align="center">¿Qué vamos hacer hoy?</h1>
-					</p>
+					<input type="search" id="searchUser" name="searchUser" placeholder="Buscar usuario..">
+					<div id="contenedor">
+
+					</div>
+					<button id="botonAgregarUsuario" type="button" class="agregarUsuario" onclick="chageToAddUser()">Agregar nuevo Usuario</button>
 				</font>
 		</div>
 	</div>

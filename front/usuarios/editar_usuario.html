@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atrezo Software</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/cargarUsuarios.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../css/homedos.css" />
+    <link rel="stylesheet" href="./css/estilosUsuarios.css" />
+</head>
+
+<body onload="cargarUsuarioSeleccionado()">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="contact-info">
+                <div class="contact-img"><img src="../images/logo.png" class="card-img-top" alt="texto descriptivo">
+                </div>
+                <div id="wrapper">
+                    <div id="sidebar-wrapper">
+                        <aside id="sidebar">
+                            <ul id="sidemenu" class="sidebar-nav">
+                                <li>
+                                    <a href="./lista_ususarios.html">
+                                        <span class="sidebar-icon"><img src="../images/usuario.png" class="icons"
+                                                alt="texto descriptivo"></span>
+                                        <span class="sidebar-title">
+                                            <font size=5 face=" Lucida Bright">Usuarios</font>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../producto/productos/productos.html">
+                                        <span class="sidebar-icon"><img src="../images/carrito.png" class="icons"
+                                                alt="texto descriptivo"></span>
+                                        <span class="sidebar-title">
+                                            <font size=5 face=" Lucida Bright">Productos</font>
+                                        </span>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-icon"><img src="../images/etiqueta.png" class="icons"
+                                                alt="texto descriptivo"></span>
+                                        <span class="sidebar-title">
+                                            <font size=5 face=" Lucida Bright">Ventas</font>
+                                        </span>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-icon"><img src="../images/reporte.png" class="icons"
+                                                alt="texto descriptivo"></span>
+                                        <span class="sidebar-title">
+                                            <font size=5 face=" Lucida Bright">Reportes</font>
+                                        </span>
+
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-icon"><img src="../images/cerrarsesion.png" class="icons"
+                                                alt="texto descriptivo"></span>
+                                        <span class="sidebar-title">
+                                            <font size=5 face=" Lucida Bright">Cerrar sesión</font>
+                                        </span>
+
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <h1 id="texto-informativo">Editar usuario</h1>
+            <br> <br>
+			<br> <br>
+            <form action="/update_user" method="POST" onsubmit="return matchPassword()">
+                <div class="containerUsers">
+                    <div class="Nombre-usuario">
+                        <input type="text" id="nombres" name="nombres" placeholder="Nombres (Obligatorio)" required
+                            minlength="3"><br><br>
+                    </div>
+                    <div class="Apellido-usuario">
+                        <input type="text" id="Apellidos" name="Apellidos" placeholder="Apellidos (Obligatorio)" minlength="3"
+                            required>
+                    </div>
+                    <div class="Telefono-usuario">
+                        <input type="tel" id="telefono" name="telefono" placeholder="Telefono celular (Obligatorio)" pattern="[0-9]+"
+                            minlength="8" required>
+                    </div>
+                    <div class="Email-usuario">
+                        <input type="email" id="Email" name="Email" placeholder="E-mail (Obligatorio)" required>
+                    </div>
+                    <div class="Direccion-usuario">
+                        <input type="text" id="direccion" name="direccion" placeholder="Direccion de residencia"
+                            minlength="5">
+                    </div>
+                    <div class="Tipo-usuario">
+                        <select id="Tipo_usuario" name="Tipo_usuario" required>
+                            <option value="A">Administrador</option>
+                            <option value="E">Empleado</option>
+                            <option value="C">Cliente</option>
+                        </select>
+                    </div>
+                    <div class="Password-usuario">
+                        <input id="password" name="password" type="password" minlength="7" placeholder="Contraseña usuario (Obligatorio)" required>
+                    </div>
+                    <div class="Repeat-password">
+                        <input id="repeat-password" name="repeat-password" type="password" minlength="7" placeholder="Repetir contraseña" required>
+                    </div>
+                    <div class="Guardar-Usuario">
+                        <input id="enviar" type="submit" value="Editar usuario">
+                    </div>
+                    <div class="Limpiar-Campos">
+                        <button id="botonEliminarProducto" type="button" class="eliminar" onclick="eliminarProducto()">Eliminar usuario</button>
+                    </div>
+                </div>
+                <input id="userID" name="userID" type="hidden" value="">
+            </form>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

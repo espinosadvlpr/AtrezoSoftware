@@ -1,0 +1,64 @@
+.containerUsers {  display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Nombre-usuario Apellido-usuario"
+      "Telefono-usuario Email-usuario"
+      "Direccion-usuario Tipo-usuario"
+      "Password-usuario Repeat-password"
+      "Guardar-Usuario Limpiar-Campos";
+  }
+  
+  .Nombre-usuario { grid-area: Nombre-usuario; }
+  
+  .Apellido-usuario { grid-area: Apellido-usuario; }
+  
+  .Telefono-usuario { grid-area: Telefono-usuario; }
+  
+  .Email-usuario { grid-area: Email-usuario; }
+  
+  .Direccion-usuario { grid-area: Direccion-usuario; }
+  
+  .Tipo-usuario { grid-area: Tipo-usuario; }
+  
+  .Password-usuario { grid-area: Password-usuario; }
+  
+  .Repeat-password { grid-area: Repeat-password; }
+  
+  .Guardar-Usuario { grid-area: Guardar-Usuario; }
+  
+  .Limpiar-Campos { grid-area: Limpiar-Campos; }
+  
+  
+  
+
+input[type=tel], input[type=email], input[type=password] {
+    width: 95%;
+    height: 88%;
+    padding: 5%;
+    margin: 1em;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    box-sizing: border-box;
+}
+
+#texto-informativo {
+    text-align: center;
+    color: white;
+    font-size: 100px;
+}
+
+.lista-usuarios {
+    background: #fff;
+    border-radius: 19px;
+    padding: 20px;
+    font-size: 25px;
+    text-align: center;
+    transition: all 0.2s;
+    margin: 0 auto;
+    width: 90%;
+    margin-bottom: 20px;
+}

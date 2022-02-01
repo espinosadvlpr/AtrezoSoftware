@@ -4,7 +4,7 @@
 function cargarTodosLosProductos() {
     peticionTodosLosProductos()
         .then(cargarCategorias2())
-        .then(crearBuscador);
+        .then(crearBuscador());
 }
 
 function peticionTodosLosProductos(){
@@ -40,24 +40,37 @@ function crearBuscador(){
  * Se cargan las categorias
  */
 function cargarProductoYCategorias(){
-    getCodigoProducto();
-    cargarCategorias();
+    let cargarCategoriasServidor = cargarCategorias();
+    cargarCategoriasServidor.then((successMessage)=> {
+        console.log('Se cargaron las categorias con exito: ' +successMessage);
+        getCodigoProducto();
+    })
+    /*
+    cargarCategorias()
+        .then(getCodigoProducto());*/
+    
 }
 
 /**
  * Funciones que se muestran al crear o editar un producto
  */
 function cargarCategorias() {
-    fetch('http://localhost:3050/categorias')
+    return new Promise((resolve , reject) => {
+        fetch('http://localhost:3050/categorias')
         .then(response => response.json())
         .then(data => {
             console.log(data);
             for (let value of data) {
                 console.log(value.codigoCategoria + ' ' + value.nombreCategoria);
                 var categoria = '<option value="'+ value.codigoCategoria + '"> ' + value.nombreCategoria + ' </option>';
-                $('#Categoria').append(categoria);
+                $('#Categoria1').append(categoria);
             }
+            return resolve(data);
         })
+        .then(error => {
+            return reject(error);
+        })
+    });
 }
 
 /**
@@ -92,14 +105,15 @@ function cambiarIdProducto(productoActual){
 
 function getCodigoProducto() {
     var retrievedObject = localStorage.getItem('ProductoActual');
-    var objetoProducto = JSON.parse(retrievedObject)
-    console.log('retrievedObject: ', objetoProducto.descripcionProducto);
+    var objetoProducto = JSON.parse(retrievedObject);
+    console.log('retrievedObject: ', objetoProducto);
     document.getElementById("codigoProducto").value=objetoProducto.codigoProducto;
     document.getElementById("cantidadDisponible").value=objetoProducto.cantidadDisponible;
     document.getElementById("nombreProducto").value=objetoProducto.nombreProducto;
     document.getElementById("precioDeCompra").value=objetoProducto.precioDeCompra;
     document.getElementById("precioDeVenta").value=objetoProducto.precioDeVenta;
     document.getElementById("descripcionProducto").value=objetoProducto.descripcionProducto;
+    document.getElementById("Categoria1").value=objetoProducto.idCategoria;
     document.getElementById('camara').src = "./productos/images/" + objetoProducto.imagenProducto;
 }
 function chageToAddProduct(){
