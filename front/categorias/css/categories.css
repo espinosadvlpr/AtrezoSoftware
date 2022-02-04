@@ -1,0 +1,222 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Quicksand", sans-serif;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    background-color: #292929;
+}
+
+.button {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.button:hover {
+    box-shadow: 2px 2px 5px rgb(15, 15, 15);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.side-bar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 17rem;
+    min-height: 100%;
+    background-color: #ff434e;
+}
+
+.side-bar .logo-top {
+    padding: 1em;
+    background-color: #ff434e;
+}
+
+.side-bar .logo-top img {
+    width: 90%;
+    height: auto;
+}
+
+.side-bar ul {
+    padding: 1em;
+    margin: 0;
+    list-style-type: none;
+}
+
+.side-bar ul li {
+    margin: 0.5rem 0;
+    padding: 0.5em;
+    width: 100%;
+    text-align: left;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.side-bar ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.side-bar ul li:hover {
+    background-color: #864879;
+}
+
+.side-bar ul li.active {
+    background-color: #ff434e;
+    -webkit-transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.side-bar ul li.active a {
+    -webkit-transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .side-bar {
+        width: 7.5rem;
+    }
+    .side-bar .logo-top img {
+        display: none;
+    }
+    .side-bar .logo-top svg {
+        width: 80%;
+        height: auto;
+    }
+    .side-bar ul li {
+        text-align: center;
+        font-size: 1.2rem;
+    }
+    .side-bar ul span {
+        display: none;
+    }
+}
+
+@media (min-width: 769px) {
+    .side-bar .logo-top svg {
+        display: none;
+    }
+}
+
+.logo-top {
+    text-align: center;
+}
+
+.logo-top a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-content {
+    min-height: 100vh;
+    margin-left: 17rem;
+    padding: 2rem;
+    width: 100%;
+}
+
+.main-content .categories,
+.main-content .create_category,
+.main-content .search,
+.main-content .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: white;
+    padding: 20px;
+}
+
+.main-content .categories ul {
+    list-style-type: none;
+}
+
+.main-content .categories ul li {
+    width: 800px;
+    padding: 10px;
+    margin: 10px;
+    background-color: white;
+    color: black;
+    border-radius: 4px;
+}
+
+.main-content .categories ul li:hover {
+    width: 800px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #F04F4F;
+    color: white;
+    border-radius: 4px;
+}
+
+.main-content .create_category input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    margin-top: 200px;
+    margin-bottom: 20px;
+}
+
+.main-content .search input[type=text] {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url('categorias/images/searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    margin-top: 15px;
+    margin-bottom: 50px;
+}
+
+div[data-view-active="false"] {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 7.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        padding: 1rem !important;
+    }
+}

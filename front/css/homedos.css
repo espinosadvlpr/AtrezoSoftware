@@ -7,14 +7,7 @@ img {
     float: right;
 }
 
-.contact {
-    padding: 4%;
-    height: 400px;
-}
-
-
 .card-img-top {
-
     width: 150px;
     height: 150px;
     border-radius: 150px;
@@ -46,7 +39,12 @@ img {
 
 .col-md-9 {
     background: #292929;
+    height: 100%;
     padding: 3%;
+}
+
+.contact-form {
+    height: 100%;
 }
 
 .contact-form label {
@@ -73,7 +71,6 @@ img {
 }
 
 @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
-
 body {
     background: #ff434e;
 }
@@ -83,10 +80,7 @@ body {
     border-width: 0 0 1px;
 }
 
-
-
 #wrapper {
-
     padding-left: 50px;
     -webkit-transition: all .5s ease;
     -moz-transition: all .5s ease;
@@ -193,7 +187,6 @@ body {
     #wrapper #sidebar-wrapper {
         width: 45px;
     }
-
     #wrapper #sidebar-wrapper #sidebar #sidemenu li ul {
         position: fixed;
         left: 45px;
@@ -207,7 +200,6 @@ body {
 .icons {
     width: 32px;
     height: 32px;
-
 }
 
 .sidebar-nav li:first-child a {
@@ -235,7 +227,6 @@ body {
     color: #fff !important;
 }
 
-
 .lista-productos {
     background: #fff;
     border-radius: 19px;
@@ -262,7 +253,8 @@ button {
     right: 200px;
 }
 
-input[type=text], select {
+input[type=text],
+select {
     width: 95%;
     height: 88%;
     padding: 5%;
@@ -273,9 +265,8 @@ input[type=text], select {
     box-sizing: border-box;
 }
 
-
-
-input[type=number], select {
+input[type=number],
+select {
     width: 95%;
     padding: 5%;
     margin: 1em;
@@ -315,7 +306,7 @@ input[type=reset]:hover {
     background-color: #424246;
 }
 
-.eliminar{
+.eliminar {
     background-color: #af4c4c;
     position: relative;
     right: 0px;
@@ -326,22 +317,21 @@ input[type=reset]:hover {
     border-radius: 9px;
 }
 
-.eliminar:hover{
+.eliminar:hover {
     background-color: #ad2828;
 }
 
 input[type=search] {
     background: #fff;
     border-radius: 9px;
-    padding: 20px;
+    padding: 8px;
     font-size: 25px;
-    text-align: center;
     transition: all 0.2s;
     margin: 0 auto;
-    width: -moz-available;
-    margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 50px;
 }
 
-.filtro{
+.filtro {
     display: none;
 }

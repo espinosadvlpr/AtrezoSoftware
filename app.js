@@ -12,10 +12,17 @@ app.use(express.urlencoded({
 app.use(express.static(__dirname + "/front"));
 
 // Conexion MySql
-const connection = mysql.createConnection({
+/*const connection = mysql.createConnection({
     host: 'localhost',
     user: 'Santiago',
     password: 'a123',
+    database: 'tcampo'
+});*/
+
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '12345',
     database: 'tcampo'
 });
 
@@ -108,36 +115,36 @@ app.post('/update_user', (req, res) => {
         SET nombres = '${req.body.nombres}', Apellidos = '${req.body.Apellidos}', tipoPersona = '${req.body.Tipo_usuario}',
         telefono = ${req.body.telefono},email = '${req.body.Email}', direccion = '${req.body.direccion}',
         password = '${req.body.password}'
-        WHERE idPersona = ${req.body.userID}`; 
-        connection.query(sql, error => {
+        WHERE idPersona = ${req.body.userID}`;
+    connection.query(sql, error => {
         if (error) throw error;
         res.send('User updated!');
     });
 });
 
 app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => {
-    if(req.file == null){
+    if (req.file == null) {
         const sql = `UPDATE Producto 
         SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible}, nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
         precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', idCategoria = ${req.body.Categoria}
-        WHERE codigoProducto = ${req.body.codigoProducto}`; 
+        WHERE codigoProducto = ${req.body.codigoProducto}`;
         connection.query(sql, error => {
             if (error) throw error;
             res.send('Producto actualizado!');
         });
-    }else {
+    } else {
         var rutaImagen = req.file.path + '.' + req.file.mimetype.split('/')[1];
         fs.renameSync(req.file.path, rutaImagen);
         const sql = `UPDATE Producto 
         SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible}, nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
         precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', idCategoria = ${req.body.Categoria}, imagenProducto = '${rutaImagen.split('/')[4]}'
-        WHERE codigoProducto = ${req.body.codigoProducto}`; 
+        WHERE codigoProducto = ${req.body.codigoProducto}`;
         connection.query(sql, error => {
             if (error) throw error;
             res.send('Producto actualizado!');
         });
     }
-    
+
 });
 
 app.post('/add_product', upload.single('imagenProducto'), (req, res) => {
@@ -192,9 +199,9 @@ app.get('/product', (req, res) => {
 app.get('/product/:idCategoria', (req, res) => {
     const { idCategoria } = req.params;
     var sql = "";
-    if(idCategoria == -1){
+    if (idCategoria == -1) {
         sql = `SELECT * FROM Producto`;
-    }else {
+    } else {
         sql = `SELECT * FROM Producto WHERE idCategoria = ${idCategoria}`;
     }
     connection.query(sql, (error, result) => {
@@ -217,6 +224,34 @@ app.delete('/delete_product/:id', (req, res) => {
         res.send('Producto eliminado!');
     });
 });
+
+//Categorias
+app.get('/categories', (req, res) => {
+    const sql = 'SELECT * FROM Categoria';
+
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
+
+app.post('/add_category', (req, res) => {
+    const sql = 'INSERT INTO Categoria SET ?';
+
+    const category_data = {
+        codigoCategoria: req.body.id,
+        nombreCategoria: req.body.name
+    };
+    connection.query(sql, category_data, error => {
+        if (error) throw error;
+        res.send('Category created!');
+    });
+});
+
 
 connection.connect(error => {
     if (error) throw error;

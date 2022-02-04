@@ -4,22 +4,38 @@
     overflow-x: auto;
 }
 
-.wrapper::-webkit-scrollbar{
+.wrapper::-webkit-scrollbar {
     width: 0;
 }
 
-.wrapper .item{
-    min-width: 110px;
-    height: 110px;
-    line-height: 110px;
+.wrapper .item {
+    min-width: 200px;
+    height: 70px;
+    line-height: 70px;
     text-align: center;
     margin-right: 20px;
 }
 
-.item {
-    width: 900px;
+.wrapper .item_imagen {
+    min-width: 70px;
+    height: 70px;
+    line-height: 70px;
+    text-align: center;
+    margin-right: 20px;
+}
+
+.item_imagen {
+    width: 50px;
     margin-bottom: 10px;
-    border-radius: 10px;   
+    border-radius: 10px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.item {
+    width: 90px;
+    margin-bottom: 10px;
+    border-radius: 10px;
     background-color: white;
     cursor: pointer;
 }
@@ -29,14 +45,11 @@
 }
 
 #editarCategorias {
-    width: 50px;
     border-radius: 50px;
 }
 
-#imagenEditar{
+#imagenEditar {
     position: relative;
-    top: 15px; 
-    left: -8px;
-    width: 90px;
-    height: 80px;
+    top: 5px;
+    left: -10px;
 }
