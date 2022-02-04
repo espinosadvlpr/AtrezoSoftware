@@ -7,6 +7,11 @@ window.onload = function getCategories() {
             for (let value of data) {
                 li = document.createElement("li")
                 li.textContent = value.nombreCategoria
+                li.addEventListener("click", function(event) {
+                    //TODO: llamar al metodo delete de app.js
+                    console.log(event.target.textContent)
+                    event.target.remove()
+                }, false);
                 ul.appendChild(li)
             }
             categories_div.appendChild(ul)
