@@ -240,7 +240,7 @@ body {
 }
 
 button {
-    width: 55%;
+    width: 72%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -250,7 +250,7 @@ button {
     cursor: pointer;
     position: fixed;
     bottom: 0px;
-    right: 200px;
+    right: 20px;
 }
 
 input[type=text],

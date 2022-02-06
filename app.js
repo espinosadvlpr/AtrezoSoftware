@@ -12,19 +12,20 @@ app.use(express.urlencoded({
 app.use(express.static(__dirname + "/front"));
 
 // Conexion MySql
-/*const connection = mysql.createConnection({
+const connection = mysql.createConnection({
     host: 'localhost',
     user: 'Santiago',
     password: 'a123',
     database: 'tcampo'
-});*/
-
+});
+/*
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '12345',
     database: 'tcampo'
 });
+*/
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');
