@@ -1,24 +1,7 @@
-.containerMOV {
-    display: grid;
-    grid-template-columns: 0.2fr 1.8fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas: "Izquierdo Central";
-}
-
 .row {
     background: #292929;
     width: 100%;
     height: 100%;
-}
-
-.Izquierdo {
-    grid-area: Izquierdo;
-}
-
-.Central {
-    grid-area: Central;
 }
 
 #linkEditarProducto {
@@ -58,9 +41,9 @@
 
 .col-md-9 {
     background: #292929;
-    height: 100%;
-    padding: 3%;
-    flex: 25%;
+    height: 150%;
+    padding: 2%;
+    flex: 29%;
     max-width: 100%;
 }
 
