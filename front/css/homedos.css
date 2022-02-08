@@ -1,25 +1,35 @@
-.containerMOV {  display: grid;
+.containerMOV {
+    display: grid;
     grid-template-columns: 0.2fr 1.8fr;
     grid-template-rows: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
-    grid-template-areas:
-      "Izquierdo Central";
+    grid-template-areas: "Izquierdo Central";
 }
-  
 
-.Izquierdo { grid-area: Izquierdo; }
-  
-.Central { grid-area: Central; }
+.row {
+    background: #292929;
+    width: 100%;
+    height: 100%;
+}
+
+.Izquierdo {
+    grid-area: Izquierdo;
+}
+
+.Central {
+    grid-area: Central;
+}
 
 #linkEditarProducto {
     color: black;
     text-decoration: none;
 }
 
-.imgProduct{
+.imgProduct {
     float: right;
 }
+
 .card-img-top {
     width: 150px;
     height: 150px;
@@ -159,7 +169,7 @@ body {
 #sidebar-wrapper .sidebar-nav li a .sidebar-icon {
     width: 25px;
     height: 45px;
-    font-size: 13px;   
+    font-size: 13px;
     display: inline-block;
     text-indent: 5px;
     margin-right: 15px;
@@ -203,7 +213,7 @@ body {
         width: 200px;
         height: 0;
     }
-    #logoAtrezo{
+    #logoAtrezo {
         display: none;
     }
 }
@@ -346,6 +356,3 @@ input[type=search] {
 .filtro {
     display: none;
 }
-
-
-  
