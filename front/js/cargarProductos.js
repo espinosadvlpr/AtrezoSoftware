@@ -150,7 +150,7 @@ function mostrarTodosLosProductos(data) {
         var editar = '<a id="linkEditarProducto" href="../editarProducto.html" onClick=\'cambiarIdProducto(' +
             TextJSON + ');\' style="color:rgb(0, 0, 0);" >';
         var clase = '<div class="lista-productos">';
-        var image = '<img src="./images/' + value.imagenProducto + '" width="260" height="150"> </img>';
+        var image = '<img src="./images/' + value.imagenProducto + '" width="260" height="150" class="imgProduct"> </img>';
         var nombreProducto = '<h1 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '</h1>';
         var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
         var precio = '<h3 style="color:rgb(60, 60, 60);">  $ ' + value.precioDeVenta + ' COP</h3>';

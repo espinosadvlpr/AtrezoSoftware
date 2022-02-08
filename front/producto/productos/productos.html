@@ -5,11 +5,11 @@
 <link rel="stylesheet" href="../../css/homedos.css" />
 <link rel="stylesheet" href="./css/barraNavegacionCategorias.css" />
 
-<body onload="cargarTodosLosProductos()">
+<body onload="cargarTodosLosProductos()" style="color: aqua;">
 	<div class="row">
 		<div class="col-md-3">
 			<div class="contact-info">
-				<div class="contact-img"><img src="../../images/logo.png" class="card-img-top" alt="texto descriptivo">
+				<div class="contact-img"><img id="logoAtrezo" src="../../images/logo.png" class="card-img-top" alt="texto descriptivo">
 				</div>
 				<div id="wrapper">
 					<div id="sidebar-wrapper">
@@ -20,7 +20,7 @@
 										<span class="sidebar-icon"><img src="../../images/usuario.png" class="icons"
 												alt="texto descriptivo"></span>
 										<span class="sidebar-title">
-											<font size=5 face=" Lucida Bright">Usuarios</font>
+											<font size=4 face=" Lucida Bright">Usuarios</font>
 										</span>
 									</a>
 								</li>
@@ -29,7 +29,7 @@
 										<span class="sidebar-icon"><img src="../../images/carrito.png" class="icons"
 												alt="texto descriptivo"></span>
 										<span class="sidebar-title">
-											<font size=5 face=" Lucida Bright">Productos</font>
+											<font size=4 face=" Lucida Bright">Productos</font>
 										</span>
 
 									</a>
@@ -39,7 +39,7 @@
 										<span class="sidebar-icon"><img src="../../images/etiqueta.png" class="icons"
 												alt="texto descriptivo"></span>
 										<span class="sidebar-title">
-											<font size=5 face=" Lucida Bright">Ventas</font>
+											<font size=4 face=" Lucida Bright">Ventas</font>
 										</span>
 
 									</a>
@@ -49,7 +49,7 @@
 										<span class="sidebar-icon"><img src="../../images/reporte.png" class="icons"
 												alt="texto descriptivo"></span>
 										<span class="sidebar-title">
-											<font size=5 face=" Lucida Bright">Reportes</font>
+											<font size=4 face=" Lucida Bright">Reportes</font>
 										</span>
 
 									</a>
@@ -59,7 +59,7 @@
 										<span class="sidebar-icon"><img src="../../images/cerrarsesion.png"
 												class="icons" alt="texto descriptivo"></span>
 										<span class="sidebar-title">
-											<font size=5 face=" Lucida Bright">Cerrar sesión</font>
+											<font size=4 face=" Lucida Bright">Cerrar sesión</font>
 										</span>
 
 									</a>
@@ -71,22 +71,21 @@
 			</div>
 		</div>
 		<div class="col-md-9">
-			<class="contact-form">
-				<font color="white" face=" Lucida Bright">
-					<input type="search" id="gsearch" name="gsearch" placeholder="Buscar producto">
-					<div id="listaCategorias" class="wrapper">
-						<a class="item_imagen" style="color:#000000;" id="editarCategorias" href="../../categorias/categories.html"> 
-							<img id="imagenEditar" src="./images/edit.png" alt="Editar categorias" width="50" height="60">
-						</a>
-						<a class="item" style="color:#000000;" onclick="cargarProductosPorCategoria(-1)" >Todos los productos</a> 
-					</div>
-					<div id="contenedor">
+			<input type="search" id="gsearch" name="gsearch" placeholder="Buscar producto">
+			<div id="listaCategorias" class="wrapper">
+				<a class="item_imagen" style="color:#000000;" id="editarCategorias"
+					href="../../categorias/categories.html">
+					<img id="imagenEditar" src="./images/edit.png" alt="Editar categorias" width="50" height="60">
+				</a>
+				<a class="item" style="color:#000000;" onclick="cargarProductosPorCategoria(-1)">Todos los
+					productos</a>
+			</div>
+			<div id="contenedor">
 
-					</div>
-					<button id="botonAgregarProducto" type="button" class="agregarProducto" onclick="chageToAddProduct()">Agregar nuevo producto</button>
-				</font>
+			</div>
+			<button id="botonAgregarProducto" type="button" class="agregarProducto"
+				onclick="chageToAddProduct()">Agregar nuevo producto</button>
+
 		</div>
 	</div>
-	</div>
-
 </body>

@@ -1,0 +1,96 @@
+.containerW {  display: grid;
+  grid-template-columns: 0.2fr 1.1fr;
+  grid-template-rows: 1.8fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "BarraNavegacion PanelCentral";
+}
+
+html, body {
+  height:100%;
+  width:100%;
+  margin:0;
+  padding: 0;
+ }
+
+.BarraNavegacion { grid-area: BarraNavegacion; 
+  height: 100%;
+  width: 100%;
+}
+
+.PanelCentral { grid-area: PanelCentral; 
+  height: 100%;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vertical a {
+  display: block;
+  width: 300px;
+  color: #FFFFFF;
+  background-color: #ff434e;
+  text-align: left;
+  padding: 15px;
+}
+
+.vertical a:hover, .vertical a:active {
+  background-color: crimson;
+}
+
+div{	
+	position : absolute;
+	width : 100%;
+	height : 100%;
+}
+*{		
+  margin : 0;
+	padding : 0;
+}
+
+#logoAtrezo{
+  text-align: center;
+}
+
+@media only screen and (max-width: 1300px) {
+  .containerW {  display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1.8fr 0.2fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "PanelCentral"
+      "BarraNavegacion";
+  }
+  
+  .BarraNavegacion { 
+    grid-area: BarraNavegacion; 
+    position: relative;
+  }
+  
+  .PanelCentral { grid-area: PanelCentral; }
+  
+  .vertical li{
+    float: left;
+  }
+
+  .vertical a {
+    margin: 0;
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+  }
+
+  #logoAtrezo{
+    display: none;
+  }
+}

@@ -1,12 +1,25 @@
+.containerMOV {  display: grid;
+    grid-template-columns: 0.2fr 1.8fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      "Izquierdo Central";
+}
+  
+
+.Izquierdo { grid-area: Izquierdo; }
+  
+.Central { grid-area: Central; }
+
 #linkEditarProducto {
     color: black;
     text-decoration: none;
 }
 
-img {
+.imgProduct{
     float: right;
 }
-
 .card-img-top {
     width: 150px;
     height: 150px;
@@ -15,18 +28,14 @@ img {
 
 .col-md-3 {
     background: #ff434e;
-    padding: 4%;
+    padding: 3%;
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
+    max-width: 14.5%;
 }
 
 .contact-info {
     margin-top: 10%;
-}
-
-.contact-img {
-    margin-top: -50px;
-    margin-left: 50px;
 }
 
 .contact-info img {
@@ -41,6 +50,8 @@ img {
     background: #292929;
     height: 100%;
     padding: 3%;
+    flex: 25%;
+    max-width: 100%;
 }
 
 .contact-form {
@@ -105,13 +116,12 @@ body {
 }
 
 #sidebar-wrapper {
-    z-index: 1000;
+    z-index: 1100px;
     position: fixed;
     left: 225px;
-    width: 1000px;
     height: 100%;
     top: 250px;
-    margin-left: -170px;
+    margin-left: -215px;
     overflow-y: auto;
     background: #ff434e;
     -webkit-transition: all .5s ease;
@@ -124,7 +134,7 @@ body {
     position: absolute;
     top: 0;
     width: 225px;
-    font-size: 14px;
+    font-size: 19px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -147,15 +157,13 @@ body {
 }
 
 #sidebar-wrapper .sidebar-nav li a .sidebar-icon {
-    width: 45px;
+    width: 25px;
     height: 45px;
-    font-size: 14px;
-    padding: 0 2px;
+    font-size: 13px;   
     display: inline-block;
-    text-indent: 7px;
-    margin-right: 20px;
+    text-indent: 5px;
+    margin-right: 15px;
     color: #fff;
-    float: left;
 }
 
 #sidebar-wrapper .sidebar-nav li a .caret {
@@ -195,11 +203,14 @@ body {
         width: 200px;
         height: 0;
     }
+    #logoAtrezo{
+        display: none;
+    }
 }
 
 .icons {
-    width: 32px;
-    height: 32px;
+    width: 25px;
+    height: 25px;
 }
 
 .sidebar-nav li:first-child a {
@@ -240,7 +251,7 @@ body {
 }
 
 button {
-    width: 72%;
+    width: 84%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -335,3 +346,6 @@ input[type=search] {
 .filtro {
     display: none;
 }
+
+
+  
