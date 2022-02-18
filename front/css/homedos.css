@@ -41,7 +41,7 @@
 
 .col-md-9 {
     background: #292929;
-    height: 150%;
+    height: 100%;
     padding: 2%;
     flex: 29%;
     max-width: 100%;
@@ -260,9 +260,9 @@ button {
 input[type=text],
 select {
     width: 95%;
-    height: 88%;
-    padding: 5%;
-    margin: 1em;
+    height: 50%;
+    padding: 4.5%;
+    margin: 15px;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 9px;
@@ -272,8 +272,8 @@ select {
 input[type=number],
 select {
     width: 95%;
-    padding: 5%;
-    margin: 1em;
+    padding: 2.5%; 
+    margin: 15px;
     display: inline-block;
     border: 1px solid #ccc;
     border-radius: 9px;
@@ -284,8 +284,8 @@ input[type=submit] {
     width: 95%;
     background-color: #4CAF50;
     color: white;
-    padding: 5%;
-    margin: 1em;
+    padding: 3%; 
+    margin: 15px;
     border: none;
     border-radius: 9px;
     cursor: pointer;
@@ -299,9 +299,9 @@ input[type=reset] {
     width: 95%;
     background-color: #7e8188;
     color: white;
-    padding: 5%;
-    margin: 1em;
+    padding: 3%;
     border: none;
+    margin: 15px;
     border-radius: 9px;
     cursor: pointer;
 }
@@ -315,9 +315,9 @@ input[type=reset]:hover {
     position: relative;
     right: 0px;
     width: 95%;
-    padding: 5%;
-    margin: 1em;
+    padding: 3%;
     border: none;
+    margin: 15px;
     border-radius: 9px;
 }
 

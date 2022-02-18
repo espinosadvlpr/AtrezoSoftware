@@ -1,7 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.1fr 0.1fr 0.1fr 01.fr 01.fr 0.1fr;
   grid-auto-columns: 1fr;
   gap: 0px 0px;
   grid-auto-flow: row dense;
@@ -59,9 +59,9 @@
 }
 
 #cantidadDisponible {
-  width: 85%;
-  height: 60%;
-  padding: 5%;
+  width: 80%;
+  height: 70%;
+  padding: 4%;
   margin: 2em;
   display: inline-block;
   border: 1px solid #ccc;
@@ -70,15 +70,12 @@
 }
 
 #T1 {
-  width: 85%;
-  height: 60%;
   padding: 5%;
-  margin: 2em;
 }
 
 #camara {
   display: block;
-  margin-left: 5%;
+  margin-left: 15%;
   margin-right: auto;
   max-width: 100%;
   height: auto;
