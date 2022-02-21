@@ -6,86 +6,85 @@
 <link rel="stylesheet" href="./css/barraNavegacionCategorias.css" />
 
 <body onload="cargarTodosLosProductos()" style="color: aqua;">
-	<div class="row">
-		<div class="col-md-3">
-			<div class="contact-info">
-				<div class="contact-img"><img id="logoAtrezo" src="../../images/logo.png" class="card-img-top" alt="texto descriptivo">
-				</div>
-				<div id="wrapper">
-					<div id="sidebar-wrapper">
-						<aside id="sidebar">
-							<ul id="sidemenu" class="sidebar-nav">
-								<li>
-									<a href="../../usuarios/lista_ususarios.html">
-										<span class="sidebar-icon"><img src="../../images/usuario.png" class="icons"
+    <div class="row">
+        <div class="col-md-3">
+            <div class="contact-info">
+                <div class="contact-img">
+                    <a href="../../home/index.html"><img id="logoAtrezo" src="../../images/logo.png" class="card-img-top" alt="texto descriptivo"></a>
+                </div>
+                <div id="wrapper">
+                    <div id="sidebar-wrapper">
+                        <aside id="sidebar">
+                            <ul id="sidemenu" class="sidebar-nav">
+                                <li>
+                                    <a href="../../usuarios/lista_ususarios.html">
+                                        <span class="sidebar-icon"><img src="../../images/usuario.png" class="icons"
 												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
+                                        <span class="sidebar-title">
 											<font size=4 face=" Lucida Bright">Usuarios</font>
 										</span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="sidebar-icon"><img src="../../images/carrito.png" class="icons"
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-icon"><img src="../../images/carrito.png" class="icons"
 												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
+                                        <span class="sidebar-title">
 											<font size=4 face=" Lucida Bright">Productos</font>
 										</span>
 
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="sidebar-icon"><img src="../../images/etiqueta.png" class="icons"
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-icon"><img src="../../images/etiqueta.png" class="icons"
 												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
+                                        <span class="sidebar-title">
 											<font size=4 face=" Lucida Bright">Ventas</font>
 										</span>
 
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="sidebar-icon"><img src="../../images/reporte.png" class="icons"
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="sidebar-icon"><img src="../../images/reporte.png" class="icons"
 												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
+                                        <span class="sidebar-title">
 											<font size=4 face=" Lucida Bright">Reportes</font>
 										</span>
 
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="sidebar-icon"><img src="../../images/cerrarsesion.png"
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../../index.html">
+                                        <span class="sidebar-icon"><img src="../../images/cerrarsesion.png"
 												class="icons" alt="texto descriptivo"></span>
-										<span class="sidebar-title">
+                                        <span class="sidebar-title">
 											<font size=4 face=" Lucida Bright">Cerrar sesión</font>
 										</span>
 
-									</a>
-								</li>
-							</ul>
-						</aside>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-9">
-			<input type="search" id="gsearch" name="gsearch" placeholder="Buscar producto">
-			<div id="listaCategorias" class="wrapper">
-				<a class="item_imagen" style="color:#000000;" id="editarCategorias"
-					href="../../categorias/categories.html">
-					<img id="imagenEditar" src="./images/edit.png" alt="Editar categorias" width="50" height="60">
-				</a>
-				<a class="item" style="color:#000000;" onclick="cargarProductosPorCategoria(-1)">Todos los
+                                    </a>
+                                </li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <input type="search" id="gsearch" name="gsearch" placeholder="Buscar producto">
+            <div id="listaCategorias" class="wrapper">
+                <a class="item_imagen" style="color:#000000;" id="editarCategorias" href="../../categorias/categories.html">
+                    <img id="imagenEditar" src="./images/edit.png" alt="Editar categorias" width="50" height="60">
+                </a>
+                <a class="item" style="color:#000000;" onclick="cargarProductosPorCategoria(-1)">Todos los
 					productos</a>
-			</div>
-			<div id="contenedor">
+            </div>
+            <div id="contenedor">
 
-			</div>
-			<button id="botonAgregarProducto" type="button" class="agregarProducto"
-				onclick="chageToAddProduct()">Agregar nuevo producto</button>
+            </div>
+            <button id="botonAgregarProducto" type="button" class="agregarProducto" onclick="chageToAddProduct()">Agregar nuevo producto</button>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </body>

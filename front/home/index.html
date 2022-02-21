@@ -2,98 +2,90 @@
 <html>
 
 <head>
-	<meta charset=UTF-8>
-	<title>Atrezo Software</title>
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="../css/homedos.css" />
-	
+    <meta charset=UTF-8>
+    <title>Atrezo Software</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--<link rel="stylesheet" href="../css/homedos.css" />-->
+    <link rel="stylesheet" href="../css/app.css" />
+
 </head>
 
 <body>
-	<div class="row">
-		<div class="col-md-3">
-			<div class="contact-info">
-				<div class="contact-img"><img id="logoAtrezo" src="../images/logo.png" class="card-img-top" alt="texto descriptivo">
-				</div>
-				<div id="wrapper">
-					<div id="sidebar-wrapper">
-						<aside id="sidebar">
-							<ul id="sidemenu" class="sidebar-nav">
-								<li>
-									<a href="../usuarios/lista_ususarios.html">
-										<span class="sidebar-icon"><img src="../images/usuario.png" class="icons"
-												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
-											<font size=4 face=" Lucida Bright">Usuarios</font>
-										</span>
-									</a>
-								</li>
-								<li>
-									<a href="../producto/productos/productos.html">
-										<span class="sidebar-icon"><img src="../images/carrito.png" class="icons"
-												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
-											<font size=4 face=" Lucida Bright">Productos</font>
-										</span>
+    <main>
+        <div class="side-bar">
+            <ul class="nav-links">
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="../home/index.html">
+                        <img src="../images/fondo.svg" alt="insertar SVG con la etiqueta image">
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="user">
+                    <a href="../../usuarios/lista_ususarios.html">
+                        <img src="../images/usuario.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
+            Usuario
+          </span>
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="../producto/productos/productos.html">
+                        <img src="../images/productos.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
+            productos
+          </span>
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="#">
+                        <img src="../images/ventas.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
+            ventas
+          </span>
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="#">
+                        <img src="../images/reportes.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
+            reportes
+          </span>
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="../index.html">
+                        <img src="../images/sesion.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
+            cerrar sesión
+          </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="main-content w-100 p-5">
+            <div class="create" data-view-active="true">
+                <font color="white" face="Lucida Bright">
+                    <p>
+                        <h1 id="User" align="center"><b></b></h1>
+                    </p>
+                    <br> <br>
+                    <br> <br>
+                    <p>
+                        <h1 align="center">Bienvenido a</h1>
+                        <h1 align="center"> ATREZO DISTRIBUCIONES</h1>
+                    </p>
+                    <br> <br>
+                    <br> <br>
+                    <p>
+                        <h1 align="center">¿Qué vamos hacer hoy?</h1>
+                    </p>
+                </font>
+            </div>
+        </div>
+    </main>
+    <script src="../js/home.js"></script>
 
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="sidebar-icon"><img src="../images/etiqueta.png" class="icons"
-												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
-											<font size=4 face=" Lucida Bright">Ventas</font>
-										</span>
-
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="sidebar-icon"><img src="../images/reporte.png" class="icons"
-												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
-											<font size=4 face=" Lucida Bright">Reportes</font>
-										</span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="sidebar-icon"><img src="../images/cerrarsesion.png" class="icons"
-												alt="texto descriptivo"></span>
-										<span class="sidebar-title">
-											<font size=4 face=" Lucida Bright">Cerrar sesión</font>
-										</span>
-									</a>
-								</li>
-							</ul>
-						</aside>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-9">
-			<div class="contact-form">
-				<font color="white" face=" Lucida Bright">
-					<p>
-					<h1 align="center"><b>Hola (usuario)</b></h1>
-					</p>
-					<br> <br>
-					<br> <br>
-					<p>
-					<h1 align="center">Bienvenido a</h1>
-					<h1 align="center"> ATREZO DISTRIBUCIONES</h1>
-					</p>
-					<br> <br>
-					<br> <br>
-					<p>
-					<h1 align="center">¿Qué vamos hacer hoy?</h1>
-					</p>
-				</font>
-			</div>
-		</div>
-	</div>
 </body>
+
 </html>

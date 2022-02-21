@@ -1,77 +1,80 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Categorias</title>
-  <link rel="stylesheet" href="css/categories.css">
+    <meta charset="UTF-8">
+    <title>Categorias</title>
+    <link rel="stylesheet" href="css/categories.css">
 
 </head>
+
 <body>
-<!-- partial:index.partial.html -->
-<main>
-  <div class="side-bar">
-    <ul class="nav-links">
-      <li class="nav-tab active" data-view-name="create">
-        <a href="#">
-          <img src="images/fondo.svg" alt="insertar SVG con la etiqueta image">
-        </a>
-      </li>
-      <li class="nav-tab active" data-view-name="user">
-        <a href="../../usuarios/lista_ususarios.html">
-          <img src="images/usuario.svg" alt="insertar SVG con la etiqueta image">
-          <span>
+    <!-- partial:index.partial.html -->
+    <main>
+        <div class="side-bar">
+            <ul class="nav-links">
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="../home/index.html">
+                        <img src="images/fondo.svg" alt="insertar SVG con la etiqueta image">
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="user">
+                    <a href="../../usuarios/lista_ususarios.html">
+                        <img src="images/usuario.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
             Usuario
           </span>
-        </a>
-      </li>
-      <li class="nav-tab active" data-view-name="create">
-        <a href="../producto/productos/productos.html">
-          <img src="images/productos.svg" alt="insertar SVG con la etiqueta image">
-          <span>
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="../producto/productos/productos.html">
+                        <img src="images/productos.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
             productos
           </span>
-        </a>
-      </li>
-      <li class="nav-tab active" data-view-name="create">
-        <a href="#">
-          <img src="images/ventas.svg" alt="insertar SVG con la etiqueta image">
-          <span>
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="#">
+                        <img src="images/ventas.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
             ventas
           </span>
-        </a>
-      </li>
-      <li class="nav-tab active" data-view-name="create">
-        <a href="#">
-          <img src="images/reportes.svg" alt="insertar SVG con la etiqueta image">
-          <span>
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="#">
+                        <img src="images/reportes.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
             reportes
           </span>
-        </a>
-      </li>
-      <li class="nav-tab active" data-view-name="create">
-        <a href="#">
-          <img src="images/sesion.svg" alt="insertar SVG con la etiqueta image">
-          <span>
+                    </a>
+                </li>
+                <li class="nav-tab active" data-view-name="create">
+                    <a href="../index.html">
+                        <img src="images/sesion.svg" alt="insertar SVG con la etiqueta image">
+                        <span>
             cerrar sesión
           </span>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="main-content w-100 p-5">
-    <div class="create" data-view-active="true">
-      <div class = "search">
-        <input type="text" name="search" id="search" placeholder = "Buscar categoria">
-      </div>
-      <div class = "categories" id="categories"></div>
-      <div id="buttons" class="buttons" data-view-active="true">
-        <input class="button" type="button" style="border:none; background-color: #2A9C35; color:#FFFFFF" value="Nueva categoria" onclick="newCategory()">
-        <input class="button button2" type="button" style="border:none; background-color: #F04F4F; color:#FFFFFF" value="Cancelar" onclick="cancel()">
-      </div>
-    </div>
-  </div>
-</main>
-  <script  src="js/categories.js"></script>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="main-content w-100 p-5">
+            <div class="create" data-view-active="true">
+                <div class="search">
+                    <input type="text" name="search" id="search" placeholder="Buscar categoria">
+                </div>
+                <div class="categories" id="categories"></div>
+                <div id="buttons" class="buttons" data-view-active="true">
+                    <input class="button" type="button" style="border:none; background-color: #2A9C35; color:#FFFFFF" value="Nueva categoria" onclick="newCategory()">
+                    <input class="button button2" type="button" style="border:none; background-color: #F04F4F; color:#FFFFFF" value="Cancelar" onclick="cancel()">
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/categories.js"></script>
 
 </body>
+
 </html>
