@@ -44,3 +44,21 @@ DROP TABLE Persona;
 
 INSERT INTO Categoria VALUES
 (3,'Lubricante');
+
+/**
+Se puede utilizar para generar una factura
+*/
+CREATE TABLE Facturas (
+    idFactura INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    idCliente INT,
+    fecha DATE NOT NULL   
+);
+
+CREATE TABLE DetalleFactura (
+    idDetalle INT NOT NULL AUTO_INCREMENT,
+    idFactura INT NOT NULL REFERENCES Facturas(idFactura),
+    idProducto INT NOT NULL REFERENCES Producto(codigoProducto),
+    cantidad INT NOT NULL,
+    precioProducto DOUBLE NOT NULL,
+    primary KEY (idDetalle,idFactura)
+);
