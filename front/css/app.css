@@ -209,8 +209,89 @@ main {
     margin-bottom: 50px;
 }
 
+input[type=text],
+select {
+    width: 95%;
+    height: 50%;
+    padding: 4.5%;
+    margin: 15px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    box-sizing: border-box;
+}
+
+input[type=number],
+select {
+    width: 95%;
+    padding: 2.5%; 
+    margin: 15px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 95%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 3%; 
+    margin: 15px;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #2b7e2f;
+}
+
+input[type=reset] {
+    width: 95%;
+    background-color: #7e8188;
+    color: white;
+    padding: 3%;
+    border: none;
+    margin: 15px;
+    border-radius: 9px;
+    cursor: pointer;
+}
+
+input[type=reset]:hover {
+    background-color: #424246;
+}
+
+input[type=search] {
+    background: #fff;
+    border-radius: 9px;
+    padding: 8px;
+    font-size: 25px;
+    transition: all 0.2s;
+    margin: 0 auto;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+button {
+    width: 70%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    position: fixed;
+    bottom: 0px;
+}
+
 div[data-view-active="false"] {
     display: none !important;
+}
+
+.filtro {
+    display: none;
 }
 
 @media (max-width: 768px) {
