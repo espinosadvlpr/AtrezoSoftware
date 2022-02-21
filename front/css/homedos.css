@@ -239,7 +239,7 @@ body {
     text-align: center;
     transition: all 0.2s;
     margin-top: 20px;
-    width: 80%;
+    width: 100%;
     margin-bottom: 20px;
 }
 
@@ -321,17 +321,6 @@ input[type=reset]:hover {
 
 .eliminar:hover {
     background-color: #ad2828;
-}
-
-input[type=search] {
-    background: #fff;
-    border-radius: 9px;
-    padding: 8px;
-    font-size: 25px;
-    transition: all 0.2s;
-    margin: 0 auto;
-    width: 100%;
-    margin-bottom: 50px;
 }
 
 .filtro {
