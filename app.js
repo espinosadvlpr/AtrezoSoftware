@@ -12,12 +12,6 @@ app.use(express.urlencoded({
 app.use(express.static(__dirname + "/front"));
 
 // Conexion MySql
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'Santiago',
-    password: 'a123',
-    database: 'tcampo'
-});
 /*
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -26,6 +20,12 @@ const connection = mysql.createConnection({
     database: 'tcampo'
 });
 */
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'Santiago',
+    password: 'a123',
+    database: 'tcampo'
+});
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');
@@ -253,7 +253,7 @@ app.post('/add_category', (req, res) => {
     });
 });
 
-app.delete('/delete_product/:category', (req, res) => {
+app.delete('/delete_category/:category', (req, res) => {
     const { id } = req.params;
     const sql = `DELETE FROM Categoria WHERE nombreCategoria= ${category}`;
 

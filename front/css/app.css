@@ -6,6 +6,11 @@
     font-family: "Quicksand", sans-serif;
 }
 
+body{
+    overflow-x: hidden;
+ }
+ 
+
 main {
     display: flex;
     flex-direction: row;
@@ -273,8 +278,19 @@ input[type=search] {
     margin-bottom: 50px;
 }
 
+#gsearch {
+    background: #fff;
+    border-radius: 9px;
+    padding: 8px;
+    font-size: 25px;
+    transition: all 0.2s;
+    margin: 0 auto;
+    width: 80%;
+    margin-bottom: 50px;
+}
+
 button {
-    width: 70%;
+    width: 73%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;

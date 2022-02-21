@@ -9,9 +9,7 @@ function sendLogin() {
                 if (email === value.email && password === value.password) {
                     sesion(value.nombres)
                     window.location = "home/index.html";
-                } else {
-                    alert("Usuario o contraseña incorrectos !");
-                }
+                } //else {alert("Usuario o contraseña incorrectos!");}
             }
         })
 }
