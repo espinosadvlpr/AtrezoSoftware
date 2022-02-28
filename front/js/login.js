@@ -6,10 +6,10 @@ function sendLogin() {
         .then(data => {
             console.log(data);
             for (let value of data) {
-                if (email === value.email && password === value.password) {
+                if (email === value.email && password === value.password && value.tipoPersona === 'A') {
                     sesion(value.nombres)
                     window.location = "home/index.html";
-                } //else {alert("Usuario o contraseña incorrectos!");}
+                }
             }
         })
 }
