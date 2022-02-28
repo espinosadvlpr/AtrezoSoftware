@@ -1,4 +1,17 @@
-window.onload = function getUser() {
+window.onload = validateUser();
+
+function validateUser(){
+    if(window.sessionStorage){
+        var user = sessionStorage.getItem("user")
+        if(user == null){
+            window.location = '../index.html'
+        }else{
+            getUser()
+        }
+    }
+}
+
+function getUser() {
     var h1 = document.getElementById("User")
     if (window.sessionStorage) {
         var user = sessionStorage.getItem("user");
