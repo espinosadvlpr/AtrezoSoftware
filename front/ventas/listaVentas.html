@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Ventas</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/cargarVentas.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../css/categories.css">
+    <link rel="stylesheet" href="../css/listaVentas.css">
 </head>
 
-<body>
+<body onload="cargaPrincipal()">
     <main>
         <div class="side-bar">
             <ul class="nav-links">
@@ -60,23 +63,37 @@
                 </li>
             </ul>
         </div>
-        <div class="main-content w-100 p-5">
-            <div class="container">
-                <div class="VentasYGastos">
-                    
+        <div id="main-content" class="main-content w-100 p-5">
+            <div class="VentasYGastos">
+                <br>
+                <p class="ventas">Utilidad Total : </p>
+                <p class="ventas" id="utilidad">$ 0.0</p>
+                <span id="linea"></span>
+                <p class="ventas">Ventas totales : </p>
+                <p class="ventas" style="color: yellowgreen;" id="ventas_totales">$ 0.0</p>
+                <span id="linea"></span>
+                <p class="ventas">Gastos totales: </p>
+                <p class="ventas" style="color: brown;" id="gastos_totales"> $ 0.0</p>
+            </div>
+            <div class="Fechas">
+                <div class="por_fecha">
+                    <img id="calendario" src="../images/calendario.png" width="35" height="35" alt="Icono calendario">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <p>Fecha de venta : </p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="date" id="fecha_venta" name="Fecha de venta" min="2020-01-01">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <input id="cambiar_fecha" type="submit" value="Actualizar" onclick="recargarPagina()">
                 </div>
-                <div class="Fechas">
+            </div>
+            <div id="ListaDeVentas">
 
-                </div>
-                <div class="ListaDeVentas">
-
-                </div>
-                <div class="NuevaVenta">
-
-                </div>
-                <div class="NuevaCompra">
-
-                </div>
+            </div>
+            <div class="NuevaVenta">
+                <button id="nueva_venta" type="button">Nueva venta</button>
+            </div>
+            <div class="NuevaCompra">
+                <button id="nueva_compra" type="button">Nueva compra</button>
             </div>
         </div>
     </main>

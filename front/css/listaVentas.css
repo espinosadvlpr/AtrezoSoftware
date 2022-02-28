@@ -1,22 +1,104 @@
-.container {  display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 0.6fr 1.8fr 0.6fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-      "VentasYGastos VentasYGastos"
-      "Fechas Fechas"
-      "ListaDeVentas ListaDeVentas"
-      "NuevaVenta NuevaCompra";
-  }
+.VentasYGastos { 
+  background: #fff;
+  border-radius: 19px;
+  padding: 5px;
+  font-size: 25px;
+  text-align: center;
+  transition: all 0.2s;
+  margin-top: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+  height: 19%;
+}
+.ventas{
+  text-align: left;
+}
+.Fechas { 
+  background: #fff;
+  border-radius: 19px;
+  padding: 10px;
+  font-size: 25px;
+  text-align: -moz-center;
+  transition: all 0.2s;
+  margin-top: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+  height: 10%;
+}
   
-.VentasYGastos { grid-area: VentasYGastos; }
-  
-.Fechas { grid-area: Fechas; }
-  
-.ListaDeVentas { grid-area: ListaDeVentas; }
-  
-.NuevaVenta { grid-area: NuevaVenta; }
-  
-.NuevaCompra { grid-area: NuevaCompra; }
-  
+.lista-ventas {
+  background: #fff;
+  border-radius: 19px;
+  padding: 20px;
+  font-size: 25px;
+  text-align: center;
+  transition: all 0.2s;
+  margin-top: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.ventas{
+  display: inline;
+  margin: 1%;
+}
+
+#linea{
+  border: 3px solid black;
+  height: 90%;
+}
+
+.por_fecha{
+  display: -webkit-inline-box;
+}
+
+#cambiar_fecha{
+  width: 100px;
+  height: 30px;
+  background-color: #f7545f;
+  color: white;
+  margin: 8px 0;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+#cambiar_fecha:hover{
+  background-color: #f76872;
+}
+
+input[type=date] {
+  height: 35px;
+  margin: 0 auto;
+  width: 135px;
+  font-family: arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: #959595;
+  outline: none;
+  border: 0;
+  border-radius: 3px;
+  padding: 0 3px;
+  color: #fff;
+}
+
+#nueva_venta , #nueva_compra{
+  color: white;
+  padding: 14px;
+  margin: 8px 20px;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  position: fixed;
+  width: 35%;
+}
+
+#nueva_venta{
+  background-color: #4CAF50;
+}
+
+#nueva_compra{
+  background-color: #af4c4c;
+  margin-left: 40%;
+}

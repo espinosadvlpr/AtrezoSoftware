@@ -216,6 +216,60 @@ app.get('/product/:idCategoria', (req, res) => {
     });
 });
 
+/**
+ * Lista de ventas en una fecha particular
+ */
+app.get('/ventas/:fecha', (req, res) => {
+    const { fecha } = req.params;
+    console.log('Fecha ventas: ' + fecha);
+    var sql = `SELECT D.idFactura, P.nombreProducto, T.total, F.tipoTransaccion
+    FROM Facturas F, Producto P, DetalleFactura D,
+    (SELECT idFactura as idFac , sum(precioProducto * cantidad) as total
+    FROM DetalleFactura
+    group by idFactura) T
+    WHERE F.idFactura = T.idFac
+    AND F.idFactura = D.idFactura
+    AND D.idProducto = P.codigoProducto
+    AND F.fecha = STR_TO_DATE('${fecha}', '%Y-%m-%d');`;
+    connection.query(sql, (error, result) => {
+        if (error) throw error;
+        if (result.length > 0) {
+            var toClient = res.json(result);
+            console.log("ventas enviadas!!");
+        } else {
+            res.send('Not result');
+        }
+    });
+});
+
+app.get('/utilidades/:fecha/:tipoTransaccion', (req, res) => {
+    let fecha  = req.params.fecha;
+    let tipoTransaccion = req.params.tipoTransaccion;
+    console.log('UTILIDADES: ' + fecha , " Tipo T" + tipoTransaccion);
+    var sql = `SELECT D.idFactura, SUM(D.cantidad * D.precioProducto) AS Total
+    FROM DetalleFactura D, Facturas F
+    WHERE D.idFactura = F.idFactura
+    AND F.tipoTransaccion = '${tipoTransaccion}'
+    AND F.fecha = STR_TO_DATE('${fecha}', '%Y-%m-%d')
+    GROUP BY D.idFactura;`;
+    connection.query(sql, (error, result) => {
+        if (error) throw error;
+        if (result.length > 0) {
+            var toClient = res.json(result);
+            console.log("utilidades enviadas!! " + toClient);
+        } else {
+            let noData = `{
+                "idFactura":"0",
+                "Total":"0"
+            }`;
+            let array = ['noData'];
+            console.log("utilidades NO enviadas!! " + toClient);
+            res.send(array);
+        }
+    });
+});
+
+
 app.delete('/delete_product/:id', (req, res) => {
     const { id } = req.params;
     const sql = `DELETE FROM Producto WHERE codigoProducto= ${id}`;

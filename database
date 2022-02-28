@@ -6,8 +6,6 @@ CREATE TABLE Categoria (
     codigoCategoria INT NOT NULL PRIMARY KEY,
     nombreCategoria VARCHAR(50) NOT NULL
 );
-INSERT INTO Categoria VALUES(1, 'Limpiadores');
-INSERT INTO Categoria VALUES(1, 'Aceites');
 
 CREATE TABLE Producto (
     codigoProducto BigInt NOT NULL PRIMARY KEY,
@@ -31,34 +29,102 @@ CREATE TABLE Persona (
     password VARCHAR(30)
 );
 
-INSERT INTO Persona VALUES 
-(2,'David Leonardo','Espinosa Ochoa','A','123456','david.espinosa@uptc.edu.co','Clle 1 #2-3','12345');
 INSERT INTO Persona VALUES
 (1,'Santiago','Sosa Reyes','A','3115078547','santiago.sosa@uptc.edu.co','Clle 1 #2-3','123');
-INSERT INTO Persona VALUES
-(1,'Lorena','Rios','A','3115078547','lorena.rios@uptc.edu.co','Clle 1 #2-3','123');
 
-DROP TABLE Categoria;
-DROP TABLE Producto;
-DROP TABLE Persona;
-
-INSERT INTO Categoria VALUES
-(3,'Lubricante');
-
-/**
-Se puede utilizar para generar una factura
-*/
 CREATE TABLE Facturas (
     idFactura INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     idCliente INT,
-    fecha DATE NOT NULL   
+    fecha DATE NOT NULL,
+    tipoTransaccion CHAR(1)/*V Venta, C Compra*/
 );
 
 CREATE TABLE DetalleFactura (
     idDetalle INT NOT NULL AUTO_INCREMENT,
     idFactura INT NOT NULL REFERENCES Facturas(idFactura),
-    idProducto INT NOT NULL REFERENCES Producto(codigoProducto),
+    idProducto BigInt NOT NULL REFERENCES Producto(codigoProducto),
     cantidad INT NOT NULL,
     precioProducto DOUBLE NOT NULL,
     primary KEY (idDetalle,idFactura)
 );
+
+SELECT D.idFactura, P.nombreProducto, T.total, F.tipoTransaccion
+FROM Facturas F, Producto P, DetalleFactura D,
+(SELECT idFactura as idFac , sum(precioProducto * cantidad) as total
+FROM DetalleFactura
+group by idFactura) T
+WHERE F.idFactura = T.idFac
+AND F.idFactura = D.idFactura
+AND D.idProducto = P.codigoProducto
+AND F.fecha = STR_TO_DATE('2022-02-27', '%Y-%m-%d');
+
+
+/*
+SELECT D.idFactura, SUM(D.cantidad * D.precioProducto) AS Total
+FROM DetalleFactura D, Facturas F
+WHERE D.idFactura = F.idFactura
+AND F.tipoTransaccion = 'V'
+AND F.fecha = STR_TO_DATE('2022-02-27', '%Y-%m-%d')
+GROUP BY D.idFactura;
+*/
+--Crear una factura
+INSERT INTO Facturas(idCliente, fecha, tipoTransaccion)
+VALUES (5 , STR_TO_DATE('2022-02-27', '%Y-%m-%d'), 'C');
+
+--Asociar porductos de la factura (en este caso CADENOL)
+
+INSERT INTO DetalleFactura(idFactura , idProducto, cantidad, precioProducto)
+VALUES((SELECT MAX(idFactura) FROM Facturas) , 778585 , 2 , (SELECT precioDeVenta FROM Producto WHERE codigoProducto = 778585));
+
+INSERT INTO DetalleFactura(idFactura , idProducto, cantidad, precioProducto)
+VALUES((SELECT MAX(idFactura) FROM Facturas) , 77020216780 , 2 , (SELECT precioDeVenta FROM Producto WHERE codigoProducto = 77020216780));
+
+--Para una compra (precio de Compra)
+
+
+--Descontar del inventario
+
+delimiter //
+CREATE PROCEDURE sincInventario(
+    IN tipoTransaccion CHAR(1)
+)
+BEGIN
+    DECLARE contador INT DEFAULT 0;
+    DECLARE v_cantidad_actual INT;
+    DECLARE var_id_prod BigInt;
+    DECLARE var_cantidad INT;		   	
+    #Cursor de idProductos y cantidades de la ultima factura
+    DECLARE cursor1 CURSOR FOR SELECT idProducto, cantidad FROM DetalleFactura 
+    WHERE idFactura = (SELECT MAX(idFactura) FROM Facturas);
+    
+    DECLARE EXIT HANDLER FOR NOT FOUND SET contador = 0;
+    
+    OPEN cursor1;
+    bucle: LOOP
+    FETCH cursor1 INTO var_id_prod, var_cantidad;
+    	IF contador = 1 THEN LEAVE bucle;
+	END IF;
+        #Guardo la cantidad actual del producto en una varibale
+        SELECT cantidadDisponible
+        INTO v_cantidad_actual
+        FROM Producto
+        WHERE codigoProducto = var_id_prod;
+        #Si es una venta debo restar la cantidad vendida
+        IF tipoTransaccion = 'V' THEN
+            UPDATE Producto
+            SET cantidadDisponible = (v_cantidad_actual - var_cantidad)
+            WHERE codigoProducto = var_id_prod;
+        #Si es una compra debo sumar la cantidad comprada
+        ELSEIF tipoTransaccion = 'C' THEN
+            UPDATE Producto
+            SET cantidadDisponible = (v_cantidad_actual + var_cantidad)
+            WHERE codigoProducto = var_id_prod;
+        END IF;
+    END LOOP bucle;
+    CLOSE cursor1;
+END;//
+delimiter ;
+
+--Ejemplo llamado
+call sincInventario('V');
+
