@@ -12,6 +12,12 @@ app.use(express.urlencoded({
 app.use(express.static(__dirname + "/front"));
 
 // Conexion MySql
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'Santiago',
+    password: 'a123',
+    database: 'tcampo'
+});
 /*
 const connection = mysql.createConnection({
     host: 'localhost',
@@ -20,12 +26,6 @@ const connection = mysql.createConnection({
     database: 'tcampo'
 });
 */
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'Santiago',
-    password: 'a123',
-    database: 'tcampo'
-});
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');
@@ -126,8 +126,10 @@ app.post('/update_user', (req, res) => {
 app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => {
     if (req.file == null) {
         const sql = `UPDATE Producto 
-        SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible}, nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
-        precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', idCategoria = ${req.body.Categoria}
+        SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible},
+        nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
+        precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', 
+        idCategoria = ${req.body.Categoria}
         WHERE codigoProducto = ${req.body.codigoProducto}`;
         connection.query(sql, error => {
             if (error) throw error;
@@ -137,8 +139,10 @@ app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => 
         var rutaImagen = req.file.path + '.' + req.file.mimetype.split('/')[1];
         fs.renameSync(req.file.path, rutaImagen);
         const sql = `UPDATE Producto 
-        SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible}, nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
-        precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', idCategoria = ${req.body.Categoria}, imagenProducto = '${rutaImagen.split('/')[4]}'
+        SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible},
+        nombreProducto = '${req.body.nombreProducto}', precioDeCompra = ${req.body.precioDeCompra},
+        precioDeVenta = ${req.body.precioDeVenta},descripcionProducto = '${req.body.descripcionProducto}', 
+        idCategoria = ${req.body.Categoria}, imagenProducto = '${rutaImagen.split('/')[4]}'
         WHERE codigoProducto = ${req.body.codigoProducto}`;
         connection.query(sql, error => {
             if (error) throw error;
@@ -262,6 +266,35 @@ app.delete('/delete_category/:category', (req, res) => {
         res.send('Categoria eliminada!');
     });
 });
+
+// Facturas
+app.get('/bills', (req, res) => {
+    const sql = 'SELECT * FROM Facturas';
+
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
+
+app.get('/bills_details', (req, res) => {
+    const sql = 'SELECT * FROM Facturas a INNER JOIN  DetalleFactura b\
+                on a.idFactura=b.idFactura';
+
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
+
 
 connection.connect(error => {
     if (error) throw error;
