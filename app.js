@@ -247,9 +247,9 @@ app.get('/ventas/:fecha', (req, res) => {
 });
 
 app.get('/utilidades/:fecha/:tipoTransaccion', (req, res) => {
-    let fecha  = req.params.fecha;
+    let fecha = req.params.fecha;
     let tipoTransaccion = req.params.tipoTransaccion;
-    console.log('UTILIDADES: ' + fecha , " Tipo T" + tipoTransaccion);
+    console.log('UTILIDADES: ' + fecha, " Tipo T" + tipoTransaccion);
     var sql = `SELECT D.idFactura, SUM(D.cantidad * D.precioProducto) AS Total
     FROM DetalleFactura D, Facturas F
     WHERE D.idFactura = F.idFactura
