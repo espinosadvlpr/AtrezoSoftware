@@ -34,7 +34,7 @@ function ventasYGastos(){
         console.log(e);
         document.getElementById("ventas_totales").innerHTML = "$ " + e;
     });
-    compras = peticionUtilidades('C' , document.getElementById("fecha_venta").value).then(response => {
+    peticionUtilidades('C' , document.getElementById("fecha_venta").value).then(response => {
         console.log("Compras del dia: " + compras);
     }).catch(e => {
         console.log(e);
