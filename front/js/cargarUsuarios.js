@@ -38,7 +38,7 @@ function mostrarTodosLosUsuarios(data) {
         var editar = '<a id="linkEditarUsuario" href="./editar_usuario.html" onClick=\'cambiarIdUsuario('
             + TextJSON + ');\' style="color:rgb(0, 0, 0);" >';
         var clase = '<div class="lista-usuarios">';
-        var nombreUsuario = '<h1 style="color:rgb(0, 0, 0);">' + value.nombres + ' ' + value.Apellidos + '</h1>';
+        var nombreUsuario = '<h3 style="color:rgb(0, 0, 0);">' + value.nombres + ' ' + value.Apellidos + '</h3>';
         var tipoUsuario = '<p style="color:rgb(120, 120, 120);">' + obtenerTipoPersona(value.tipoPersona) + '</p>';
         var cerrarDiv = editar + clase + nombreUsuario + tipoUsuario + '</div> </a>';
         $('#contenedor').append(cerrarDiv);
@@ -66,10 +66,10 @@ function matchPassword() {
     var pw2 = document.getElementById("repeat-password").value;
     if (pw2.length < 6) {
         alert("Ingrese una contraseña con al menos 7 caracteres!!");
-        return false;
+        event.preventDefault();
     } else if(pw1 != pw2 ){
         alert("Las contraseñas no conciden!!");
-        return false;
+        event.preventDefault();
     }else {
         return true;
     }

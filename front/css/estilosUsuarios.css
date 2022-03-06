@@ -55,10 +55,10 @@ input[type=tel], input[type=email], input[type=password] {
     background: #fff;
     border-radius: 19px;
     padding: 20px;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
     transition: all 0.2s;
     margin: 0 auto;
-    width: 90%;
+    width: 98%;
     margin-bottom: 20px;
 }

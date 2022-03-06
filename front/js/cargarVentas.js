@@ -118,3 +118,4 @@ function recargarPagina(){
     //$("#main-content").load('listaVentas.html');
     window.location.reload();
 }
+
