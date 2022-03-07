@@ -299,6 +299,7 @@ button {
     bottom: 0px;
 }
 
+
 div[data-view-active="false"] {
     display: none !important;
 }

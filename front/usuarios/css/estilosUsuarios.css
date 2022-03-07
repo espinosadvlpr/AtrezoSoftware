@@ -62,3 +62,14 @@ input[type=tel], input[type=email], input[type=password] {
     width: 90%;
     margin-bottom: 20px;
 }
+
+table {
+  border-collapse: separate;
+  border-spacing: 10px;
+  table-layout: auto;
+  text-indent: inherit;
+}
+
+td {
+  text-align: center;
+}

@@ -33,16 +33,20 @@ function crearBuscador() {
 }
 
 function mostrarTodosLosUsuarios(data) {
+    var cabecera = '<div class = "lista-usuarios"><table class="default"><tr><th>Usuario</th><th>Tipo usuario</th><th>Accion</th></tr>'
     for (let value of data) {
         var TextJSON = JSON.stringify(value) + '';
-        var editar = '<a id="linkEditarUsuario" href="./editar_usuario.html" onClick=\'cambiarIdUsuario('
-            + TextJSON + ');\' style="color:rgb(0, 0, 0);" >';
+        var nombreUsuario = '<td><p style="color:rgb(0, 0, 0);">' + value.nombres + ' ' + value.Apellidos + '</p></td>';
+        var tipoUsuario = '<td><p style="color:rgb(120, 120, 120);">' + obtenerTipoPersona(value.tipoPersona) + '</p></td>';
+        var editar = '<td><p><a id="linkEditarUsuario" href="./editar_usuario.html" onClick=\'cambiarIdUsuario('
+            + TextJSON + ');\' style="color:rgb(0, 0, 0);" > Editar</a></p></td>';
         var clase = '<div class="lista-usuarios">';
-        var nombreUsuario = '<h1 style="color:rgb(0, 0, 0);">' + value.nombres + ' ' + value.Apellidos + '</h1>';
-        var tipoUsuario = '<p style="color:rgb(120, 120, 120);">' + obtenerTipoPersona(value.tipoPersona) + '</p>';
-        var cerrarDiv = editar + clase + nombreUsuario + tipoUsuario + '</div> </a>';
-        $('#contenedor').append(cerrarDiv);
+        var tabla = '<tr>'+nombreUsuario+tipoUsuario+editar+'</tr>'
+        cabecera += tabla
     }
+    cabecera += '</table></div>'
+    console.log(cabecera)
+    $('#contenedor').append(cabecera);
 }
 
 function obtenerTipoPersona(tipoPersona) {
