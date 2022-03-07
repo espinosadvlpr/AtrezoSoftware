@@ -39,12 +39,12 @@ function crearBuscador() {
 function cargarProductoYCategorias() {
     let cargarCategoriasServidor = cargarCategorias();
     cargarCategoriasServidor.then((successMessage) => {
-            console.log('Se cargaron las categorias con exito: ' + successMessage);
-            getCodigoProducto();
-        })
-        /*
-        cargarCategorias()
-            .then(getCodigoProducto());*/
+        console.log('Se cargaron las categorias con exito: ' + successMessage);
+        getCodigoProducto();
+    })
+    /*
+    cargarCategorias()
+        .then(getCodigoProducto());*/
 
 }
 
@@ -126,8 +126,8 @@ function eliminarProducto() {
         var retrievedObject = localStorage.getItem('ProductoActual');
         var objetoProducto = JSON.parse(retrievedObject)
         fetch('http://localhost:3050/delete_product/' + objetoProducto.codigoProducto, {
-                method: 'DELETE',
-            })
+            method: 'DELETE',
+        })
             .then(res => res.text()) // or res.json()
             .then(res => window.location = "./productos/productos.html")
     }

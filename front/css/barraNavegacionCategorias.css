@@ -1,17 +1,20 @@
 .wrapper {
-    scrollbar-width: none;
     max-height: 120px;
     display: flex;
-    overflow-x: auto;
+    overflow-x: scroll;
+}
+
+.wrapper::-webkit-scroll {
+    width: 10px;
+    overflow-x: scroll;
 }
 
 .wrapper::-webkit-scrollbar {
-    width: 0;
-    display: none;
+    width: 10%;
 }
 
 .wrapper .item {
-    min-width: 200px;
+    min-width: 170px;
     height: 70px;
     line-height: 70px;
     text-align: center;
