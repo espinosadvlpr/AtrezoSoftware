@@ -49,7 +49,7 @@ function allProducts() {
 function showAllProducts(data) {
     originalList = data;
     for (let value of data) {
-        var editar = '<a class="target" id="linkEditarProducto" href="#" style="color:rgb(0, 0, 0);" >';
+        var editar = '<a class="target" id="linkEditarProducto" style="color:rgb(0, 0, 0);" >';
         var clase = '<div class="containerNV">';
         var image = '<div class="center"> <img src="../producto/productos/images/' + value.imagenProducto
             + '" width="260" height="150" class="imgProduct2"> </img> </div>';
@@ -86,13 +86,16 @@ function cambiarValorVenta(codeIdCurrentProd) {
 }
 
 function abrirVentana() {
-    document.getElementById("ventana").style.display="block";
-    document.getElementById("main").classList.add("desenfoque");
-    llenarTabla();
+    clearList();
+    if (selectedlList.length > 0) {
+        document.getElementById("ventana").style.display = "block";
+        document.getElementById("main").classList.add("desenfoque");
+        llenarTabla();
+    }
 }
 
-function cerrarVentana(){
-    document.getElementById("ventana").style.display="none";
+function cerrarVentana() {
+    document.getElementById("ventana").style.display = "none";
     document.getElementById("main").classList.remove("desenfoque");
 }
 
@@ -113,20 +116,49 @@ function updateTotalValue() {
         total += cProd.precioDeVenta * cProd.cantidadAComprar;
     }
     console.log('Total: ' + total);
-    document.getElementById('botonNuevaVenta').firstChild.data = 'Nueva venta $' + total;
+    document.getElementById('botonNuevaVenta').firstChild.data = 'Nueva venta $ ' + total;
+    document.getElementById('botonConfirmarVenta').firstChild.data = 'Confirmar venta $ ' + total;
 }
 
-function llenarTabla(){
+function llenarTabla() {
     $(".iProd").remove();
     for (const CProd of selectedlList) {
-        if(CProd.cantidadAComprar > 0){
+        if (CProd.cantidadAComprar > 0) {
             var tr = `<tr class="iProd">
-          <td>`+CProd.nombreProducto+`</td>
-          <td>`+CProd.cantidadAComprar+`</td>
-          <td>`+CProd.precioDeVenta+`</td>
-          <td>`+(CProd.cantidadAComprar * CProd.precioDeVenta)+`</td>
+          <td>`+ CProd.nombreProducto + `</td>
+          <td>`+ CProd.cantidadAComprar + `</td>
+          <td>`+ CProd.precioDeVenta + `</td>
+          <td>`+ (CProd.cantidadAComprar * CProd.precioDeVenta) + `</td>
         </tr>`;
-        $("#cuerpo").append(tr);
+            $("#cuerpo").append(tr);
+        }
+    }
+}
+
+function sendSelectProducts() {
+    if (selectedlList.length > 0) {
+        var url = 'http://localhost:3050/add_sale';
+        fetch(url, {
+            method: 'POST', // or 'PUT'
+            body: JSON.stringify(selectedlList), // data can be `string` or {object}!
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => res.json())
+            .catch(error => console.error('Error:', error))
+            .then(response => console.log('Success:', response));
+    }
+
+}
+/**
+ * Limpia de la lista de los elemntos que fueron seleccionados pero
+ * que la cantidad a comprar es 0
+ */
+function clearList() {
+    for (let i = 0; i < selectedlList.length; i++) {
+        const cProd = selectedlList[i];
+        if (cProd.cantidadAComprar <= 0) {
+            selectedlList.splice(i, 1);
         }
     }
 }

@@ -349,10 +349,67 @@ app.get('/bills_details', (req, res) => {
     });
 });
 
+app.post('/add_sale', (req, res) => {
+    var now = new Date();
+    var month = (now.getMonth() + 1);
+    var day = now.getDate();
+    if (month < 10)
+        month = "0" + month;
+    if (day < 10)
+        day = "0" + day;
+    var today = now.getFullYear() + '-' + month + '-' + day;
+
+    const sql1 = `INSERT INTO Facturas(fecha, tipoTransaccion) 
+    VALUES (STR_TO_DATE('${today}', '%Y-%m-%d'), 'V')`;
+    connection.query(sql1, (error, results) => {
+        if (error) throw error;
+    });
+
+    var sql2 = 'INSERT INTO DetalleFactura(idFactura , idProducto, cantidad, precioProducto) VALUES ';
+    listProdu = req.body;
+    for (let i = 0; i < listProdu.length; i++) {
+        const cProd = listProdu[i];
+        sql2 += '((SELECT MAX(idFactura) FROM Facturas)';
+        sql2 += ',' + cProd.codigoProducto;
+        sql2 += ',' + cProd.cantidadAComprar;
+        sql2 += ',' + cProd.precioDeVenta + ')';
+        if ((i + 1) == listProdu.length) {
+            sql2 += ';';
+        } else {
+            sql2 += ',';
+        }
+    }
+    console.log(sql2);
+    connection.query(sql2, (error, results) => {
+        if (error) throw error;
+    });
+
+    const sql3 = `call sincInventario('V');`;
+    connection.query(sql3, (error, results) => {
+        if (error) throw error;
+        res.send("Venta agregada e inevtario sincronizado!!");
+    });
+});
+
+/*
+--Crear una factura
+INSERT INTO Facturas(fecha, tipoTransaccion)
+VALUES (STR_TO_DATE('2022-02-27', '%Y-%m-%d'), 'C');
+
+--Asociar porductos de la factura (en este caso CADENOL)
+
+INSERT INTO DetalleFactura(idFactura , idProducto, cantidad, precioProducto)
+VALUES((SELECT MAX(idFactura) FROM Facturas) , 778585 , 2 , (SELECT precioDeVenta FROM Producto WHERE codigoProducto = 778585));
+
+*/
+
+
+
 
 connection.connect(error => {
     if (error) throw error;
     console.log('Database server running!');
 });
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
