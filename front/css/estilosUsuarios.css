@@ -68,8 +68,18 @@ table {
   border-spacing: 10px;
   table-layout: auto;
   text-indent: inherit;
+  width:100%;
+}
+
+thead, tbody {
+  display: block;
+}
+
+a {
+  width:100%;
 }
 
 td {
+  width: 50%;
   text-align: center;
 }
