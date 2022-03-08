@@ -68,7 +68,6 @@ function peticionTodasLasVentas(fecha) {
         fetch('http://localhost:3050/ventas/' + fecha)
             .then(response => response.json())
             .then(data => {
-                console.log('Ventas traidas del servidor' + data);
                 agruparVentas(data);
                 return resolve(data);
             })
@@ -82,17 +81,22 @@ function agruparVentas(data) {
     var currentValue = data[0].idFactura;
     let listaProductos = '';
     let currentTransaction = data[0].tipoTransaccion;
+    let subTotalVenta = 0;
     let i = 0;
     for (let value of data) {
         i++;
         if (value.idFactura == currentValue) {
             listaProductos += value.nombreProducto + ', ';
+            subTotalVenta += value.SubTotal;
         } else if (value.idFactura != currentValue) {
-            crearEtiqueta(value.total , currentTransaction, listaProductos);
+            console.log(subTotalVenta + ' -- ** --');
+            crearEtiqueta(subTotalVenta , currentTransaction, listaProductos);
             listaProductos = value.nombreProducto + ', ';
+            subTotalVenta = 0;
+            subTotalVenta += value.SubTotal;
         }
         if (i == data.length) {
-            crearEtiqueta(value.total , value.tipoTransaccion, listaProductos);
+            crearEtiqueta(subTotalVenta , value.tipoTransaccion, listaProductos);
         }
         currentValue = value.idFactura;
         currentTransaction = value.tipoTransaccion;

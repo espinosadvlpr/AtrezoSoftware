@@ -124,6 +124,7 @@ app.post('/update_user', (req, res) => {
 });
 
 app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => {
+    console.log("Cantidad a setear: " + req.body.cantidadDisponible);
     if (req.file == null) {
         const sql = `UPDATE Producto 
         SET codigoProducto = ${req.body.codigoProducto}, cantidadDisponible = ${req.body.cantidadDisponible},
@@ -226,13 +227,9 @@ app.get('/product/:idCategoria', (req, res) => {
 app.get('/ventas/:fecha', (req, res) => {
     const { fecha } = req.params;
     console.log('Fecha ventas: ' + fecha);
-    var sql = `SELECT D.idFactura, P.nombreProducto, T.total, F.tipoTransaccion
-    FROM Facturas F, Producto P, DetalleFactura D,
-    (SELECT idFactura as idFac , sum(precioProducto * cantidad) as total
-    FROM DetalleFactura
-    group by idFactura) T
-    WHERE F.idFactura = T.idFac
-    AND F.idFactura = D.idFactura
+    var sql = `SELECT D.idFactura, P.nombreProducto, (D.cantidad * D.precioProducto) AS SubTotal, F.tipoTransaccion
+    FROM Facturas F, Producto P, DetalleFactura D
+    WHERE F.idFactura = D.idFactura
     AND D.idProducto = P.codigoProducto
     AND F.fecha = STR_TO_DATE('${fecha}', '%Y-%m-%d');`;
     connection.query(sql, (error, result) => {
@@ -250,23 +247,20 @@ app.get('/utilidades/:fecha/:tipoTransaccion', (req, res) => {
     let fecha = req.params.fecha;
     let tipoTransaccion = req.params.tipoTransaccion;
     console.log('UTILIDADES: ' + fecha, " Tipo T" + tipoTransaccion);
-    var sql = `SELECT D.idFactura, SUM(D.cantidad * D.precioProducto) AS Total
+    var sql = `SELECT SUM(D.cantidad * D.precioProducto) AS Total
     FROM DetalleFactura D, Facturas F
     WHERE D.idFactura = F.idFactura
     AND F.tipoTransaccion = '${tipoTransaccion}'
-    AND F.fecha = STR_TO_DATE('${fecha}', '%Y-%m-%d')
-    GROUP BY D.idFactura;`;
+    AND F.fecha = STR_TO_DATE('${fecha}', '%Y-%m-%d')`;
     connection.query(sql, (error, result) => {
         if (error) throw error;
         if (result.length > 0) {
             var toClient = res.json(result);
             console.log("utilidades enviadas!! " + toClient);
         } else {
-            let noData = `{
-                "idFactura":"0",
-                "Total":"0"
-            }`;
-            let array = ['noData'];
+            let array = `[{
+                "Total": 0
+            }]`;
             console.log("utilidades NO enviadas!! " + toClient);
             res.send(array);
         }
@@ -387,7 +381,9 @@ app.post('/add_sale', (req, res) => {
     const sql3 = `call sincInventario('V');`;
     connection.query(sql3, (error, results) => {
         if (error) throw error;
-        res.send("Venta agregada e inevtario sincronizado!!");
+        res.send(`[{
+            "respuesta": "Venta agregada e inevtario sincronizado!!"
+        }]`);
     });
 });
 

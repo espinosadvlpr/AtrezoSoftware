@@ -64,9 +64,16 @@ SELECT D.idFactura, SUM(D.cantidad * D.precioProducto) AS Total
 FROM DetalleFactura D, Facturas F
 WHERE D.idFactura = F.idFactura
 AND F.tipoTransaccion = 'V'
-AND F.fecha = STR_TO_DATE('2022-02-27', '%Y-%m-%d')
+AND F.fecha = STR_TO_DATE('2022-03-07', '%Y-%m-%d')
 GROUP BY D.idFactura;
 */
+
+SELECT D.idFactura, P.nombreProducto, (D.cantidad * D.precioProducto) AS SubTotal, F.tipoTransaccion
+FROM Facturas F, Producto P, DetalleFactura D
+WHERE F.idFactura = D.idFactura
+AND D.idProducto = P.codigoProducto
+AND F.fecha = STR_TO_DATE('2022-03-07', '%Y-%m-%d');
+
 --Crear una factura
 INSERT INTO Facturas(idCliente, fecha, tipoTransaccion)
 VALUES (5 , STR_TO_DATE('2022-02-27', '%Y-%m-%d'), 'C');

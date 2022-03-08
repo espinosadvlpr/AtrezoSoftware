@@ -139,16 +139,22 @@ function sendSelectProducts() {
     if (selectedlList.length > 0) {
         var url = 'http://localhost:3050/add_sale';
         fetch(url, {
-            method: 'POST', // or 'PUT'
-            body: JSON.stringify(selectedlList), // data can be `string` or {object}!
+            method: 'POST', 
+            body: JSON.stringify(selectedlList),
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json())
-            .catch(error => console.error('Error:', error))
-            .then(response => console.log('Success:', response));
-    }
-
+        .then(data => {
+                alert("Venta realizada correctamente.");
+                window.location = "./listaVentas.html";
+            })
+            .then(error => {
+                alert("No se pudo generar la venta!!!");
+                console.log(error);
+                return reject(error);
+            });
+        }
 }
 /**
  * Limpia de la lista de los elemntos que fueron seleccionados pero
