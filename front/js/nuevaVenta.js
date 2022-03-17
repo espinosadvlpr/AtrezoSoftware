@@ -1,11 +1,17 @@
 var originalList = []
 var selectedlList = []
+/**
+ * Lista que nos dice si un porducto es visible o no
+ * True si esta visile
+ */
+var visibleProducts = []
 
 function cargarTodo() {
     let promise = allProducts();
     promise.then((val) => {
         console.log('asynchronously executed: ' + val);
         crearBuscador();
+        cargarCategorias();
     }).catch((err) => {
         console.log('asynchronously executed: ' + err);
     }).finally(() => {
@@ -27,6 +33,21 @@ function crearBuscador() {
     })
 }
 
+function cargarCategorias() {
+    console.log('Cargar categorias dossss');
+    fetch('http://localhost:3050/categorias')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            for (let value of data) {
+                console.log(value.codigoCategoria + ' ' + value.nombreCategoria);
+                var categoria = '<a class="item" style="color:#000000;" ' +
+                    'onclick="cargarProductosPorCategoria(' + value.codigoCategoria + ')">' + value.nombreCategoria + ' </a>';
+                $('#listaCategorias').append(categoria);
+            }
+        })
+}
+
 function cambiarANuevaVenta() {
     window.location = "./nuevaVenta.html";
 }
@@ -37,7 +58,8 @@ function allProducts() {
             .then(response => response.json())
             .then(data => {
                 console.log('Productos traidos del servidor');
-                showAllProducts(data);
+
+                showFirstCategoryProducts(data);
                 return resolve(data);
             })
             .then(error => {
@@ -46,25 +68,43 @@ function allProducts() {
     });
 }
 
-function showAllProducts(data) {
+function showFirstCategoryProducts(data) {
     originalList = data;
-    for (let value of data) {
-        var editar = '<a class="target" id="linkEditarProducto" style="color:rgb(0, 0, 0);" >';
-        var clase = '<div class="containerNV">';
-        var image = '<div class="center"> <img src="../producto/productos/images/' + value.imagenProducto
-            + '" width="260" height="150" class="imgProduct2"> </img> </div>';
-        var nombreProducto = ' <div class="lefth"> <h2 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '</h2>';
-        var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
-        var precio = '<h4 style="color:rgb(60, 60, 60);">  $ '
-            + value.precioDeVenta + ' COP</h4> </div>';
-        var cantidadAgregar = '<div class="rigthInput">' +
-            '<input type="number" onchange="cambiarValorVenta(' + value.codigoProducto + ')"'
-            + 'class="quantityProduct" id="' + value.codigoProducto + '"'
-            + 'name="quantity" min="0" max="'
-            + value.cantidadDisponible + '"></input> </div>';
-        var cerrarDiv = editar + clase + image + nombreProducto + cantidadDisponible + precio + cantidadAgregar + '</div> </a>';
-        $('#contenedor').append(cerrarDiv);
+    visibleProducts = Array(data.length);
+    cargarProductosPorCategoria(originalList[0].idCategoria);
+}
+
+function mostrarTodosLosProductos() {
+    let i = 0;
+    mostradosActualmente = document.querySelectorAll(".target").forEach(producto => {
+        producto.classList.remove("filtro")
+    });
+    for (let product of originalList) {
+        console.log('safdsa');
+        if (visibleProducts[i] == null) {
+            crearEtiqueta(product);
+        } 
+        visibleProducts[i] = true;
+        i++;
     }
+}
+
+function crearEtiqueta(value) {
+    var editar = '<a class="target" id="linkEditarProducto" style="color:rgb(0, 0, 0);" >';
+    var clase = '<div class="containerNV">';
+    var image = '<div class="center"> <img src="../producto/productos/images/' + value.imagenProducto
+        + '" width="260" height="150" class="imgProduct2"> </img> </div>';
+    var nombreProducto = ' <div class="lefth"> <h2 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '</h2>';
+    var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
+    var precio = '<h4 style="color:rgb(60, 60, 60);">  $ '
+        + value.precioDeVenta + ' COP</h4> </div>';
+    var cantidadAgregar = '<div class="rigthInput">' +
+        '<input type="number" onchange="cambiarValorVenta(' + value.codigoProducto + ')"'
+        + 'class="quantityProduct" id="' + value.codigoProducto + '"'
+        + 'name="quantity" min="0" max="'
+        + value.cantidadDisponible + '"></input> </div>';
+    var cerrarDiv = editar + clase + image + nombreProducto + cantidadDisponible + precio + cantidadAgregar + '</div> </a>';
+    $('#contenedor').append(cerrarDiv);
 }
 
 function cambiarValorVenta(codeIdCurrentProd) {
@@ -139,13 +179,13 @@ function sendSelectProducts() {
     if (selectedlList.length > 0) {
         var url = 'http://localhost:3050/add_sale';
         fetch(url, {
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify(selectedlList),
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json())
-        .then(data => {
+            .then(data => {
                 alert("Venta realizada correctamente.");
                 window.location = "./listaVentas.html";
             })
@@ -154,7 +194,7 @@ function sendSelectProducts() {
                 console.log(error);
                 return reject(error);
             });
-        }
+    }
 }
 /**
  * Limpia de la lista de los elemntos que fueron seleccionados pero
@@ -166,5 +206,24 @@ function clearList() {
         if (cProd.cantidadAComprar <= 0) {
             selectedlList.splice(i, 1);
         }
+    }
+}
+
+function cargarProductosPorCategoria(idCategoria) {
+    mostradosActualmente = document.querySelectorAll(".target");
+    for (let i = 0; i < originalList.length; i++) {
+        const product = originalList[i];
+        if (product.idCategoria == idCategoria) {
+            if (visibleProducts[i] == null) {
+                crearEtiqueta(product);
+            } else if (visibleProducts[i] == false) {//Poner visible
+                mostradosActualmente[i].classList.remove("filtro");
+            }
+            visibleProducts[i] = true;
+        } else if (visibleProducts[i] != null) {
+            console.log("Se debe poner invisible: " + product.nombreProducto + ' -- ' + mostradosActualmente[i].classList);
+            mostradosActualmente[i].classList.add("filtro");
+            visibleProducts[i] = false;
+        }//Poner invisible si no pertenece a la categoria
     }
 }

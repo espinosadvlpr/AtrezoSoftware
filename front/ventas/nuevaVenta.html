@@ -70,10 +70,13 @@
         <div class="main-content w-100 p-5">
             <div class="create" data-view-active="true">
                 <input type="search" id="gsearch" name="gsearch" placeholder="Buscar producto">
+                <div id="listaCategorias" class="wrapper">
+                    <a class="item" style="color:#000000;" onclick="mostrarTodosLosProductos()">Todos los
+                        productos</a>
+                </div>
                 <div id="contenedor"></div>
                 <button id="botonNuevaVenta" type="button" class="agregarProducto" onclick="abrirVentana()">Nueva venta
                     $</button>
-                <!-- Ventana emergente!!! -->
             </div>
         </div>
     </main>
@@ -93,7 +96,8 @@
             </tbody>
         </table>
         </br>
-        <button id="botonConfirmarVenta" type="button" class="confirmar" onclick="sendSelectProducts()">Confirmar venta $</button>
+        <button id="botonConfirmarVenta" type="button" class="confirmar" onclick="sendSelectProducts()">Confirmar venta
+            $</button>
     </div>
 </body>
 

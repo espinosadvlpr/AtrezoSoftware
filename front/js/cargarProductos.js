@@ -71,9 +71,8 @@ function cargarCategorias() {
 }
 
 /**
- * Funciones que se cargan en la lista de productos
+ * Carga las categorias pero para ser mostradas como botones
  */
-
 function cargarCategorias2() {
     console.log('Cargar categorias dossss');
     fetch('http://localhost:3050/categorias')

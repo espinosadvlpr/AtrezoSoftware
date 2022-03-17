@@ -186,7 +186,9 @@ app.delete('/delete_user/:id', (req, res) => {
 });
 
 
-// Productos
+/**
+ * Lista de todos los productos
+ */
 app.get('/product', (req, res) => {
     const sql = 'SELECT * from Producto;';
     connection.query(sql, (error, results) => {

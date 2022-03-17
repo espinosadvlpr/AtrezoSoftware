@@ -330,6 +330,10 @@ div[data-view-active="false"] {
     display: none;
 }
 
+.blue {
+    background-color: blue;
+}
+
 @media (max-width: 768px) {
     .main-content {
         margin-left: 7.5rem;
