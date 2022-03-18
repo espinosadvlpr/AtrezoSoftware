@@ -1,10 +1,7 @@
 var originalList = []
 var selectedlList = []
-/**
- * Lista que nos dice si un porducto es visible o no
- * True si esta visile
- */
-var visibleProducts = []
+
+ 
 
 function cargarTodo() {
     let promise = allProducts();
@@ -75,18 +72,15 @@ function showFirstCategoryProducts(data) {
 }
 
 function mostrarTodosLosProductos() {
-    let i = 0;
-    mostradosActualmente = document.querySelectorAll(".target").forEach(producto => {
-        producto.classList.remove("filtro")
+    mostradosActualmente = document.querySelectorAll(".target");
+    originalList.forEach(cProd => {
+        let isShowed = getTarget(cProd.nombreProducto , mostradosActualmente);
+        if (isShowed == null) {
+            crearEtiqueta(cProd);
+        } else {
+            isShowed.classList.remove("filtro");
+        }
     });
-    for (let product of originalList) {
-        console.log('safdsa');
-        if (visibleProducts[i] == null) {
-            crearEtiqueta(product);
-        } 
-        visibleProducts[i] = true;
-        i++;
-    }
 }
 
 function crearEtiqueta(value) {
@@ -94,7 +88,7 @@ function crearEtiqueta(value) {
     var clase = '<div class="containerNV">';
     var image = '<div class="center"> <img src="../producto/productos/images/' + value.imagenProducto
         + '" width="260" height="150" class="imgProduct2"> </img> </div>';
-    var nombreProducto = ' <div class="lefth"> <h2 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '</h2>';
+    var nombreProducto = ' <div class="lefth"> <h2 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '.</h2>';
     var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
     var precio = '<h4 style="color:rgb(60, 60, 60);">  $ '
         + value.precioDeVenta + ' COP</h4> </div>';
@@ -213,17 +207,31 @@ function cargarProductosPorCategoria(idCategoria) {
     mostradosActualmente = document.querySelectorAll(".target");
     for (let i = 0; i < originalList.length; i++) {
         const product = originalList[i];
-        if (product.idCategoria == idCategoria) {
-            if (visibleProducts[i] == null) {
+        let nameProduct = product.nombreProducto;
+        let target = getTarget(nameProduct , mostradosActualmente);
+        //Devuelvo un target si ese producto ya se esta mostrando
+        if(idCategoria == product.idCategoria){
+            //Si pertenece a la categoria que se quiere mostrar
+            if(target == null){
                 crearEtiqueta(product);
-            } else if (visibleProducts[i] == false) {//Poner visible
-                mostradosActualmente[i].classList.remove("filtro");
+            }else {
+                target.classList.remove("filtro");
             }
-            visibleProducts[i] = true;
-        } else if (visibleProducts[i] != null) {
-            console.log("Se debe poner invisible: " + product.nombreProducto + ' -- ' + mostradosActualmente[i].classList);
-            mostradosActualmente[i].classList.add("filtro");
-            visibleProducts[i] = false;
-        }//Poner invisible si no pertenece a la categoria
+        }else if(target != null){
+            target.classList.add("filtro");
+        }
     }
+    console.log("----------");
+}
+
+
+function getTarget(nameProd , listTarget){
+    for (let i = 0; i < listTarget.length; i++) {
+        let nameCurrPord = listTarget[i].textContent.split(".")[0];
+        let recortado = nameCurrPord.slice(5);
+        if(nameProd == recortado){
+            return listTarget[i];
+        }
+    }
+    return null;
 }
