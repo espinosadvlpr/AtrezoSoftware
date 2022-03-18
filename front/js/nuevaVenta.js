@@ -19,7 +19,7 @@ function cargarTodo() {
 function crearBuscador() {
     console.log("Cargadando Buscador..")
     document.addEventListener("keyup", e => {
-        if (e.target.matches("#gsearch")) {
+        if (e.target.matches("#gsearch2")) {
             if (e.key === "Escape") e.target.value = ""
             document.querySelectorAll(".target").forEach(producto => {
                 producto.textContent.toLowerCase().includes(e.target.value.toLowerCase()) ?
@@ -145,10 +145,7 @@ function yaExiste(idProd) {
 }
 
 function updateTotalValue() {
-    let total = 0;
-    for (let cProd of selectedlList) {
-        total += cProd.precioDeVenta * cProd.cantidadAComprar;
-    }
+    let total = getTotalProductsSelect();
     console.log('Total: ' + total);
     document.getElementById('botonNuevaVenta').firstChild.data = 'Nueva venta $ ' + total;
     document.getElementById('botonConfirmarVenta').firstChild.data = 'Confirmar venta $ ' + total;
@@ -170,7 +167,7 @@ function llenarTabla() {
 }
 
 function sendSelectProducts() {
-    if (selectedlList.length > 0) {
+    if (selectedlList.length > 0 && getTotalProductsSelect > 0) {
         var url = 'http://localhost:3050/add_sale';
         fetch(url, {
             method: 'POST',
@@ -190,6 +187,20 @@ function sendSelectProducts() {
             });
     }
 }
+
+/**
+ * 
+ * @returns Obtiene el total de todos los productos seleccionados
+ */
+function getTotalProductsSelect(){
+    let total = 0;
+    for (let cProd of selectedlList) {
+        total += cProd.precioDeVenta * cProd.cantidadAComprar;
+    }
+    return total;
+}
+
+
 /**
  * Limpia de la lista de los elemntos que fueron seleccionados pero
  * que la cantidad a comprar es 0

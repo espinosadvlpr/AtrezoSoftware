@@ -314,6 +314,17 @@ div[data-view-active="false"] {
     margin-bottom: 50px;
 }
 
+#gsearch2 {
+    background: #fff;
+    border-radius: 9px;
+    padding: 8px;
+    font-size: 25px;
+    transition: all 0.2s;
+    margin: 2px 3% 0 auto;
+    width: 75%;
+    margin-bottom: 50px;
+}
+
 .lista-productos {
     background: #fff;
     border-radius: 19px;
