@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../css/nuevaVentaEstilos.css" />
 </head>
 
-<body onload="cargarTodo();">
+<body onload="cargarTodo(); cargarPersona('C' , 'ClienteSeleccionado');">
     <main id="main">
         <div class="side-bar">
             <ul class="nav-links">
@@ -71,20 +71,8 @@
             <div class="create" data-view-active="true">
                 <input type="search" id="gsearch2" name="gsearch2" placeholder="Buscar producto">
                 <div class="custom-select222" style="width:200px;">
-                    <select>
-                        <option value="0">Select car:</option>
-                        <option value="1">Audi</option>
-                        <option value="2">BMW</option>
-                        <option value="3">Citroen</option>
-                        <option value="4">Ford</option>
-                        <option value="5">Honda</option>
-                        <option value="6">Jaguar</option>
-                        <option value="7">Land Rover</option>
-                        <option value="8">Mercedes</option>
-                        <option value="9">Mini</option>
-                        <option value="10">Nissan</option>
-                        <option value="11">Toyota</option>
-                        <option value="12">Volvo</option>
+                    <select id="ClienteSeleccionado" onChange="showPersonSelected('ClienteFactura' , 'ClienteSeleccionado')">
+                        <option value="-1">Seleccione un cliente:</option>
                     </select>
                 </div>
                 <div id="listaCategorias" class="wrapper">
@@ -101,6 +89,7 @@
         <img class="close" onclick="cerrarVentana()" width="30px" height="30px"
             src="../images/High-contrast-dialog-close.svg.png">
         <h4> Confirmar venta </h4>
+        <h5 id="ClienteFactura">No se selecciono cliente.</h5>
         </br>
         <table style="width:100%" id="tableProducts">
             <thead>
@@ -113,7 +102,7 @@
             </tbody>
         </table>
         </br>
-        <button id="botonConfirmarVenta" type="button" class="confirmar" onclick="sendSelectProducts()">Confirmar venta
+        <button id="botonConfirmarVenta" type="button" class="confirmar" onclick="sendSelectProducts('V')">Confirmar venta
             $</button>
     </div>
 </body>

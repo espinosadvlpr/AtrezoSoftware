@@ -69,7 +69,6 @@ app.get('/categorias', (req, res) => {
 
 app.get('/admin', (req, res) => {
     const sql = 'SELECT * FROM Persona WHERE tipoPersona = "A"';
-
     connection.query(sql, (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
@@ -80,12 +79,29 @@ app.get('/admin', (req, res) => {
     });
 });
 
+
 app.get('/user/:id', (req, res) => {
     const { id } = req.params;
     const sql = `SELECT * FROM Persona WHERE idPersona = ${id}`;
     connection.query(sql, (error, result) => {
         if (error) throw error;
+        if (result.length > 0) {
+            res.json(result);
+        } else {
+            res.send('Not result');
+        }
+    });
+});
 
+/**
+ * Deveulve un lista de usuarios
+ * descriminado por categoria
+ */
+app.get('/users/:tipoPersona', (req, res) => {
+    const { tipoPersona } = req.params;
+    const sql = `select idPersona, nombres, Apellidos from Persona where tipoPersona = '${tipoPersona}';`;
+    connection.query(sql, (error, result) => {
+        if (error) throw error;
         if (result.length > 0) {
             res.json(result);
         } else {
@@ -245,6 +261,9 @@ app.get('/ventas/:fecha', (req, res) => {
     });
 });
 
+/**
+ * 
+ */
 app.get('/utilidades/:fecha/:tipoTransaccion', (req, res) => {
     let fecha = req.params.fecha;
     let tipoTransaccion = req.params.tipoTransaccion;
@@ -308,7 +327,7 @@ app.post('/add_category', (req, res) => {
 });
 
 app.delete('/delete_category/:category', (req, res) => {
-    const { id } = req.params;
+    const { category } = req.params;
     const sql = `DELETE FROM Categoria WHERE nombreCategoria= ${category}`;
 
     connection.query(sql, error => {
@@ -345,7 +364,16 @@ app.get('/bills_details', (req, res) => {
     });
 });
 
-app.post('/add_sale', (req, res) => {
+/**
+ * Agregar una venta o compra requiere de:
+ * Crear una factura
+ * Insertar en DetalleFactura tantas veces como los porductos vendidos
+ * Sincronizar el iventario
+ */
+app.post('/add_transaction/:idCliente/:tipoTransaccion', (req, res) => {
+    let idCliente  = req.params.idCliente;
+    let tipoTransaccion = req.params.tipoTransaccion;
+    console.log("ADD TRANSACTION: " + idCliente + " -- " + tipoTransaccion);
     var now = new Date();
     var month = (now.getMonth() + 1);
     var day = now.getDate();
@@ -355,8 +383,16 @@ app.post('/add_sale', (req, res) => {
         day = "0" + day;
     var today = now.getFullYear() + '-' + month + '-' + day;
 
-    const sql1 = `INSERT INTO Facturas(fecha, tipoTransaccion) 
-    VALUES (STR_TO_DATE('${today}', '%Y-%m-%d'), 'V')`;
+    var sql1 = '';
+
+    if(idCliente != -1){
+        sql1 = `INSERT INTO Facturas(idCliente, fecha, tipoTransaccion) 
+        VALUES (${idCliente}  , STR_TO_DATE('${today}', '%Y-%m-%d'), '${tipoTransaccion}')`;
+    }else {
+        sql1 = `INSERT INTO Facturas(fecha, tipoTransaccion) 
+        VALUES (STR_TO_DATE('${today}', '%Y-%m-%d'), '${tipoTransaccion}')`;
+    }
+
     connection.query(sql1, (error, results) => {
         if (error) throw error;
     });
@@ -380,29 +416,14 @@ app.post('/add_sale', (req, res) => {
         if (error) throw error;
     });
 
-    const sql3 = `call sincInventario('V');`;
+    const sql3 = `call sincInventario('${tipoTransaccion}');`;
     connection.query(sql3, (error, results) => {
         if (error) throw error;
         res.send(`[{
-            "respuesta": "Venta agregada e inevtario sincronizado!!"
+            "respuesta": "Venta o compra agregada e inevtario sincronizado!!"
         }]`);
     });
 });
-
-/*
---Crear una factura
-INSERT INTO Facturas(fecha, tipoTransaccion)
-VALUES (STR_TO_DATE('2022-02-27', '%Y-%m-%d'), 'C');
-
---Asociar porductos de la factura (en este caso CADENOL)
-
-INSERT INTO DetalleFactura(idFactura , idProducto, cantidad, precioProducto)
-VALUES((SELECT MAX(idFactura) FROM Facturas) , 778585 , 2 , (SELECT precioDeVenta FROM Producto WHERE codigoProducto = 778585));
-
-*/
-
-
-
 
 connection.connect(error => {
     if (error) throw error;

@@ -1,7 +1,6 @@
 var originalList = []
 var selectedlList = []
-
- 
+var idPersona = -1;
 
 function cargarTodo() {
     let promise = allProducts();
@@ -74,7 +73,7 @@ function showFirstCategoryProducts(data) {
 function mostrarTodosLosProductos() {
     mostradosActualmente = document.querySelectorAll(".target");
     originalList.forEach(cProd => {
-        let isShowed = getTarget(cProd.nombreProducto , mostradosActualmente);
+        let isShowed = getTarget(cProd.nombreProducto, mostradosActualmente);
         if (isShowed == null) {
             crearEtiqueta(cProd);
         } else {
@@ -166,9 +165,9 @@ function llenarTabla() {
     }
 }
 
-function sendSelectProducts() {
-    if (selectedlList.length > 0 && getTotalProductsSelect > 0) {
-        var url = 'http://localhost:3050/add_sale';
+function sendSelectProducts(tipoTransaccion) {
+    if (selectedlList.length > 0 && getTotalProductsSelect() > 0) {
+        var url = `http://localhost:3050/add_transaction/${idPersona}/${tipoTransaccion}`;
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(selectedlList),
@@ -192,7 +191,7 @@ function sendSelectProducts() {
  * 
  * @returns Obtiene el total de todos los productos seleccionados
  */
-function getTotalProductsSelect(){
+function getTotalProductsSelect() {
     let total = 0;
     for (let cProd of selectedlList) {
         total += cProd.precioDeVenta * cProd.cantidadAComprar;
@@ -219,16 +218,16 @@ function cargarProductosPorCategoria(idCategoria) {
     for (let i = 0; i < originalList.length; i++) {
         const product = originalList[i];
         let nameProduct = product.nombreProducto;
-        let target = getTarget(nameProduct , mostradosActualmente);
+        let target = getTarget(nameProduct, mostradosActualmente);
         //Devuelvo un target si ese producto ya se esta mostrando
-        if(idCategoria == product.idCategoria){
+        if (idCategoria == product.idCategoria) {
             //Si pertenece a la categoria que se quiere mostrar
-            if(target == null){
+            if (target == null) {
                 crearEtiqueta(product);
-            }else {
+            } else {
                 target.classList.remove("filtro");
             }
-        }else if(target != null){
+        } else if (target != null) {
             target.classList.add("filtro");
         }
     }
@@ -236,13 +235,49 @@ function cargarProductosPorCategoria(idCategoria) {
 }
 
 
-function getTarget(nameProd , listTarget){
+function getTarget(nameProd, listTarget) {
     for (let i = 0; i < listTarget.length; i++) {
         let nameCurrPord = listTarget[i].textContent.split(".")[0];
         let recortado = nameCurrPord.slice(5);
-        if(nameProd == recortado){
+        if (nameProd == recortado) {
             return listTarget[i];
         }
     }
     return null;
+}
+
+/**
+ * Funciones que se muestran al crear o editar un producto
+ */
+function cargarPersona(tipoPersona , elementToChange) {
+    console.log('Cargando personas!!');
+    return new Promise((resolve, reject) => {
+        fetch('http://localhost:3050/users/' + tipoPersona)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                for (let value of data) {
+                    console.log(value.nombres + ' ' + value.Apellidos);
+                    var persona = '<option value="' + value.idPersona + '"> ' + value.nombres + ' ' + value.Apellidos + ' </option>';
+                    $(`#${elementToChange}`).append(persona);
+                }
+                return resolve(data);
+            })
+            .then(error => {
+                return reject(error);
+            })
+    });
+}
+
+function showPersonSelected(idElement , idSelect) {
+    console.log("ON change!!" + idElement + "  " + idSelect);
+    let toChange = document.getElementById(idElement);
+    var select = document.getElementById(idSelect);
+	var option = select.options[select.selectedIndex];
+    if(option.value != -1){
+        toChange.textContent = 'Cliente: ' + option.text;
+        idPersona = option.value;
+    }else {
+        toChange.textContent = 'No se selecciono cliente.';
+    }
 }

@@ -68,6 +68,18 @@ AND F.fecha = STR_TO_DATE('2022-03-07', '%Y-%m-%d')
 GROUP BY D.idFactura;
 */
 
+/*
+--Crear una factura
+INSERT INTO Facturas(fecha, tipoTransaccion)
+VALUES (STR_TO_DATE('2022-02-27', '%Y-%m-%d'), 'C');
+
+--Asociar porductos de la factura (en este caso CADENOL)
+
+INSERT INTO DetalleFactura(idFactura , idProducto, cantidad, precioProducto)
+VALUES((SELECT MAX(idFactura) FROM Facturas) , 778585 , 2 , (SELECT precioDeVenta FROM Producto WHERE codigoProducto = 778585));
+
+*/
+
 SELECT D.idFactura, P.nombreProducto, (D.cantidad * D.precioProducto) AS SubTotal, F.tipoTransaccion
 FROM Facturas F, Producto P, DetalleFactura D
 WHERE F.idFactura = D.idFactura
