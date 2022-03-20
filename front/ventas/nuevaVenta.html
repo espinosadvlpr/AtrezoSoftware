@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../css/nuevaVentaEstilos.css" />
 </head>
 
-<body onload="cargarTodo(); cargarPersona('C' , 'ClienteSeleccionado');">
+<body onload="cargarTodo('V'); cargarPersona('C' , 'ClienteSeleccionado');">
     <main id="main">
         <div class="side-bar">
             <ul class="nav-links">
@@ -70,7 +70,7 @@
         <div class="main-content w-100 p-5">
             <div class="create" data-view-active="true">
                 <input type="search" id="gsearch2" name="gsearch2" placeholder="Buscar producto">
-                <div class="custom-select222" style="width:200px;">
+                <div class="custom-select222" style="width:230px;">
                     <select id="ClienteSeleccionado" onChange="showPersonSelected('ClienteFactura' , 'ClienteSeleccionado')">
                         <option value="-1">Seleccione un cliente:</option>
                     </select>

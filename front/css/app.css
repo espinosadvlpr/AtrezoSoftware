@@ -299,6 +299,14 @@ button {
     bottom: 0px;
 }
 
+#botonNuevaCompra{
+    background-color: #af4c4c;
+}
+
+#botonNuevaCompra:hover{
+    background-color: #be3232;
+}
+
 div[data-view-active="false"] {
     display: none !important;
 }
@@ -321,7 +329,7 @@ div[data-view-active="false"] {
     font-size: 25px;
     transition: all 0.2s;
     margin: 2px 3% 0 auto;
-    width: 75%;
+    width: 73%;
     margin-bottom: 50px;
 }
 

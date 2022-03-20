@@ -404,7 +404,7 @@ app.post('/add_transaction/:idCliente/:tipoTransaccion', (req, res) => {
         sql2 += '((SELECT MAX(idFactura) FROM Facturas)';
         sql2 += ',' + cProd.codigoProducto;
         sql2 += ',' + cProd.cantidadAComprar;
-        sql2 += ',' + cProd.precioDeVenta + ')';
+        sql2 += ',' + cProd.precioProd + ')';
         if ((i + 1) == listProdu.length) {
             sql2 += ';';
         } else {

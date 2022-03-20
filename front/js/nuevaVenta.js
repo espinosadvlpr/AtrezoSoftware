@@ -1,8 +1,10 @@
 var originalList = []
 var selectedlList = []
 var idPersona = -1;
+var tipoTransaccionActual = '';
 
-function cargarTodo() {
+function cargarTodo(tipoTransaccion) {
+    this.tipoTransaccionActual = tipoTransaccion;
     let promise = allProducts();
     promise.then((val) => {
         console.log('asynchronously executed: ' + val);
@@ -48,13 +50,16 @@ function cambiarANuevaVenta() {
     window.location = "./nuevaVenta.html";
 }
 
+function cambiarANuevaCompra() {
+    window.location = "./nuevaCompra.html";
+}
+
 function allProducts() {
     return new Promise((resolve, reject) => {
         fetch('http://localhost:3050/product')
             .then(response => response.json())
             .then(data => {
                 console.log('Productos traidos del servidor');
-
                 showFirstCategoryProducts(data);
                 return resolve(data);
             })
@@ -89,13 +94,22 @@ function crearEtiqueta(value) {
         + '" width="260" height="150" class="imgProduct2"> </img> </div>';
     var nombreProducto = ' <div class="lefth"> <h2 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '.</h2>';
     var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
+    let precioActual = 0;
+    let maxToSelected = 0;
+    if(tipoTransaccionActual == 'V'){
+        precioActual = value.precioDeVenta;
+        maxToSelected = value.cantidadDisponible;
+    }else if(tipoTransaccionActual == 'C'){
+        precioActual = value.precioDeCompra;
+        maxToSelected = 100;
+    }
     var precio = '<h4 style="color:rgb(60, 60, 60);">  $ '
-        + value.precioDeVenta + ' COP</h4> </div>';
+        + precioActual + ' COP</h4> </div>';
     var cantidadAgregar = '<div class="rigthInput">' +
         '<input type="number" onchange="cambiarValorVenta(' + value.codigoProducto + ')"'
         + 'class="quantityProduct" id="' + value.codigoProducto + '"'
         + 'name="quantity" min="0" max="'
-        + value.cantidadDisponible + '"></input> </div>';
+        + maxToSelected + '"></input> </div>';
     var cerrarDiv = editar + clase + image + nombreProducto + cantidadDisponible + precio + cantidadAgregar + '</div> </a>';
     $('#contenedor').append(cerrarDiv);
 }
@@ -108,7 +122,13 @@ function cambiarValorVenta(codeIdCurrentProd) {
                 console.log('Ya existe');
                 var myProd = new Object();
                 myProd.codigoProducto = idCProd;
-                myProd.precioDeVenta = cProduct.precioDeVenta;
+                precioActual = 0;
+                if(tipoTransaccionActual == 'V'){
+                    precioActual = cProduct.precioDeVenta;
+                }else if(tipoTransaccionActual == 'C'){
+                    precioActual = cProduct.precioDeCompra;
+                }
+                myProd.precioProd = cProduct.precioDeVenta;
                 myProd.cantidadAComprar = document.getElementById(idCProd).value;
                 myProd.nombreProducto = cProduct.nombreProducto;
                 selectedlList.push(myProd);
@@ -146,8 +166,13 @@ function yaExiste(idProd) {
 function updateTotalValue() {
     let total = getTotalProductsSelect();
     console.log('Total: ' + total);
-    document.getElementById('botonNuevaVenta').firstChild.data = 'Nueva venta $ ' + total;
-    document.getElementById('botonConfirmarVenta').firstChild.data = 'Confirmar venta $ ' + total;
+    if(tipoTransaccionActual == 'V'){
+        document.getElementById('botonNuevaVenta').firstChild.data = 'Nueva venta $ ' + total;
+        document.getElementById('botonConfirmarVenta').firstChild.data = 'Confirmar venta $ ' + total;
+    }else if(tipoTransaccionActual == 'C'){
+        document.getElementById('botonNuevaCompra').firstChild.data = 'Nueva compra $ ' + total;
+        document.getElementById('botonConfirmarCompra').firstChild.data = 'Confirmar compra $ ' + total;
+    }
 }
 
 function llenarTabla() {
@@ -157,8 +182,8 @@ function llenarTabla() {
             var tr = `<tr class="iProd">
           <td>`+ CProd.nombreProducto + `</td>
           <td>`+ CProd.cantidadAComprar + `</td>
-          <td>`+ CProd.precioDeVenta + `</td>
-          <td>`+ (CProd.cantidadAComprar * CProd.precioDeVenta) + `</td>
+          <td>`+ CProd.precioProd + `</td>
+          <td>`+ (CProd.cantidadAComprar * CProd.precioProd) + `</td>
         </tr>`;
             $("#cuerpo").append(tr);
         }
@@ -176,7 +201,11 @@ function sendSelectProducts(tipoTransaccion) {
             }
         }).then(res => res.json())
             .then(data => {
-                alert("Venta realizada correctamente.");
+                if(tipoTransaccionActual == 'V'){
+                    alert("Venta realizada correctamente.");
+                }else if(tipoTransaccionActual == 'C'){
+                    alert("Compra realizada correctamente.");
+                }
                 window.location = "./listaVentas.html";
             })
             .then(error => {
@@ -194,7 +223,8 @@ function sendSelectProducts(tipoTransaccion) {
 function getTotalProductsSelect() {
     let total = 0;
     for (let cProd of selectedlList) {
-        total += cProd.precioDeVenta * cProd.cantidadAComprar;
+        //TO DO
+        total += cProd.precioProd * cProd.cantidadAComprar;
     }
     return total;
 }
@@ -275,9 +305,17 @@ function showPersonSelected(idElement , idSelect) {
     var select = document.getElementById(idSelect);
 	var option = select.options[select.selectedIndex];
     if(option.value != -1){
-        toChange.textContent = 'Cliente: ' + option.text;
         idPersona = option.value;
+        if(tipoTransaccionActual == 'V'){
+            toChange.textContent = 'Cliente: ' + option.text;
+        }else if(tipoTransaccionActual == 'C'){
+            toChange.textContent = 'Proveedor: ' + option.text;
+        }
     }else {
-        toChange.textContent = 'No se selecciono cliente.';
+        if(tipoTransaccionActual == 'V'){
+            toChange.textContent = 'No se selecciono cliente.';
+        }else if(tipoTransaccionActual == 'C'){
+            toChange.textContent = 'No se selecciono proveedor.';
+        }
     }
 }
