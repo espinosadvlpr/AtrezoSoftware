@@ -1,4 +1,4 @@
-window.onload = function getCategories() {
+    window.onload = function getCategories() {
     fetch('http://localhost:3050/categories')
         .then(response => response.json())
         .then(data => {
@@ -9,7 +9,12 @@ window.onload = function getCategories() {
                 li.textContent = value.nombreCategoria
                 li.addEventListener("click", function(event) {
                     console.log(event.target.textContent)
-                    //deleteCategory(event.target.textContent)
+                    if (window.confirm("Realmente desea eliminar este usuario?")) {
+                        var retrievedObject = localStorage.getItem('usuarioActual');
+                        var objetoUsuario = JSON.parse(retrievedObject)
+                        fetch('http://localhost:3050/delete_category/' + event.target.textContent, {
+                            method: 'DELETE'
+            }).then(res => res.json());
                     event.target.remove()
                 }, false);
                 ul.appendChild(li)

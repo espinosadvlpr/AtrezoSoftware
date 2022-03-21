@@ -55,6 +55,26 @@ app.get('/users', (req, res) => {
     });
 });
 
+app.post('/validate_login',(req,res)=>{
+    const sql = `select * from Persona where email="${req.body.email}" and password="${req.body.password}" and tipoPersona="A"`
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
+
+app.post('/password_change',(req,res)=>{
+    const sql = `update Persona set password=${req.body.password} where email =${req.body.email}`;
+    connection.query(sql, error => {
+        if (error) throw error;
+        res.send('User password updated!');
+    });
+});
+
 app.get('/categorias', (req, res) => {
     const sql = 'select * from Categoria';
     connection.query(sql, (error, results) => {

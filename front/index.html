@@ -31,10 +31,25 @@
                                 <p left="250px"><a href="password_reset.html" id="signup">¿Olvidaste tu contraseña?</a></p>
                             </div>
                             <div class="text-center">
-                                <input type="submit" style="border:none; background-color: #F04F4F;" left="800px" class="btn btn-lg btn-primary" value="Ingresar" onclick="sendLogin()">
+                                <input id="button-login" type="submit" style="border:none; background-color: #F04F4F;" left="800px" class="btn btn-lg btn-primary" value="Ingresar" onclick="login()">
                             </div>
                         </div>
                         <script src="js/login.js"></script>
+                        <script type = "text/javascript">
+                            document.getElementById("email").addEventListener('keydown',input_password);
+                            document.getElementById("password").addEventListener('keydown',get_login);
+                            function input_password(e){
+                                if(e.keyCode==13){
+                                    document.getElementById("password").focus();
+                                }
+                            }
+
+                            function get_login(e){
+                                if(e.keyCode==13){
+                                    document.getElementById("button-login").focus();        
+                                }
+                            } 
+                        </script>
                     </div>
                 </div>
             </div>
