@@ -1,11 +1,15 @@
 var originalList = []
 var selectedlList = []
+var idPersona = -1;
+var tipoTransaccionActual = '';
 
-function cargarTodo() {
+function cargarTodo(tipoTransaccion) {
+    this.tipoTransaccionActual = tipoTransaccion;
     let promise = allProducts();
     promise.then((val) => {
         console.log('asynchronously executed: ' + val);
         crearBuscador();
+        cargarCategorias();
     }).catch((err) => {
         console.log('asynchronously executed: ' + err);
     }).finally(() => {
@@ -16,7 +20,7 @@ function cargarTodo() {
 function crearBuscador() {
     console.log("Cargadando Buscador..")
     document.addEventListener("keyup", e => {
-        if (e.target.matches("#gsearch")) {
+        if (e.target.matches("#gsearch2")) {
             if (e.key === "Escape") e.target.value = ""
             document.querySelectorAll(".target").forEach(producto => {
                 producto.textContent.toLowerCase().includes(e.target.value.toLowerCase()) ?
@@ -27,8 +31,27 @@ function crearBuscador() {
     })
 }
 
+function cargarCategorias() {
+    console.log('Cargar categorias dossss');
+    fetch('http://localhost:3050/categorias')
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            for (let value of data) {
+                console.log(value.codigoCategoria + ' ' + value.nombreCategoria);
+                var categoria = '<a class="item" style="color:#000000;" ' +
+                    'onclick="cargarProductosPorCategoria(' + value.codigoCategoria + ')">' + value.nombreCategoria + ' </a>';
+                $('#listaCategorias').append(categoria);
+            }
+        })
+}
+
 function cambiarANuevaVenta() {
     window.location = "./nuevaVenta.html";
+}
+
+function cambiarANuevaCompra() {
+    window.location = "./nuevaCompra.html";
 }
 
 function allProducts() {
@@ -37,7 +60,7 @@ function allProducts() {
             .then(response => response.json())
             .then(data => {
                 console.log('Productos traidos del servidor');
-                showAllProducts(data);
+                showFirstCategoryProducts(data);
                 return resolve(data);
             })
             .then(error => {
@@ -46,25 +69,49 @@ function allProducts() {
     });
 }
 
-function showAllProducts(data) {
+function showFirstCategoryProducts(data) {
     originalList = data;
-    for (let value of data) {
-        var editar = '<a class="target" id="linkEditarProducto" style="color:rgb(0, 0, 0);" >';
-        var clase = '<div class="containerNV">';
-        var image = '<div class="center"> <img src="../producto/productos/images/' + value.imagenProducto
-            + '" width="260" height="150" class="imgProduct2"> </img> </div>';
-        var nombreProducto = ' <div class="lefth"> <h2 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '</h2>';
-        var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
-        var precio = '<h4 style="color:rgb(60, 60, 60);">  $ '
-            + value.precioDeVenta + ' COP</h4> </div>';
-        var cantidadAgregar = '<div class="rigthInput">' +
-            '<input type="number" onchange="cambiarValorVenta(' + value.codigoProducto + ')"'
-            + 'class="quantityProduct" id="' + value.codigoProducto + '"'
-            + 'name="quantity" min="0" max="'
-            + value.cantidadDisponible + '"></input> </div>';
-        var cerrarDiv = editar + clase + image + nombreProducto + cantidadDisponible + precio + cantidadAgregar + '</div> </a>';
-        $('#contenedor').append(cerrarDiv);
+    visibleProducts = Array(data.length);
+    cargarProductosPorCategoria(originalList[0].idCategoria);
+}
+
+function mostrarTodosLosProductos() {
+    mostradosActualmente = document.querySelectorAll(".target");
+    originalList.forEach(cProd => {
+        let isShowed = getTarget(cProd.nombreProducto, mostradosActualmente);
+        if (isShowed == null) {
+            crearEtiqueta(cProd);
+        } else {
+            isShowed.classList.remove("filtro");
+        }
+    });
+}
+
+function crearEtiqueta(value) {
+    var editar = '<a class="target" id="linkEditarProducto" style="color:rgb(0, 0, 0);" >';
+    var clase = '<div class="containerNV">';
+    var image = '<div class="center"> <img src="../producto/productos/images/' + value.imagenProducto
+        + '" width="260" height="150" class="imgProduct2"> </img> </div>';
+    var nombreProducto = ' <div class="lefth"> <h2 style="color:rgb(0, 0, 0);">' + value.nombreProducto + '.</h2>';
+    var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
+    let precioActual = 0;
+    let maxToSelected = 0;
+    if(tipoTransaccionActual == 'V'){
+        precioActual = value.precioDeVenta;
+        maxToSelected = value.cantidadDisponible;
+    }else if(tipoTransaccionActual == 'C'){
+        precioActual = value.precioDeCompra;
+        maxToSelected = 100;
     }
+    var precio = '<h4 style="color:rgb(60, 60, 60);">  $ '
+        + precioActual + ' COP</h4> </div>';
+    var cantidadAgregar = '<div class="rigthInput">' +
+        '<input type="number" onchange="cambiarValorVenta(' + value.codigoProducto + ')"'
+        + 'class="quantityProduct" id="' + value.codigoProducto + '"'
+        + 'name="quantity" min="0" max="'
+        + maxToSelected + '"></input> </div>';
+    var cerrarDiv = editar + clase + image + nombreProducto + cantidadDisponible + precio + cantidadAgregar + '</div> </a>';
+    $('#contenedor').append(cerrarDiv);
 }
 
 function cambiarValorVenta(codeIdCurrentProd) {
@@ -75,7 +122,13 @@ function cambiarValorVenta(codeIdCurrentProd) {
                 console.log('Ya existe');
                 var myProd = new Object();
                 myProd.codigoProducto = idCProd;
-                myProd.precioDeVenta = cProduct.precioDeVenta;
+                precioActual = 0;
+                if(tipoTransaccionActual == 'V'){
+                    precioActual = cProduct.precioDeVenta;
+                }else if(tipoTransaccionActual == 'C'){
+                    precioActual = cProduct.precioDeCompra;
+                }
+                myProd.precioProd = cProduct.precioDeVenta;
                 myProd.cantidadAComprar = document.getElementById(idCProd).value;
                 myProd.nombreProducto = cProduct.nombreProducto;
                 selectedlList.push(myProd);
@@ -111,13 +164,15 @@ function yaExiste(idProd) {
 }
 
 function updateTotalValue() {
-    let total = 0;
-    for (let cProd of selectedlList) {
-        total += cProd.precioDeVenta * cProd.cantidadAComprar;
-    }
+    let total = getTotalProductsSelect();
     console.log('Total: ' + total);
-    document.getElementById('botonNuevaVenta').firstChild.data = 'Nueva venta $ ' + total;
-    document.getElementById('botonConfirmarVenta').firstChild.data = 'Confirmar venta $ ' + total;
+    if(tipoTransaccionActual == 'V'){
+        document.getElementById('botonNuevaVenta').firstChild.data = 'Nueva venta $ ' + total;
+        document.getElementById('botonConfirmarVenta').firstChild.data = 'Confirmar venta $ ' + total;
+    }else if(tipoTransaccionActual == 'C'){
+        document.getElementById('botonNuevaCompra').firstChild.data = 'Nueva compra $ ' + total;
+        document.getElementById('botonConfirmarCompra').firstChild.data = 'Confirmar compra $ ' + total;
+    }
 }
 
 function llenarTabla() {
@@ -127,26 +182,30 @@ function llenarTabla() {
             var tr = `<tr class="iProd">
           <td>`+ CProd.nombreProducto + `</td>
           <td>`+ CProd.cantidadAComprar + `</td>
-          <td>`+ CProd.precioDeVenta + `</td>
-          <td>`+ (CProd.cantidadAComprar * CProd.precioDeVenta) + `</td>
+          <td>`+ CProd.precioProd + `</td>
+          <td>`+ (CProd.cantidadAComprar * CProd.precioProd) + `</td>
         </tr>`;
             $("#cuerpo").append(tr);
         }
     }
 }
 
-function sendSelectProducts() {
-    if (selectedlList.length > 0) {
-        var url = 'http://localhost:3050/add_sale';
+function sendSelectProducts(tipoTransaccion) {
+    if (selectedlList.length > 0 && getTotalProductsSelect() > 0) {
+        var url = `http://localhost:3050/add_transaction/${idPersona}/${tipoTransaccion}`;
         fetch(url, {
-            method: 'POST', 
+            method: 'POST',
             body: JSON.stringify(selectedlList),
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then(res => res.json())
-        .then(data => {
-                alert("Venta realizada correctamente.");
+            .then(data => {
+                if(tipoTransaccionActual == 'V'){
+                    alert("Venta realizada correctamente.");
+                }else if(tipoTransaccionActual == 'C'){
+                    alert("Compra realizada correctamente.");
+                }
                 window.location = "./listaVentas.html";
             })
             .then(error => {
@@ -154,8 +213,23 @@ function sendSelectProducts() {
                 console.log(error);
                 return reject(error);
             });
-        }
+    }
 }
+
+/**
+ * 
+ * @returns Obtiene el total de todos los productos seleccionados
+ */
+function getTotalProductsSelect() {
+    let total = 0;
+    for (let cProd of selectedlList) {
+        //TO DO
+        total += cProd.precioProd * cProd.cantidadAComprar;
+    }
+    return total;
+}
+
+
 /**
  * Limpia de la lista de los elemntos que fueron seleccionados pero
  * que la cantidad a comprar es 0
@@ -165,6 +239,83 @@ function clearList() {
         const cProd = selectedlList[i];
         if (cProd.cantidadAComprar <= 0) {
             selectedlList.splice(i, 1);
+        }
+    }
+}
+
+function cargarProductosPorCategoria(idCategoria) {
+    mostradosActualmente = document.querySelectorAll(".target");
+    for (let i = 0; i < originalList.length; i++) {
+        const product = originalList[i];
+        let nameProduct = product.nombreProducto;
+        let target = getTarget(nameProduct, mostradosActualmente);
+        //Devuelvo un target si ese producto ya se esta mostrando
+        if (idCategoria == product.idCategoria) {
+            //Si pertenece a la categoria que se quiere mostrar
+            if (target == null) {
+                crearEtiqueta(product);
+            } else {
+                target.classList.remove("filtro");
+            }
+        } else if (target != null) {
+            target.classList.add("filtro");
+        }
+    }
+    console.log("----------");
+}
+
+
+function getTarget(nameProd, listTarget) {
+    for (let i = 0; i < listTarget.length; i++) {
+        let nameCurrPord = listTarget[i].textContent.split(".")[0];
+        let recortado = nameCurrPord.slice(5);
+        if (nameProd == recortado) {
+            return listTarget[i];
+        }
+    }
+    return null;
+}
+
+/**
+ * Funciones que se muestran al crear o editar un producto
+ */
+function cargarPersona(tipoPersona , elementToChange) {
+    console.log('Cargando personas!!');
+    return new Promise((resolve, reject) => {
+        fetch('http://localhost:3050/users/' + tipoPersona)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                for (let value of data) {
+                    console.log(value.nombres + ' ' + value.Apellidos);
+                    var persona = '<option value="' + value.idPersona + '"> ' + value.nombres + ' ' + value.Apellidos + ' </option>';
+                    $(`#${elementToChange}`).append(persona);
+                }
+                return resolve(data);
+            })
+            .then(error => {
+                return reject(error);
+            })
+    });
+}
+
+function showPersonSelected(idElement , idSelect) {
+    console.log("ON change!!" + idElement + "  " + idSelect);
+    let toChange = document.getElementById(idElement);
+    var select = document.getElementById(idSelect);
+	var option = select.options[select.selectedIndex];
+    if(option.value != -1){
+        idPersona = option.value;
+        if(tipoTransaccionActual == 'V'){
+            toChange.textContent = 'Cliente: ' + option.text;
+        }else if(tipoTransaccionActual == 'C'){
+            toChange.textContent = 'Proveedor: ' + option.text;
+        }
+    }else {
+        if(tipoTransaccionActual == 'V'){
+            toChange.textContent = 'No se selecciono cliente.';
+        }else if(tipoTransaccionActual == 'C'){
+            toChange.textContent = 'No se selecciono proveedor.';
         }
     }
 }

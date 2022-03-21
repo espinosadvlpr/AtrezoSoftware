@@ -90,21 +90,22 @@ function agruparVentas(data) {
             subTotalVenta += value.SubTotal;
         } else if (value.idFactura != currentValue) {
             console.log(subTotalVenta + ' -- ** --');
-            crearEtiqueta(subTotalVenta , currentTransaction, listaProductos);
+            crearEtiquetaTransaction(subTotalVenta , currentTransaction, listaProductos);
             listaProductos = value.nombreProducto + ', ';
             subTotalVenta = 0;
             subTotalVenta += value.SubTotal;
         }
         if (i == data.length) {
-            crearEtiqueta(subTotalVenta , value.tipoTransaccion, listaProductos);
+            crearEtiquetaTransaction(subTotalVenta , value.tipoTransaccion, listaProductos);
         }
         currentValue = value.idFactura;
         currentTransaction = value.tipoTransaccion;
     }
 }
 
-function crearEtiqueta(total, tipoTransaccion, listaProductos) {
-    var editar = '<a style="text-decoration:none" id="linkEditarProducto" href="#" onClick=\'cambiarIdProducto(' + ');\' style="color:rgb(0, 0, 0);" >';
+function crearEtiquetaTransaction(total, tipoTransaccion, listaProductos) {
+    console.log("Se debe crear etiqueta!!");
+    var editar = '<a style="text-decoration:none" id="linkEditarProducto" href="#" style="color:rgb(0, 0, 0);" >';
     var clase = '<div class="lista-ventas">';
     var productos = '<h3 style="color:rgb(0, 0, 0);">' + listaProductos + '</h3>';
     var precio = '';

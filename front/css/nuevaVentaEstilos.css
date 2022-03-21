@@ -63,3 +63,12 @@
   position: initial;
   left: 12%;
 }
+
+#botonConfirmarCompra{
+  background-color: #be3232;
+}
+
+.custom-select222{
+  float: right;
+  margin: 0 0 0 auto;
+}

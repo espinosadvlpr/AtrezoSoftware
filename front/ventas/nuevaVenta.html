@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../css/nuevaVentaEstilos.css" />
 </head>
 
-<body onload="cargarTodo();">
+<body onload="cargarTodo('V'); cargarPersona('C' , 'ClienteSeleccionado');">
     <main id="main">
         <div class="side-bar">
             <ul class="nav-links">
@@ -69,11 +69,19 @@
         </div>
         <div class="main-content w-100 p-5">
             <div class="create" data-view-active="true">
-                <input type="search" id="gsearch" name="gsearch" placeholder="Buscar producto">
+                <input type="search" id="gsearch2" name="gsearch2" placeholder="Buscar producto">
+                <div class="custom-select222" style="width:230px;">
+                    <select id="ClienteSeleccionado" onChange="showPersonSelected('ClienteFactura' , 'ClienteSeleccionado')">
+                        <option value="-1">Seleccione un cliente:</option>
+                    </select>
+                </div>
+                <div id="listaCategorias" class="wrapper">
+                    <a class="item" style="color:#000000;" onclick="mostrarTodosLosProductos()">Todos los
+                        productos</a>
+                </div>
                 <div id="contenedor"></div>
                 <button id="botonNuevaVenta" type="button" class="agregarProducto" onclick="abrirVentana()">Nueva venta
                     $</button>
-                <!-- Ventana emergente!!! -->
             </div>
         </div>
     </main>
@@ -81,6 +89,7 @@
         <img class="close" onclick="cerrarVentana()" width="30px" height="30px"
             src="../images/High-contrast-dialog-close.svg.png">
         <h4> Confirmar venta </h4>
+        <h5 id="ClienteFactura">No se selecciono cliente.</h5>
         </br>
         <table style="width:100%" id="tableProducts">
             <thead>
@@ -93,7 +102,8 @@
             </tbody>
         </table>
         </br>
-        <button id="botonConfirmarVenta" type="button" class="confirmar" onclick="sendSelectProducts()">Confirmar venta $</button>
+        <button id="botonConfirmarVenta" type="button" class="confirmar" onclick="sendSelectProducts('V')">Confirmar venta
+            $</button>
     </div>
 </body>
 

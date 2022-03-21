@@ -55,7 +55,9 @@ function obtenerTipoPersona(tipoPersona) {
         return 'Cliente';
     } else if (tipoPersona == 'E') {
         return 'Empleado';
-    } else {
+    } else if (tipoPersona == 'P'){
+        return 'Proveedor';
+    }else {
         return 'Sin tipo de ususario!!';
     }
 }

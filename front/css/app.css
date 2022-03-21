@@ -299,6 +299,14 @@ button {
     bottom: 0px;
 }
 
+#botonNuevaCompra{
+    background-color: #af4c4c;
+}
+
+#botonNuevaCompra:hover{
+    background-color: #be3232;
+}
+
 div[data-view-active="false"] {
     display: none !important;
 }
@@ -311,6 +319,17 @@ div[data-view-active="false"] {
     transition: all 0.2s;
     margin: 0 auto;
     width: 98%;
+    margin-bottom: 50px;
+}
+
+#gsearch2 {
+    background: #fff;
+    border-radius: 9px;
+    padding: 8px;
+    font-size: 25px;
+    transition: all 0.2s;
+    margin: 2px 3% 0 auto;
+    width: 73%;
     margin-bottom: 50px;
 }
 
@@ -328,6 +347,10 @@ div[data-view-active="false"] {
 
 .filtro {
     display: none;
+}
+
+.blue {
+    background-color: blue;
 }
 
 @media (max-width: 768px) {
