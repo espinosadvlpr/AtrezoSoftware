@@ -350,7 +350,7 @@ app.post('/add_category', (req, res) => {
 
 app.delete('/delete_category/:category', (req, res) => {
     const { category } = req.params;
-    const sql = `DELETE FROM Categoria WHERE nombreCategoria= ${category}`;
+    const sql = `DELETE FROM Categoria WHERE nombreCategoria= '${category}'`;
 
     connection.query(sql, error => {
         if (error) throw error;
