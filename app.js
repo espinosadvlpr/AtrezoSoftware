@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2');
 const PORT = process.env.PORT || 3050;
+const jwt = require('jsonwebtoken')
 const app = express();
 const fs = require('fs');
 const multer = require('multer');
@@ -18,14 +19,14 @@ const connection = mysql.createConnection({
     password: 'a123',
     database: 'tcampo'
 });
+
 /*
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '12345',
     database: 'tcampo'
-});
-*/
+});*/
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');
@@ -40,6 +41,43 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+
+//Integracion
+app.post('/api/register',(req,res)=>{
+    const id = req.body.id
+    jwt.sign(id,'secret_key',(err,token)=>{
+        if(err){
+            res.status(400).send({msg: 'Error'})
+        }else {
+            res.send({msg:'Success',token: token})
+        }
+    });
+});
+
+function verifyToken(req, res, next) {
+   const token = req.headers["authorization"];
+   if (token == null) return res.sendStatus(403);
+   jwt.verify(token, "secret_key", (err, user) => {
+      if (err) return res.sendStatus(404);
+      req.user = user;
+      next();
+   });
+}
+
+
+app.post("/api/products",verifyToken,(req,res)=>{
+    const sql = 'SELECT nombreProducto,cantidadDisponible,precioDeVenta,descripcionProducto FROM Producto';
+
+    connection.query(sql,(error,results)=>{
+        if (error) throw error;
+            if (results.length > 0) {
+                console.log(results)
+                res.json(results);
+            } else {
+                res.send('Empty');
+            }
+    });
+});
 
 // Usuarios
 app.get('/users', (req, res) => {
