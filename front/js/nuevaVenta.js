@@ -95,7 +95,7 @@ function allProducts() {
 }
 
 /**
- * Se muestran todos los productos de la ultima categoria cargado 
+ * Se muestran todos los productos de la primera categoria cargada
  * @param {*} data 
  */
 function showFirstCategoryProducts(data) {
