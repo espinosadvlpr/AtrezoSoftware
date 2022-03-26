@@ -1,5 +1,5 @@
 function createCategory() {
-    fetch('http://localhost:3050/categories')
+    fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/categories')
         .then(response => response.json())
         .then(data => {
             for (let value of data) {
@@ -14,7 +14,7 @@ function createCategory() {
 }
 
 function sendData(idCategory, nameCategory) {
-    fetch('http://localhost:3050/add_category', {
+    fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/add_category', {
             method: 'POST',
             body: JSON.stringify({
                 id: idCategory,

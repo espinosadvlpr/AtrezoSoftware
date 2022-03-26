@@ -25,7 +25,7 @@ function cleanLogin(){
 }
 
 async function sendLogin(user_json){
-    const response = await fetch("http://localhost:3050/validate_login/",{
+    const response = await fetch("http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/validate_login/",{
         method: 'POST',
         body: JSON.stringify(user_json),
         headers: {

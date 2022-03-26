@@ -1,5 +1,5 @@
 window.onload = function getCategories() {
-    fetch('http://localhost:3050/categories')
+    fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/categories')
         .then(response => response.json())
         .then(data => {
             categories_div = document.getElementById("categories")
@@ -13,7 +13,7 @@ window.onload = function getCategories() {
                     if (window.confirm("Realmente desea eliminar esta categoria?")) {
                         var retrievedObject = localStorage.getItem('usuarioActual');
                         var objetoUsuario = JSON.parse(retrievedObject)
-                        fetch('http://localhost:3050/delete_category/' + event.target.textContent, {
+                        fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/delete_category/' + event.target.textContent, {
                             method: 'DELETE'
                         }).then(res => res.json())
                         .catch(error=>console.log(error));

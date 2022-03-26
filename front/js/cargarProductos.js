@@ -6,7 +6,7 @@ function cargarTodosLosProductos() {
 
 function peticionTodosLosProductos() {
     return new Promise((resolve, reject) => {
-        fetch('http://localhost:3050/product')
+        fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/product')
             .then(response => response.json())
             .then(data => {
                 console.log('Productos traidos del servidor');
@@ -53,7 +53,7 @@ function cargarProductoYCategorias() {
  */
 function cargarCategorias() {
     return new Promise((resolve, reject) => {
-        fetch('http://localhost:3050/categorias')
+        fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/categorias')
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -75,7 +75,7 @@ function cargarCategorias() {
  */
 function cargarCategorias2() {
     console.log('Cargar categorias dossss');
-    fetch('http://localhost:3050/categorias')
+    fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/categorias')
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -124,7 +124,7 @@ function eliminarProducto() {
     if (window.confirm("Realmente desea eliminar este producto?")) {
         var retrievedObject = localStorage.getItem('ProductoActual');
         var objetoProducto = JSON.parse(retrievedObject)
-        fetch('http://localhost:3050/delete_product/' + objetoProducto.codigoProducto, {
+        fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/delete_product/' + objetoProducto.codigoProducto, {
             method: 'DELETE',
         })
             .then(res => res.text()) // or res.json()
@@ -160,7 +160,7 @@ function mostrarTodosLosProductos(data) {
 
 function cargarProductosPorCategoria(idCategoria) {
     eliminarTodosLosProductos();
-    fetch('http://localhost:3050/product/' + idCategoria)
+    fetch('http://ec2-54-159-11-0.compute-1.amazonaws.com:3050/product/' + idCategoria)
         .then(response => response.json())
         .then(data => {
             console.log('Productos cargados solo por categoria');
