@@ -5,6 +5,8 @@ const jwt = require('jsonwebtoken')
 const app = express();
 const fs = require('fs');
 const multer = require('multer');
+const bcrypt = require('bcrypt');
+const axios = require('axios');
 const upload = multer({ dest: 'front/producto/productos/images' });
 app.use(express.json());
 app.use(express.urlencoded({
@@ -13,20 +15,29 @@ app.use(express.urlencoded({
 app.use(express.static(__dirname + "/front"));
 
 // Conexion MySql
+/*
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'Santiago',
     password: 'a123',
     database: 'tcampo'
 });
-
-/*
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '12345',
     database: 'tcampo'
-});*/
+});
+*/
+
+//Conexion servidor 
+const connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'atrezo-app',
+    password: '12345',
+    database: 'tcampo'
+});
+
 
 app.get('/', (req, res) => {
     res.send('Welcome to my API!');
@@ -78,6 +89,21 @@ app.post("/api/products",verifyToken,(req,res)=>{
             }
     });
 });
+
+app.post('/api/login',(req, res) =>{
+    const values = {
+        aceg_jjde:req.body.aceg_jjde_x,
+        mcor_pdls:bcrypt.hashSync(req.body.mcor_pdls_x, 10)
+    }
+    console.log(values)
+    axios.post('http://localhost:3000/login_atreza', values)
+    .then(function (response) {
+        res.send(response.data)
+    }).catch(function (error) {
+        console.log(error);
+        res.send(error)
+    })
+})
 
 // Usuarios
 app.get('/users', (req, res) => {
