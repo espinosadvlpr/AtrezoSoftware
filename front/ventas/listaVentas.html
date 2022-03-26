@@ -11,10 +11,11 @@
     <script src="../js/nuevaVenta.js" type="text/javascript"></script>
     <link rel="stylesheet" href="../css/categories.css">
     <link rel="stylesheet" href="../css/listaVentas.css">
+    <link rel="stylesheet" href="../css/nuevaVentaEstilos.css" />
 </head>
 
 <body onload="cargaPrincipal()">
-    <main>
+    <main id="main">
         <div class="side-bar">
             <ul class="nav-links">
                 <li class="nav-tab active" data-view-name="create">
@@ -96,6 +97,26 @@
             </div>
         </div>
     </main>
+    <div class="ventanaEmergente" id="ventana">
+        <img class="close" onclick="cerrarVentana()" width="30px" height="30px"
+            src="../images/High-contrast-dialog-close.svg.png">
+        <h4>Detalle Factura</h4>
+        </br>
+        <h4 id="personaFactura"></h4>
+        </br>
+        <table style="width:100%" id="tableProducts">
+            <thead>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Valor Unitario</th>
+                <th>Sub Total</th>
+            </thead>
+            <tbody id="cuerpo">
+            </tbody>
+        </table>
+        </br>
+        <h4 id="totalFactura"></h4>
+    </div>
 </body>
 
 </html>

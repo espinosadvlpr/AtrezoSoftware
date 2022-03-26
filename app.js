@@ -265,7 +265,9 @@ app.get('/product/:idCategoria', (req, res) => {
 app.get('/ventas/:fecha', (req, res) => {
     const { fecha } = req.params;
     console.log('Fecha ventas: ' + fecha);
-    var sql = `SELECT D.idFactura, P.nombreProducto, (D.cantidad * D.precioProducto) AS SubTotal, F.tipoTransaccion
+    var sql = `SELECT ( Select CONCAT(A.nombres," ",A.Apellidos) from Persona A Where A.idPersona = F.idCliente)
+    AS Person, D.idFactura, P.nombreProducto, 
+    D.precioProducto, D.cantidad, (D.cantidad * D.precioProducto) AS SubTotal, F.tipoTransaccion
     FROM Facturas F, Producto P, DetalleFactura D
     WHERE F.idFactura = D.idFactura
     AND D.idProducto = P.codigoProducto

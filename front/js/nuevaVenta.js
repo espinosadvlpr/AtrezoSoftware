@@ -3,6 +3,12 @@ var selectedlList = []
 var idPersona = -1;
 var tipoTransaccionActual = '';
 
+/**
+ * Se cargan todos los productos
+ * suidamente se cargan las categorias
+ * y se crea un buscador
+ * @param {*} tipoTransaccion 
+ */
 function cargarTodo(tipoTransaccion) {
     this.tipoTransaccionActual = tipoTransaccion;
     let promise = allProducts();
@@ -17,6 +23,11 @@ function cargarTodo(tipoTransaccion) {
     });
 }
 
+/**
+ * Se agregan funciones al cuadro de busqueda,
+ * de manera que lo que se ingrese en el mismo
+ * corresponda con las targetas de productos mostradas
+ */
 function crearBuscador() {
     console.log("Cargadando Buscador..")
     document.addEventListener("keyup", e => {
@@ -31,6 +42,9 @@ function crearBuscador() {
     })
 }
 
+/**
+ * Se hace na peticion para cargar las categorias
+ */
 function cargarCategorias() {
     console.log('Cargar categorias dossss');
     fetch('http://localhost:3050/categorias')
@@ -45,15 +59,26 @@ function cargarCategorias() {
             }
         })
 }
-
+/**
+ * Se cambia a otro html
+ */
 function cambiarANuevaVenta() {
     window.location = "./nuevaVenta.html";
 }
 
+/**
+ * Se cambia a otro html
+ */
 function cambiarANuevaCompra() {
     window.location = "./nuevaCompra.html";
 }
 
+/**
+ * Se realiza una promesa que contiene
+ * una peticion de todos los productos
+ * Aunque solo unos de ellos se iran mostrando
+ * @returns 
+ */
 function allProducts() {
     return new Promise((resolve, reject) => {
         fetch('http://localhost:3050/product')
@@ -69,12 +94,20 @@ function allProducts() {
     });
 }
 
+/**
+ * Se muestran todos los productos de la ultima categoria cargado 
+ * @param {*} data 
+ */
 function showFirstCategoryProducts(data) {
     originalList = data;
     visibleProducts = Array(data.length);
     cargarProductosPorCategoria(originalList[0].idCategoria);
 }
 
+/**
+ * Se muestran todos los productos 
+ * teniendo en cuenta que algunos ya son visibles
+ */
 function mostrarTodosLosProductos() {
     mostradosActualmente = document.querySelectorAll(".target");
     originalList.forEach(cProd => {
@@ -87,6 +120,11 @@ function mostrarTodosLosProductos() {
     });
 }
 
+/**
+ * Crear una terjeta de un producto
+ * con su información aprticular
+ * @param {*} value 
+ */
 function crearEtiqueta(value) {
     var editar = '<a class="target" id="linkEditarProducto" style="color:rgb(0, 0, 0);" >';
     var clase = '<div class="containerNV">';
@@ -114,6 +152,10 @@ function crearEtiqueta(value) {
     $('#contenedor').append(cerrarDiv);
 }
 
+/**
+ * Agrega a la lita la información necesaria para agregar una venta o compra 
+ * @param {*} codeIdCurrentProd 
+ */
 function cambiarValorVenta(codeIdCurrentProd) {
     for (let cProduct of originalList) {
         let idCProd = cProduct.codigoProducto;
@@ -138,6 +180,11 @@ function cambiarValorVenta(codeIdCurrentProd) {
     updateTotalValue();
 }
 
+/**
+ * Limpia la lista
+ * Suporpone la factura de compra o venta
+ * dejando el fondo desenfocado
+ */
 function abrirVentana() {
     clearList();
     if (selectedlList.length > 0) {
@@ -147,11 +194,19 @@ function abrirVentana() {
     }
 }
 
+/**
+ * Cierra la ventana y quita el desenfoque
+ */
 function cerrarVentana() {
     document.getElementById("ventana").style.display = "none";
     document.getElementById("main").classList.remove("desenfoque");
 }
 
+/**
+ * Un producto debe agregarse a la lista una unica vez
+ * @param {*} idProd Producto en particular
+ * @returns true si existe dentro de la lista, false de lo contrario
+ */
 function yaExiste(idProd) {
     for (let cProd of selectedlList) {
         if (cProd.codigoProducto == idProd) {
@@ -163,6 +218,9 @@ function yaExiste(idProd) {
     return false;
 }
 
+/**
+ * Se pone el valor total de la venta ó en los botones correpondientes
+ */
 function updateTotalValue() {
     let total = getTotalProductsSelect();
     console.log('Total: ' + total);
@@ -175,8 +233,11 @@ function updateTotalValue() {
     }
 }
 
+/**
+ * Llena la tabla de facturas con los productos seleccionados
+ */
 function llenarTabla() {
-    $(".iProd").remove();
+    $(".iProd").remove();//Remueve elementos de la tabla
     for (const CProd of selectedlList) {
         if (CProd.cantidadAComprar > 0) {
             var tr = `<tr class="iProd">
@@ -190,6 +251,10 @@ function llenarTabla() {
     }
 }
 
+/**
+ * Se realiza una peticion con la lista de productos que el cliente haya seleccionado
+ * @param {*} tipoTransaccion 
+ */
 function sendSelectProducts(tipoTransaccion) {
     if (selectedlList.length > 0 && getTotalProductsSelect() > 0) {
         var url = `http://localhost:3050/add_transaction/${idPersona}/${tipoTransaccion}`;
@@ -243,6 +308,10 @@ function clearList() {
     }
 }
 
+/**
+ * Se muestran, ocultan o crean tarjetas para una lista por categoria
+ * @param {*} idCategoria de la categoria que se ve a mostrar
+ */
 function cargarProductosPorCategoria(idCategoria) {
     mostradosActualmente = document.querySelectorAll(".target");
     for (let i = 0; i < originalList.length; i++) {
@@ -264,7 +333,12 @@ function cargarProductosPorCategoria(idCategoria) {
     console.log("----------");
 }
 
-
+/**
+ * Devuleve un target si el producto ya esta mostrado
+ * @param {*} nameProd a buscar
+ * @param {*} listTarget en una lista actual
+ * @returns un target nameProd esta en la lista, null de lo contrario
+ */
 function getTarget(nameProd, listTarget) {
     for (let i = 0; i < listTarget.length; i++) {
         let nameCurrPord = listTarget[i].textContent.split(".")[0];
@@ -299,6 +373,11 @@ function cargarPersona(tipoPersona , elementToChange) {
     });
 }
 
+/**
+ * Se muestra en la factura un cliente ó un proveedor
+ * @param {*} idElement 
+ * @param {*} idSelect 
+ */
 function showPersonSelected(idElement , idSelect) {
     console.log("ON change!!" + idElement + "  " + idSelect);
     let toChange = document.getElementById(idElement);
