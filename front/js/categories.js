@@ -1,3 +1,7 @@
+/**
+ * Obtiene todas las cetegorias
+ * adicionando una tarjeta para cada una de ellas
+ */
 window.onload = function getCategories() {
     fetch('http://localhost:3050/categories')
         .then(response => response.json())
@@ -26,10 +30,16 @@ window.onload = function getCategories() {
     })
 }   
 
+/**
+ * Cambio de html
+ */
 function newCategory() {
     window.location = "./createCategory.html"
 }
 
+/**
+ * Cambio de html
+ */
 function cancel() {
     window.location = "../producto/productos/productos.html";
 }

@@ -4,6 +4,10 @@ function cargarTodosLosProductos() {
         .then(crearBuscador());
 }
 
+/**
+ * Lista de todos porductos
+ * @returns lista de productos o error si no se realizo la coneccion
+ */
 function peticionTodosLosProductos() {
     return new Promise((resolve, reject) => {
         fetch('http://localhost:3050/product')
@@ -19,6 +23,9 @@ function peticionTodosLosProductos() {
     });
 }
 
+/**
+ * Se crea un buscador con el contenido de las tarjetas
+ */
 function crearBuscador() {
     document.addEventListener("keyup", e => {
         if (e.target.matches("#gsearch")) {
@@ -99,6 +106,10 @@ function cambiarIdProducto(productoActual) {
     localStorage.setItem("ProductoActual", JSON.stringify(productoActual));
 }
 
+/**
+ * Al seleccionarse una tarjeta se extrae el codigo del producto
+ * para poder mostrar la imformación particular del mismo
+ */
 function getCodigoProducto() {
     var retrievedObject = localStorage.getItem('ProductoActual');
     var objetoProducto = JSON.parse(retrievedObject);
@@ -113,6 +124,9 @@ function getCodigoProducto() {
     document.getElementById('camara').src = "./productos/images/" + objetoProducto.imagenProducto;
 }
 
+/**
+ * Cambio de html
+ */
 function chageToAddProduct() {
     window.location = "../crearProducto.html";
 }
@@ -143,6 +157,11 @@ function eliminarTodosLosProductos() {
     }
 }
 
+/**
+ * Para una lista de productos
+ * se crea una tarjeta para cada uno de ellos
+ * @param {*} data 
+ */
 function mostrarTodosLosProductos(data) {
     for (let value of data) {
         var TextJSON = JSON.stringify(value) + '';
@@ -158,6 +177,10 @@ function mostrarTodosLosProductos(data) {
     }
 }
 
+/**
+ * Carga los productos de una categoria en particualr
+ * @param {*} idCategoria 
+ */
 function cargarProductosPorCategoria(idCategoria) {
     eliminarTodosLosProductos();
     fetch('http://localhost:3050/product/' + idCategoria)

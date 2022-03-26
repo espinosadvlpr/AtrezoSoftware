@@ -41,7 +41,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-// Usuarios
+/**
+ * Devuelve la lista completa de usuarios
+ */
 app.get('/users', (req, res) => {
     const sql = 'SELECT * FROM Persona';
 
@@ -55,6 +57,9 @@ app.get('/users', (req, res) => {
     });
 });
 
+/**
+ * Se validan los campos email y password de un usuario
+ */
 app.post('/validate_login',(req,res)=>{
     const sql = `select * from Persona where email="${req.body.email}" and password="${req.body.password}" and tipoPersona="A"`
     connection.query(sql, (error, results) => {
@@ -67,6 +72,9 @@ app.post('/validate_login',(req,res)=>{
     });
 });
 
+/**
+ * Se actualiza la contraseña del usuario
+ */
 app.post('/password_change',(req,res)=>{
     const sql = `update Persona set password=${req.body.password} where email =${req.body.email}`;
     connection.query(sql, error => {
@@ -75,6 +83,9 @@ app.post('/password_change',(req,res)=>{
     });
 });
 
+/**
+ * Todas las ccategorias de la BD
+ */
 app.get('/categorias', (req, res) => {
     const sql = 'select * from Categoria';
     connection.query(sql, (error, results) => {
@@ -87,6 +98,9 @@ app.get('/categorias', (req, res) => {
     });
 });
 
+/**
+ * Usuarios Administradores
+ */
 app.get('/admin', (req, res) => {
     const sql = 'SELECT * FROM Persona WHERE tipoPersona = "A"';
     connection.query(sql, (error, results) => {
@@ -99,7 +113,9 @@ app.get('/admin', (req, res) => {
     });
 });
 
-
+/**
+ * Devuelve una persona que coincida con el id proporcionado
+ */
 app.get('/user/:id', (req, res) => {
     const { id } = req.params;
     const sql = `SELECT * FROM Persona WHERE idPersona = ${id}`;
@@ -130,6 +146,9 @@ app.get('/users/:tipoPersona', (req, res) => {
     });
 });
 
+/**
+ * Se registra una persona con los datos proporcionado
+ */
 app.post('/add_user', (req, res) => {
     const sql = 'INSERT INTO Persona SET ?';
     const user_data = {
@@ -147,6 +166,9 @@ app.post('/add_user', (req, res) => {
     });
 });
 
+/**
+ * Se actualiza una persona con los datos proporcionados
+ */
 app.post('/update_user', (req, res) => {
     const sql = `UPDATE Persona 
         SET nombres = '${req.body.nombres}', Apellidos = '${req.body.Apellidos}', tipoPersona = '${req.body.Tipo_usuario}',
@@ -159,6 +181,9 @@ app.post('/update_user', (req, res) => {
     });
 });
 
+/**
+ * Se actualiza un producto con los datos proporcionados
+ */
 app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => {
     console.log("Cantidad a setear: " + req.body.cantidadDisponible);
     if (req.file == null) {
@@ -189,6 +214,9 @@ app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => 
 
 });
 
+/**
+ * Se agrega un porducto con sus datos e imagen
+ */
 app.post('/add_product', upload.single('imagenProducto'), (req, res) => {
     var rutaImagen = req.file.path + '.' + req.file.mimetype.split('/')[1];
     fs.renameSync(req.file.path, rutaImagen);
@@ -210,7 +238,9 @@ app.post('/add_product', upload.single('imagenProducto'), (req, res) => {
     });
 });
 
-
+/**
+ * Elimina el usuario que coincida con el id
+ */
 app.delete('/delete_user/:id', (req, res) => {
     const { id } = req.params;
     const sql = `DELETE FROM Persona WHERE idPersona= ${id}`;
@@ -284,7 +314,7 @@ app.get('/ventas/:fecha', (req, res) => {
 });
 
 /**
- * 
+ * Total de ventoas o compras para una fecha ingresada
  */
 app.get('/utilidades/:fecha/:tipoTransaccion', (req, res) => {
     let fecha = req.params.fecha;
@@ -311,6 +341,9 @@ app.get('/utilidades/:fecha/:tipoTransaccion', (req, res) => {
 });
 
 
+/**
+ * Se elimina un producto
+ */
 app.delete('/delete_product/:id', (req, res) => {
     const { id } = req.params;
     const sql = `DELETE FROM Producto WHERE codigoProducto= ${id}`;
@@ -321,7 +354,9 @@ app.delete('/delete_product/:id', (req, res) => {
     });
 });
 
-//Categorias
+/**
+ * Retorna todas las categorias
+ */
 app.get('/categories', (req, res) => {
     const sql = 'SELECT * FROM Categoria';
 
@@ -335,6 +370,9 @@ app.get('/categories', (req, res) => {
     });
 });
 
+/**
+ * Se agrega una categoria 
+ */
 app.post('/add_category', (req, res) => {
     const sql = 'INSERT INTO Categoria SET ?';
 
@@ -348,6 +386,9 @@ app.post('/add_category', (req, res) => {
     });
 });
 
+/**
+ * Elimina una ctegoria 
+ */
 app.delete('/delete_category/:category', (req, res) => {
     const { category } = req.params;
     const sql = `DELETE FROM Categoria WHERE nombreCategoria= '${category}'`;

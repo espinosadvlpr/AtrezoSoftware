@@ -12,6 +12,9 @@ function setCurrentDate() {
     return today;
 }
 
+/**
+ * Carga una lista de ventas y compras si hay una fecha
+ */
 function cargaPrincipal() {
     setCurrentDate();
     let fecha = document.getElementById("fecha_venta").value;
@@ -23,7 +26,9 @@ function cargaPrincipal() {
     }
 }
 
-
+/**
+ * Se realiza el calculo de utilidades
+ */
 function ventasYGastos() {
     let ventas = 0;
     let compras = 0;
@@ -46,6 +51,12 @@ function ventasYGastos() {
     //let utilidad = ventas - compras;
 }
 
+/**
+ * Devuelve total de ventas o compras para una fecha en particular
+ * @param {*} type venta o compra
+ * @param {*} fecha fecha seleccionada en el campo fecha
+ * @returns total de ventas o compras realizadas en esa fecha
+ */
 function peticionUtilidades(type, fecha) {
     return new Promise((resolve, reject) => {
         fetch(`http://localhost:3050/utilidades/${fecha}/${type}`)
@@ -63,6 +74,11 @@ function peticionUtilidades(type, fecha) {
     });
 }
 
+/**
+ * Todas las transacciones realizadas en una fecha en particular
+ * @param {*} fecha fecha de transaccion
+ * @returns todas las transacciones de una fecha en particular
+ */
 function peticionTodasLasVentas(fecha) {
     return new Promise((resolve, reject) => {
         fetch('http://localhost:3050/ventas/' + fecha)
@@ -77,6 +93,11 @@ function peticionTodasLasVentas(fecha) {
     });
 }
 
+/**
+ * Dada una lista de transacciones,
+ * se agrupa por cada factura 
+ * @param {*} data lista de transacciones
+ */
 function agruparVentas(data) {
     var currentValue = data[0].idFactura;
     let listaProductos = '';
@@ -107,16 +128,13 @@ function agruparVentas(data) {
     }
 }
 
-function createObjetctToShowInFacture(currentProd) {
-    var myProdInFacture = new Object();
-    myProdInFacture.nombreProducto = currentProd.nombreProducto;
-    myProdInFacture.cantidad = currentProd.cantidad;
-    myProdInFacture.precioProducto = currentProd.precioProducto;
-    myProdInFacture.SubTotal = currentProd.SubTotal;
-    console.log("Objeto: " + myProdInFacture);
-    return myProdInFacture;
-}
-
+/**
+ * Crea una etiqueta con la lista de productos de una factura
+ * @param {*} total total de la venta o compra
+ * @param {*} tipoTransaccion Si se trata de venta aparece en verde, rojo de lo contrario
+ * @param {*} listaProductos Los productos de esa facturta
+ * @param {*} currentFacture informacion de la factura actual
+ */
 function crearEtiquetaTransaction(total, tipoTransaccion, listaProductos, currentFacture) {
     var editar = `<a style="text-decoration:none" id="linkEditarProducto" onclick='abrirVentana2(${JSON.stringify(currentFacture)})' style="color:rgb(0, 0, 0);" >`;
     var clase = '<div class="lista-ventas">';
@@ -170,8 +188,8 @@ function insertPerson(tipoTransaccion , Persona){
 }
 
 /**
- * 
- * @param {*} listToShow 
+ * Muestra una factura y modifica la tabla de una venta en particular
+ * @param {*} listToShow Lista de productos de una factura
  */
 function abrirVentana2(listToShow) {
     document.getElementById("ventana").style.display = "block";
@@ -180,6 +198,9 @@ function abrirVentana2(listToShow) {
 
 }
 
+/**
+ * Recarga la pagina actual
+ */
 function recargarPagina() {
     console.log("Click en el boton recargar!!!");
     //$("#main-content").load('listaVentas.html');

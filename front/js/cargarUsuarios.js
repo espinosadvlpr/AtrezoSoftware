@@ -4,6 +4,10 @@ function cargarTodosLosUsuarios() {
         .then(crearBuscador);
 }
 
+/**
+ * Peticion de una lista de todos los ususarios
+ * @returns lista de todos los ususarios
+ */
 function peticionTodosLosUsuarios() {
     return new Promise((resolve, reject) => {
         fetch('http://localhost:3050/users')
@@ -19,6 +23,9 @@ function peticionTodosLosUsuarios() {
     });
 }
 
+/**
+ * Se crea un buscador con la informacion de las tarjetas
+ */
 function crearBuscador() {
     document.addEventListener("keyup", e => {
         if (e.target.matches("#searchUser")) {
@@ -32,6 +39,10 @@ function crearBuscador() {
     })
 }
 
+/**
+ * Se crea una tarjeta para cada uno de los usuarios de la lista
+ * @param {*} data lista de uauarios
+ */
 function mostrarTodosLosUsuarios(data) {
     var cabecera = '<div class = "lista-usuarios"><table class="default"><tr><th>Usuario</th><th>Tipo usuario</th><th>Accion</th></tr>'
     for (let value of data) {
@@ -48,6 +59,11 @@ function mostrarTodosLosUsuarios(data) {
     $('#contenedor').append(cabecera);
 }
 
+/**
+ * Devuelve un tipo de ususario para cada tipo
+ * @param {*} tipoPersona 
+ * @returns Administradro cliente, etc
+ */
 function obtenerTipoPersona(tipoPersona) {
     if (tipoPersona == 'A') {
         return 'Administrador';
@@ -62,10 +78,17 @@ function obtenerTipoPersona(tipoPersona) {
     }
 }
 
+/**
+ * Cambio de html
+ */
 function chageToAddUser() {
     window.location = "./agregarUsuario.html";
 }
 
+/**
+ * Valida que los campos 1 y 2 de contraseñas coinicida
+ * @returns true si las contrasenas coinciden
+ */
 function matchPassword() {
     var pw1 = document.getElementById("password").value;
     var pw2 = document.getElementById("repeat-password").value;
@@ -80,11 +103,18 @@ function matchPassword() {
     }
 }
 
+/**
+ * Se selecciona un usuario para mostralo
+ * @param {*} usuarioActual 
+ */
 function cambiarIdUsuario(usuarioActual) {
     console.log('Se guaradron atributos: ' + JSON.stringify(usuarioActual));
     localStorage.setItem("usuarioActual", JSON.stringify(usuarioActual));
 }
 
+/**
+ * Carga los atributos del ususario seleccionado
+ */
 function cargarUsuarioSeleccionado() {
     var retrievedObject = localStorage.getItem('usuarioActual');
     var objetoUsuario = JSON.parse(retrievedObject)
