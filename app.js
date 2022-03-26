@@ -22,18 +22,18 @@ const connection = mysql.createConnection({
     password: 'a123',
     database: 'tcampo'
 });
+//Conexion servidor 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
+    user: 'atrezo-app',
     password: '12345',
     database: 'tcampo'
 });
 */
 
-//Conexion servidor 
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'atrezo-app',
+    user: 'root',
     password: '12345',
     database: 'tcampo'
 });
@@ -91,14 +91,17 @@ app.post("/api/products",verifyToken,(req,res)=>{
 });
 
 app.post('/api/login',(req, res) =>{
+    
+    console.log(req.body)
+
     const values = {
         aceg_jjde:req.body.aceg_jjde_x,
         mcor_pdls:bcrypt.hashSync(req.body.mcor_pdls_x, 10)
     }
     console.log(values)
-    axios.post('http://localhost:3000/login_atreza', values)
+    axios.post('http://34.201.132.114:3000/log_atrezo', values)
     .then(function (response) {
-        res.send(response.data)
+        res.send(response)
     }).catch(function (error) {
         console.log(error);
         res.send(error)
