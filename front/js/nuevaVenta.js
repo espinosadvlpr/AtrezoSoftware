@@ -1,7 +1,7 @@
 var originalList = []
 var selectedlList = []
 var idPersona = -1;
-var tipoTransaccionActual = '';
+var tipoTransaccionActual = 'V';
 
 /**
  * Se cargan todos los productos
@@ -23,21 +23,25 @@ function cargarTodo(tipoTransaccion) {
     });
 }
 
-/**
- * Se agregan funciones al cuadro de busqueda,
- * de manera que lo que se ingrese en el mismo
- * corresponda con las targetas de productos mostradas
- */
 function crearBuscador() {
     console.log("Cargadando Buscador..")
     document.addEventListener("keyup", e => {
         if (e.target.matches("#gsearch2")) {
-            if (e.key === "Escape") e.target.value = ""
-            document.querySelectorAll(".target").forEach(producto => {
-                producto.textContent.toLowerCase().includes(e.target.value.toLowerCase()) ?
-                    producto.classList.remove("filtro") :
-                    producto.classList.add("filtro")
-            })
+            if (e.key === "Escape") e.target.value = "";
+            mostradosActualmente = document.querySelectorAll(".target");
+            originalList.forEach(producto => {
+                let nameProduct = producto.nombreProducto;
+                let target = getTarget(nameProduct, mostradosActualmente);
+                if (producto.nombreProducto.toLowerCase().includes(e.target.value.toLowerCase())) {
+                    if (target != null) {
+                        target.classList.remove("filtro");
+                    } else if (target == null) {
+                        crearEtiqueta(producto);
+                    }
+                } else if (target != null) {
+                    target.classList.add("filtro");
+                }
+            });
         }
     })
 }
@@ -85,7 +89,7 @@ function allProducts() {
             .then(response => response.json())
             .then(data => {
                 console.log('Productos traidos del servidor');
-                showFirstCategoryProducts(data);
+                originalList = data;
                 return resolve(data);
             })
             .then(error => {
@@ -94,15 +98,7 @@ function allProducts() {
     });
 }
 
-/**
- * Se muestran todos los productos de la primera categoria cargada
- * @param {*} data 
- */
-function showFirstCategoryProducts(data) {
-    originalList = data;
-    visibleProducts = Array(data.length);
-    cargarProductosPorCategoria(originalList[0].idCategoria);
-}
+
 
 /**
  * Se muestran todos los productos 
@@ -134,10 +130,10 @@ function crearEtiqueta(value) {
     var cantidadDisponible = '<p style="color:rgb(120, 120, 120);">' + value.cantidadDisponible + ' disponibles</p>';
     let precioActual = 0;
     let maxToSelected = 0;
-    if(tipoTransaccionActual == 'V'){
+    if (tipoTransaccionActual == 'V') {
         precioActual = value.precioDeVenta;
         maxToSelected = value.cantidadDisponible;
-    }else if(tipoTransaccionActual == 'C'){
+    } else if (tipoTransaccionActual == 'C') {
         precioActual = value.precioDeCompra;
         maxToSelected = 100;
     }
@@ -149,7 +145,9 @@ function crearEtiqueta(value) {
         + 'name="quantity" min="0" max="'
         + maxToSelected + '"></input> </div>';
     var cerrarDiv = editar + clase + image + nombreProducto + cantidadDisponible + precio + cantidadAgregar + '</div> </a>';
-    $('#contenedor').append(cerrarDiv);
+    //$('#contenedor').append(cerrarDiv);
+    var d1 = document.getElementById('contenedor');
+    d1.insertAdjacentHTML('beforeend', cerrarDiv);
 }
 
 /**
@@ -161,13 +159,13 @@ function cambiarValorVenta(codeIdCurrentProd) {
         let idCProd = cProduct.codigoProducto;
         if (idCProd == codeIdCurrentProd) {
             if (yaExiste(idCProd) == false) {
-                console.log('Ya existe');
                 var myProd = new Object();
                 myProd.codigoProducto = idCProd;
                 precioActual = 0;
-                if(tipoTransaccionActual == 'V'){
+                if (tipoTransaccionActual == 'V') {
+                    console.log('Fisico !!!!!!!!!');
                     precioActual = cProduct.precioDeVenta;
-                }else if(tipoTransaccionActual == 'C'){
+                } else if (tipoTransaccionActual == 'C') {
                     precioActual = cProduct.precioDeCompra;
                 }
                 myProd.precioProd = cProduct.precioDeVenta;
@@ -224,10 +222,10 @@ function yaExiste(idProd) {
 function updateTotalValue() {
     let total = getTotalProductsSelect();
     console.log('Total: ' + total);
-    if(tipoTransaccionActual == 'V'){
+    if (tipoTransaccionActual == 'V') {
         document.getElementById('botonNuevaVenta').firstChild.data = 'Nueva venta $ ' + total;
         document.getElementById('botonConfirmarVenta').firstChild.data = 'Confirmar venta $ ' + total;
-    }else if(tipoTransaccionActual == 'C'){
+    } else if (tipoTransaccionActual == 'C') {
         document.getElementById('botonNuevaCompra').firstChild.data = 'Nueva compra $ ' + total;
         document.getElementById('botonConfirmarCompra').firstChild.data = 'Confirmar compra $ ' + total;
     }
@@ -266,9 +264,9 @@ function sendSelectProducts(tipoTransaccion) {
             }
         }).then(res => res.json())
             .then(data => {
-                if(tipoTransaccionActual == 'V'){
+                if (tipoTransaccionActual == 'V') {
                     alert("Venta realizada correctamente.");
-                }else if(tipoTransaccionActual == 'C'){
+                } else if (tipoTransaccionActual == 'C') {
                     alert("Compra realizada correctamente.");
                 }
                 window.location = "./listaVentas.html";
@@ -288,7 +286,6 @@ function sendSelectProducts(tipoTransaccion) {
 function getTotalProductsSelect() {
     let total = 0;
     for (let cProd of selectedlList) {
-        //TO DO
         total += cProd.precioProd * cProd.cantidadAComprar;
     }
     return total;
@@ -353,7 +350,7 @@ function getTarget(nameProd, listTarget) {
 /**
  * Funciones que se muestran al crear o editar un producto
  */
-function cargarPersona(tipoPersona , elementToChange) {
+function cargarPersona(tipoPersona, elementToChange) {
     console.log('Cargando personas!!');
     return new Promise((resolve, reject) => {
         fetch('http://localhost:3050/users/' + tipoPersona)
@@ -378,23 +375,32 @@ function cargarPersona(tipoPersona , elementToChange) {
  * @param {*} idElement 
  * @param {*} idSelect 
  */
-function showPersonSelected(idElement , idSelect) {
+function showPersonSelected(idElement, idSelect) {
     console.log("ON change!!" + idElement + "  " + idSelect);
     let toChange = document.getElementById(idElement);
     var select = document.getElementById(idSelect);
-	var option = select.options[select.selectedIndex];
-    if(option.value != -1){
+    var option = select.options[select.selectedIndex];
+    if (option.value != -1) {
         idPersona = option.value;
-        if(tipoTransaccionActual == 'V'){
+        if (tipoTransaccionActual == 'V') {
             toChange.textContent = 'Cliente: ' + option.text;
-        }else if(tipoTransaccionActual == 'C'){
+        } else if (tipoTransaccionActual == 'C') {
             toChange.textContent = 'Proveedor: ' + option.text;
         }
-    }else {
-        if(tipoTransaccionActual == 'V'){
+    } else {
+        if (tipoTransaccionActual == 'V') {
             toChange.textContent = 'No se selecciono cliente.';
-        }else if(tipoTransaccionActual == 'C'){
+        } else if (tipoTransaccionActual == 'C') {
             toChange.textContent = 'No se selecciono proveedor.';
         }
     }
+}
+
+module.exports = {
+    "allProducts": allProducts,
+    "originalList" : originalList,
+    "crearEtiqueta" : crearEtiqueta,
+    "tipoTransaccionActual" : tipoTransaccionActual,
+    "getTotalProductsSelect" : getTotalProductsSelect,
+    "cambiarValorVenta" : cambiarValorVenta
 }

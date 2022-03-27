@@ -4,12 +4,16 @@
   "description": "servidor programado en express para el manejo de datos",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
+  },
+  "jest":{
+    "testEnvironment": "jsdom"
   },
   "author": "David Espinosa",
   "license": "ISC",
   "devDependencies": {
     "express": "^4.17.3",
+    "jest": "^27.5.1",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15"
   },
@@ -19,5 +23,14 @@
     "cors": "^2.8.5",
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SantiagoSosa12/AtrezoSoftware.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/SantiagoSosa12/AtrezoSoftware/issues"
+  },
+  "homepage": "https://github.com/SantiagoSosa12/AtrezoSoftware#readme"
 }
