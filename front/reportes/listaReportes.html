@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -9,7 +10,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!--<link rel="stylesheet" href="../css/homedos.css" />-->
     <link rel="stylesheet" href="../css/app.css" />
-
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
@@ -67,24 +68,16 @@
             <div class="create" data-view-active="true">
                 <font color="white" face="Lucida Bright">
                     <p>
-                        <h1 id="User" align="center"><b></b></h1>
+                        <h1 id="User" align="center"><b>Reportes</b></h1>
                     </p>
-                    <br> <br>
-                    <br> <br>
-                    <p>
-                        <h1 align="center">Bienvenido a</h1>
-                        <h1 align="center"> ATREZO DISTRIBUCIONES</h1>
-                    </p>
-                    <br> <br>
-                    <br> <br>
-                    <p>
-                        <h1 align="center">¿Qué vamos hacer hoy?</h1>
-                    </p>
+                    <div id="generated_report" class="generated_report">
+                    <div id="chart_div"></div>
+                    </div>
                 </font>
             </div>
         </div>
-    </main>
-    <script src="../js/home.js"></script>
+    </main> 
+    <script src="../js/reports.js"></script>
 
 </body>
 
