@@ -1,7 +1,7 @@
 var originalList = []
 var selectedlList = []
 var idPersona = -1;
-var tipoTransaccionActual = 'V';
+var tipoTransaccionActual = '';
 
 /**
  * Se cargan todos los productos
@@ -50,18 +50,19 @@ function crearBuscador() {
  * Se hace na peticion para cargar las categorias
  */
 function cargarCategorias() {
-    console.log('Cargar categorias dossss');
-    fetch('http://localhost:3050/categorias')
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            for (let value of data) {
-                console.log(value.codigoCategoria + ' ' + value.nombreCategoria);
-                var categoria = '<a class="item" style="color:#000000;" ' +
-                    'onclick="cargarProductosPorCategoria(' + value.codigoCategoria + ')">' + value.nombreCategoria + ' </a>';
-                $('#listaCategorias').append(categoria);
-            }
-        })
+    return new Promise((resolve, reject) => {
+        fetch('http://localhost:3050/categorias')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                for (let value of data) {
+                    console.log(value.codigoCategoria + ' ' + value.nombreCategoria);
+                    var categoria = '<a class="item" style="color:#000000;" ' +
+                        'onclick="cargarProductosPorCategoria(' + value.codigoCategoria + ')">' + value.nombreCategoria + ' </a>';
+                    $('#listaCategorias').append(categoria);
+                }
+            })
+    });
 }
 /**
  * Se cambia a otro html
@@ -163,7 +164,6 @@ function cambiarValorVenta(codeIdCurrentProd) {
                 myProd.codigoProducto = idCProd;
                 precioActual = 0;
                 if (tipoTransaccionActual == 'V') {
-                    console.log('Fisico !!!!!!!!!');
                     precioActual = cProduct.precioDeVenta;
                 } else if (tipoTransaccionActual == 'C') {
                     precioActual = cProduct.precioDeCompra;
@@ -398,9 +398,15 @@ function showPersonSelected(idElement, idSelect) {
 
 module.exports = {
     "allProducts": allProducts,
-    "originalList" : originalList,
-    "crearEtiqueta" : crearEtiqueta,
-    "tipoTransaccionActual" : tipoTransaccionActual,
+    "originalList": originalList,
+    "crearEtiqueta": crearEtiqueta,
+    "tipoTransaccionActual": tipoTransaccionActual,
+    "getTotalProductsSelect": getTotalProductsSelect,
+    "cambiarValorVenta": cambiarValorVenta,
+    "cargarCategorias" : cargarCategorias,
+    "selectedlList" : selectedlList,
+    "clearList" : clearList,
     "getTotalProductsSelect" : getTotalProductsSelect,
-    "cambiarValorVenta" : cambiarValorVenta
+    "getTarget" : getTarget,
+    "llenarTabla" : llenarTabla
 }

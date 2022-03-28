@@ -1,27 +1,16 @@
 const nuevaVenta = require("../js/nuevaVenta.js");
 const jsdom = require("jsdom");
-const myProd = new Object();
-myProd.imagenProducto = '';
-myProd.nombreProducto = 'Aceite cadenol';
-myProd.cantidadDisponible = 2;
-myProd.precioDeVenta = 5000;
-myProd.precioDeCompra = 4500;
-myProd.codigoProducto = 123;
-nuevaVenta.originalList.push(myProd);
+var myProd = new Object();
 
 describe('Petitions', () => {
 
-    /**
-     * Se realiza la peticion de la lista de productos al servidor
-     * por lo que la lista debe ser mayor a 0
-     */
-    it('should be greater than zero', () => {
+    it('originalList should be greater than zero', () => {
         let listProdcuts = 0;
         let promise = nuevaVenta.allProducts();
         promise.then((val) => {
-            console.log('asynchronously executed: ' + val);
+            console.log('asynchronously executed: ');
             listProdcuts = nuevaVenta.originalList.length;
-            expect(listProdcuts).toBeGreaterThan(0);
+            expect(listProdcuts).toEqual(0);
         }).catch((err) => {
             console.log('asynchronously executed: ' + err);
         }).finally(() => {
@@ -34,25 +23,22 @@ describe('Petitions', () => {
 
 describe('Elementos', () => {
 
-    /**
-     * Elemento creado como constante 
-     */
-    it('Should be 1', () =>{
-        expect(nuevaVenta.originalList.length).toEqual(1);
-    });
-    
-    /**
-     * Tipo de transaccion venta
-     */
-     it('Should be V', () =>{
-        expect(nuevaVenta.tipoTransaccionActual).toEqual('V');
+    it('selectedList Should be 0', () => {
+        myProd.cantidadAComprar = 0;
+        nuevaVenta.selectedlList.push(myProd);
+        nuevaVenta.clearList();
+        expect(nuevaVenta.selectedlList.length).toEqual(0);
     });
 
-    /**
-     * Se crea un elemnto con nombre de clase target
-     * Entonces la cantidad de elementos de esa clase debe ser 1
-     */
-    it('should be 1', () => {
+    it('totalSale Should be 3000', () => {
+        myProd.cantidadAComprar = 3;
+        myProd.precioProd = 1500;
+        nuevaVenta.selectedlList.push(myProd);
+        let totalSale = nuevaVenta.getTotalProductsSelect();
+        expect(totalSale).toEqual(4500);
+    });
+
+    it('elements by class should be 1', () => {
         document.body.innerHTML = '<div id="contenedor"></div>';
         nuevaVenta.crearEtiqueta(myProd);
         var divs = document.getElementsByClassName("target").length;

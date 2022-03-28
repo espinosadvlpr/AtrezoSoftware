@@ -90,17 +90,25 @@ function chageToAddUser() {
  * @returns true si las contrasenas coinciden
  */
 function matchPassword() {
-    var pw1 = document.getElementById("password").value;
-    var pw2 = document.getElementById("repeat-password").value;
-    if (pw2.length < 6) {
-        alert("Ingrese una contraseña con al menos 7 caracteres!!");
-        event.preventDefault();
-    } else if (pw1 != pw2) {
+    if(verifyPasswords() != true){
         alert("Las contraseñas no conciden!!");
         event.preventDefault();
-    } else {
+    }else {
         return true;
     }
+}
+
+/**
+ * Verifica que las dos contrasenas coinciden
+ * @returns true si los campos coinciden
+ */
+function verifyPasswords() {
+    var pw1 = document.getElementById("password").value;
+    var pw2 = document.getElementById("repeat-password").value;
+    if(pw1 == pw2 && pw1.length > 6 ){
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -143,4 +151,8 @@ function eliminarProducto() {
             .then(res => res.text()) // or res.json()
             .then(res => window.location = "./lista_ususarios.html")
     }
+}
+
+module.exports = {
+    "verifyPasswords" : verifyPasswords
 }

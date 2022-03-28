@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="../css/estilos_crear_producto.css" />
 
 
-<body onload="cargarCategorias()">
+<body onload="cargarCategorias(); sumarPorcentaje();">
 	<main>
         <div class="side-bar">
             <ul class="nav-links">
@@ -60,7 +60,7 @@
         </div>
         <div class="main-content w-100 p-5">
             <div class="create" data-view-active="true">
-                <form action="/add_product" method="POST" enctype="multipart/form-data">
+                <form id="createProd" action="/add_product" method="POST" enctype="multipart/form-data">
 					<div class="container">
 						<div class="Foto_Producto">
 							<label for="ingresarFoto">
@@ -84,7 +84,7 @@
 							<input type="number" id="precioDeVenta" name="precioDeVenta" min="1000" placeholder="Precio de venta">
 						</div>
 						<div class="precio_compra">
-							<input type="number" id="precioDeCompra" name="precioDeCompra" placeholder="Precio de compra" min="1000">
+							<input type="number" onchange="sumarPorcentaje()" id="precioDeCompra" name="precioDeCompra" placeholder="Precio de compra" min="1000">
 						</div>
 						<div class="categoria">
 							<select id="Categoria1" name="Categoria" required> </select>

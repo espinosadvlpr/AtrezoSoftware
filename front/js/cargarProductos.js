@@ -190,3 +190,20 @@ function cargarProductosPorCategoria(idCategoria) {
             mostrarTodosLosProductos(data);
         })
 }
+
+/**
+ * Se suma un porcentaje al valor de venta
+ * dependiendo del de compra
+ * El valor minimo de compra debe ser al menos un 5%
+ * mayor que el de compra
+ */
+function sumarPorcentaje() {
+    let precioCompra = document.getElementById("precioDeCompra").value;
+    precioCompra = parseFloat(precioCompra);
+    document.getElementById("precioDeVenta").min = (precioCompra + (precioCompra * 0.05)) * 1;
+    document.getElementById("precioDeVenta").value = (precioCompra + (precioCompra * 0.2)) * 1;
+}
+
+module.exports = {
+    "sumarPorcentaje" : sumarPorcentaje
+}
