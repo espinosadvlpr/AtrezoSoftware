@@ -147,3 +147,96 @@ delimiter ;
 --Ejemplo llamado
 call sincInventario('V');
 
+-- 3 Aceites, 2 cadenol
+-- Entre dos fechas
+-- Cantidad de productos en un mes
+
+--Cantidad de productos vendidos en un dia
+
+SELECT P.nombreProducto, sum(D.cantidad) as Cantidad
+FROM DetalleFactura D, Producto P, Facturas F
+WHERE P.codigoProducto = D.idProducto
+AND F.idFactura = D.idFactura
+AND F.fecha = STR_TO_DATE('2022-03-28', '%Y-%m-%d')
+AND F.tipoTransaccion = 'V'
+GROUP BY D.idProducto;
+
+--Entre dos fechas
+
+SELECT P.nombreProducto, sum(D.cantidad) as Cantidad
+FROM DetalleFactura D, Producto P, Facturas F
+WHERE P.codigoProducto = D.idProducto
+AND F.idFactura = D.idFactura
+AND (F.fecha BETWEEN STR_TO_DATE('2022-03-18', '%Y-%m-%d') AND STR_TO_DATE('2022-03-28', '%Y-%m-%d'))
+AND F.tipoTransaccion = 'V'
+GROUP BY D.idProducto;
+
+--En un mes especifico
+
+SELECT P.nombreProducto, sum(D.cantidad) as Cantidad
+FROM DetalleFactura D, Producto P, Facturas F
+WHERE P.codigoProducto = D.idProducto
+AND F.idFactura = D.idFactura
+AND MONTH(F.fecha) = 3
+AND F.tipoTransaccion = 'V'
+GROUP BY D.idProducto;
+
+-- Total de ventas por factura en un dia
+
+SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total
+FROM Facturas F, DetalleFactura D
+WHERE F.idFactura = D.idFactura
+AND F.fecha = STR_TO_DATE('2022-03-28', '%Y-%m-%d')
+AND F.tipoTransaccion = 'V'
+GROUP BY D.idFactura;
+
+-- Total de ventas por factura Entre fechas 
+
+SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total
+FROM Facturas F, DetalleFactura D
+WHERE F.idFactura = D.idFactura
+AND (F.fecha BETWEEN STR_TO_DATE('2022-03-18', '%Y-%m-%d') AND STR_TO_DATE('2022-03-28', '%Y-%m-%d'))
+AND F.tipoTransaccion = 'V'
+GROUP BY D.idFactura;
+
+-- Total de ventas por factura En un mes especifico
+
+SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total
+FROM Facturas F, DetalleFactura D
+WHERE F.idFactura = D.idFactura
+AND MONTH(F.fecha) = 3
+AND F.tipoTransaccion = 'V'
+GROUP BY D.idFactura;
+
+--Cantidad de productos vendidos por categoria
+
+--Cantidad de productos vendidos por categoria en un dia
+
+SELECT C.nombreCategoria, sum(D.cantidad)
+FROM DetalleFactura D, Producto P, Categoria C, Facturas F
+WHERE D.idProducto = P.codigoProducto
+AND P.idCategoria = C.codigoCategoria
+AND F.idFactura = D.idFactura
+AND F.fecha = STR_TO_DATE('2022-03-28', '%Y-%m-%d')
+GROUP BY C.nombreCategoria;
+
+--Cantidad de productos vendidos por categoria entre fechas
+
+SELECT C.nombreCategoria, sum(D.cantidad)
+FROM DetalleFactura D, Producto P, Categoria C, Facturas F
+WHERE D.idProducto = P.codigoProducto
+AND P.idCategoria = C.codigoCategoria
+AND F.idFactura = D.idFactura
+AND (F.fecha BETWEEN STR_TO_DATE('2022-03-18', '%Y-%m-%d') AND STR_TO_DATE('2022-03-28', '%Y-%m-%d'))
+GROUP BY C.nombreCategoria;
+
+
+--Cantidad de productos vendidos  por categoria en un mes especifico
+
+SELECT C.nombreCategoria, sum(D.cantidad)
+FROM DetalleFactura D, Producto P, Categoria C, Facturas F
+WHERE D.idProducto = P.codigoProducto
+AND P.idCategoria = C.codigoCategoria
+AND F.idFactura = D.idFactura
+AND MONTH(F.fecha) = 3
+GROUP BY C.nombreCategoria;
