@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: '',
     password: '',
-    database: ''
+    database: 'tcampo'
 });
 
 
@@ -70,6 +70,8 @@ app.post("/api/products",verifyToken,(req,res)=>{
     });
 });
 
+
+
 app.post('/api/login',(req, res) =>{
     const values = {
         aceg_jjde:req.body.aceg_jjde_x,
@@ -84,6 +86,119 @@ app.post('/api/login',(req, res) =>{
         res.send(error)
     })
 })
+
+//Reportes
+
+app.post('/category-report/:date',(req,res)=>{
+    const {date} = req.params;
+    const body = req.body;
+    var sql=""
+
+    if(body.end-date){
+        sql = `SELECT C.nombreCategoria, sum(D.cantidad)
+FROM DetalleFactura D, Producto P, Categoria C, Facturas F
+WHERE D.idProducto = P.codigoProducto
+AND P.idCategoria = C.codigoCategoria
+AND F.idFactura = D.idFactura
+AND (F.fecha BETWEEN STR_TO_DATE('${date}', '%Y-%m-%d') AND STR_TO_DATE('${body.end-date}', '%Y-%m-%d'))
+GROUP BY C.nombreCategoria;`
+        console.log(sql);
+    }else if(date<13){
+        sql = `SELECT C.nombreCategoria, sum(D.cantidad) FROM DetalleFactura D, Producto P, Categoria C, Facturas F WHERE D.idProducto = P.codigoProducto AND P.idCategoria = C.codigoCategoria AND F.idFactura = D.idFactura AND MONTH(F.fecha) = ${date} GROUP BY C.nombreCategoria;`
+        console.log(sql);
+    }else{
+        sql = `SELECT C.nombreCategoria, sum(D.cantidad) FROM DetalleFactura D, Producto P, Categoria C, Facturas F WHERE D.idProducto = P.codigoProducto AND P.idCategoria = C.codigoCategoria AND F.idFactura = D.idFactura AND F.fecha = STR_TO_DATE('${date}', '%Y-%m-%d') GROUP BY C.nombreCategoria;`
+        console.log(sql);
+    }
+
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
+
+app.post('/product-report/:date',(req,res)=>{
+    const {date} = req.params;
+    const body = req.body;
+    var sql=""
+
+    if(body.end-date){
+        sql = `SELECT P.nombreProducto, sum(D.cantidad) as Cantidad FROM DetalleFactura D, Producto P, Facturas F WHERE P.codigoProducto = D.idProducto AND F.idFactura = D.idFactura AND (F.fecha BETWEEN STR_TO_DATE('${date}', '%Y-%m-%d') AND STR_TO_DATE('${body.end-date}', '%Y-%m-%d')) AND F.tipoTransaccion = 'V' GROUP BY D.idProducto;`
+        console.log(sql);
+    }else if(date<13){
+        sql = `SELECT P.nombreProducto, sum(D.cantidad) as Cantidad FROM DetalleFactura D, Producto P, Facturas F WHERE P.codigoProducto = D.idProducto AND F.idFactura = D.idFactura AND MONTH(F.fecha) = ${date} AND F.tipoTransaccion = 'V' GROUP BY D.idProducto;`
+        console.log(sql);
+    }else{
+        sql = `SELECT P.nombreProducto, sum(D.cantidad) as Cantidad FROM DetalleFactura D, Producto P, Facturas F WHERE P.codigoProducto = D.idProducto AND F.idFactura = D.idFactura AND F.fecha = STR_TO_DATE('${date}', '%Y-%m-%d') AND F.tipoTransaccion = 'V' GROUP BY D.idProducto;`
+        console.log(sql);
+    }
+
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
+
+app.post('/sale-report/:date',(req,res)=>{
+    const {date} = req.params;
+    const body = req.body;
+    var sql=""
+
+    if(body.end-date){
+        sql = `SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total FROM Facturas F, DetalleFactura D WHERE F.idFactura = D.idFactura AND (F.fecha BETWEEN STR_TO_DATE('${date}', '%Y-%m-%d') AND STR_TO_DATE('${body.end-date}', '%Y-%m-%d')) AND F.tipoTransaccion = 'V' GROUP BY D.idFactura;`
+        console.log(sql);
+    }else if(date<13){
+        sql = `SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total FROM Facturas F, DetalleFactura D WHERE F.idFactura = D.idFactura AND MONTH(F.fecha) = ${date} AND F.tipoTransaccion = 'V' GROUP BY D.idFactura;`
+        console.log(sql);
+    }else{
+        sql = `SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total FROM Facturas F, DetalleFactura D WHERE F.idFactura = D.idFactura AND F.fecha = STR_TO_DATE('${date}', '%Y-%m-%d') AND F.tipoTransaccion = 'V' GROUP BY D.idFactura;`
+        console.log(sql);
+    }
+
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
+
+
+app.post('/shop-report/:date',(req,res)=>{
+    const {date} = req.params;
+    const body = req.body;
+    var sql=""
+
+    if(body.end-date){
+        sql = `SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total FROM Facturas F, DetalleFactura D WHERE F.idFactura = D.idFactura AND (F.fecha BETWEEN STR_TO_DATE('${date}', '%Y-%m-%d') AND STR_TO_DATE('${body.end-date}', '%Y-%m-%d')) AND F.tipoTransaccion = 'C' GROUP BY D.idFactura;`
+        console.log(sql);
+    }else if(date<13){
+        sql = `SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total FROM Facturas F, DetalleFactura D WHERE F.idFactura = D.idFactura AND MONTH(F.fecha) = ${date} AND F.tipoTransaccion = 'C' GROUP BY D.idFactura;`
+        console.log(sql);
+    }else{
+        sql = `SELECT D.idFactura, sum(D.cantidad * D.precioProducto) As Total FROM Facturas F, DetalleFactura D WHERE F.idFactura = D.idFactura AND F.fecha = STR_TO_DATE('${date}', '%Y-%m-%d') AND F.tipoTransaccion = 'C' GROUP BY D.idFactura;`
+        console.log(sql);
+    }
+
+    connection.query(sql, (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.json(results);
+        } else {
+            res.send('Empty');
+        }
+    });
+});
 
 // Usuarios
 app.get('/users', (req, res) => {
