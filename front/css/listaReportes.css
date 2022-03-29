@@ -56,6 +56,9 @@
 .create button{
     font-size: 20px;
     background: #27bf2e;
+    position: initial;
+    width: 100%;
+    margin-top:40px;
 }
 
 .create button:hover{
@@ -99,4 +102,11 @@
   position:initial;
   margin-right:10px;
   margin-left:20px;
+}
+
+.category-d select {
+  width: 50%;
+  height: 48px;
+  padding:0;
+  text-align: center;
 }

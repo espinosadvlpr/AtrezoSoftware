@@ -9,10 +9,12 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/3f7779c4d5.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.1/dist/html2canvas.min.js"></script>
     <!--<link rel="stylesheet" href="../css/homedos.css" />-->
     <link rel="stylesheet" href="../css/app.css" />
     <link rel="stylesheet" href="../css/listaReportes.css" />
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 
 <body>
@@ -81,8 +83,7 @@
                       <label for="semanal">Semanal</label>
                       <input type="radio" name="time" id="mensual">
                       <label for="mensual">Mensual</label>
-                      <input type="radio" name="time" id="anual">
-                      <label for="anual">Anual</label>
+                      <div id="date-type"></div>
                     </div>
                     <div id="element" class="options">
                       <input type="radio" name="element" id="categoria">
@@ -94,6 +95,7 @@
                       <label for="venta">Ventas</label>
                       <input type="radio" name="element" id="gasto">
                       <label for="gasto">Gastos</label>
+                      <div class="category-d" id="choose-category"></div>
                     </div>
                     <div id="diagram" class="options">
                       <input type="radio" name="diagram" id="pie">
@@ -114,9 +116,9 @@
       </div>
       <h1 align="center">Reporte generado</h1>
       <div class="report">
-                    <div class="charts" id="chart_div"></div>
+                    <div class="charts" id="chart_div"style="width:700px; height:400px;"></div>
                     <div class="download-buttons">
-                      <button style="background:#27bf2e;">Descargar imagen</button>
+                      <button id="btnCapturar" style="background:#27bf2e;">Descargar imagen</button>
                       <button style="background:#ff4242">Descargar PDF</button>
                     </div>
       </div>

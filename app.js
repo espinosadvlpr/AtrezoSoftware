@@ -15,36 +15,13 @@ app.use(express.urlencoded({
 app.use(express.static(__dirname + "/front"));
 
 // Conexion MySql
-
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'Santiago',
-    password: 'a123',
-    database: 'tcampo'
+    user: '',
+    password: '',
+    database: ''
 });
 
-/*
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '12345',
-    database: 'tcampo'
-});
-*/
-
-//Conexion servidor 
-/*
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'atrezo-app',
-    password: '12345',
-    database: 'tcampo'
-});
-*/
-
-app.get('/', (req, res) => {
-    res.send('Welcome to my API!');
-});
 
 //CORS-Access
 const cors = require("cors");
