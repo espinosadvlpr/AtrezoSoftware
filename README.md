@@ -25,6 +25,7 @@ Se debe realizar la instalación de los paquetes de node js con el comando:
 	npm install  
 	npm i
 
+
 De forma opcional se puede instalar el paquete **"nodemon"** de forma global para las pruebas del servidor en desarrollo:
 
 	npm install -g nodemon
@@ -32,9 +33,17 @@ De forma opcional se puede instalar el paquete **"nodemon"** de forma global par
 
 ## Instalacion de la BD
 
+Para la instalacion de la base de datos se realizara mediante un procedimiento en **Python** para el que se usa la libreria **mysql-connector-python** y se instala con el siguiente comando:
+
+	pip install mysql-connector-python
+
+
 Teniendo en cuenta que ya debe tener instalado un motor de base de datos como se menciono anteriormente, ejecutar el archivo para la instalación de la base de datos con el comando y siga los pasos: 
 
 	python3 create_database.py
+
+
+**NOTA:** Debe guardar la configuración que realice en el procedimiento para configurar el servidor posteriormente.
 
 
 ## Configuracion del servidor Express
@@ -42,10 +51,10 @@ Teniendo en cuenta que ya debe tener instalado un motor de base de datos como se
 En el archivo **app.js** debe realizar el cambio de los parametros de conexión con la base de datos:
 
 	const connection = mysql.createConnection({
-    host: 'localhost',
-    user: '', // usuario
-    password: '', // contraseña
-    database: '' // nombre asignado a la base de datos
+    	host: 'localhost',
+    	user: '', // usuario
+    	password: '', // contraseña
+    	database: '' // nombre asignado a la base de datos
 	});
 
 
@@ -59,7 +68,7 @@ Para ejecutar el servidor debe correr el comando:
 	node app.js o nodemon
 
 
-**NOTA:** Para revisar que el programa se está ejecutando correctamente en el navegador abra el URL <http://localhost:3050/> o con el puerto que le asignó y debera aparecer el inicio de sesión del aplicativo y debe ingresar los datos de prueba creados en la configuración de la base de datos.
+**NOTA:** Para revisar que el programa se está ejecutando correctamente en el navegador abra el URL <http://localhost:3050/> o con el puerto que le asignó y debera aparecer el inicio de sesión del aplicativo. Debe ingresar los datos de prueba creados en la configuración de la base de datos.
 
 
 ## Continuando con el desarrollo
