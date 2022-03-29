@@ -46,6 +46,11 @@ Teniendo en cuenta que ya debe tener instalado un motor de base de datos como se
 **NOTA:** Debe guardar la configuración que realice en el procedimiento para configurar el servidor posteriormente.
 
 
+Para terminar con la configuracion de la base de datos se debe realizar la creacion del procedimiento almacenado para el manejo del inventario, este se encuentra en el archivo [procedure.sql](https://github.com/espinosadvlpr/AtrezoSoftware/blob/main/procedure.sql) el cual se puede ejecutar desde el entorno grafico de la base de datos o desde la consola de la misma con el siguiente comando:
+
+	source {ruta_al_proyecto}/AtrezoSoftware/procedure.sql
+
+
 ## Configuracion del servidor Express
 
 En el archivo **app.js** debe realizar el cambio de los parametros de conexión con la base de datos:
