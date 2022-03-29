@@ -25,7 +25,7 @@ function cleanLogin(){
 }
 
 async function sendLogin(user_json){
-    const response = await fetch("http://54.159.11.0:3050/validate_login/",{
+    const response = await fetch("http://3.84.226.84:3050/validate_login/",{
         method: 'POST',
         body: JSON.stringify(user_json),
         headers: {

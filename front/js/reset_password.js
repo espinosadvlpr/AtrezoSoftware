@@ -3,7 +3,7 @@ function setPassword(){
     let user_password = document.getElementById("password").value;
     const user_json = {email: user_email,password: user_password};
 
-    fetch("http://54.159.11.0:3050/password_change/",{
+    fetch("http://3.84.226.84:3050/password_change/",{
         method: 'POST',
         body: JSON.stringify(user_json),
         headers: {

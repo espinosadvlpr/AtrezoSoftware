@@ -59,7 +59,7 @@ function ventasYGastos() {
  */
 function peticionUtilidades(type, fecha) {
     return new Promise((resolve, reject) => {
-        fetch(`http://54.159.11.0:3050/utilidades/${fecha}/${type}`)
+        fetch(`http://3.84.226.84:3050/utilidades/${fecha}/${type}`)
             .then(response => response.json())
             .then(data => {
                 if (data[0].Total == undefined) {
@@ -81,7 +81,7 @@ function peticionUtilidades(type, fecha) {
  */
 function peticionTodasLasVentas(fecha) {
     return new Promise((resolve, reject) => {
-        fetch('http://54.159.11.0:3050/ventas/' + fecha)
+        fetch('http://3.84.226.84:3050/ventas/' + fecha)
             .then(response => response.json())
             .then(data => {
                 agruparVentas(data);
