@@ -3,7 +3,7 @@
  * adicionando una tarjeta para cada una de ellas
  */
 window.onload = function getCategories() {
-    fetch('http://localhost:3050/categories')
+    fetch('http://54.159.11.0:3050/categories')
         .then(response => response.json())
         .then(data => {
             categories_div = document.getElementById("categories")

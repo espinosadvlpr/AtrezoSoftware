@@ -10,7 +10,7 @@ function cargarTodosLosUsuarios() {
  */
 function peticionTodosLosUsuarios() {
     return new Promise((resolve, reject) => {
-        fetch('http://localhost:3050/users')
+        fetch('http://54.159.11.0:3050/users')
             .then(response => response.json())
             .then(data => {
                 console.log('Usuarios traidos del servidor');
@@ -145,7 +145,7 @@ function eliminarProducto() {
     if (window.confirm("Realmente desea eliminar este usuario?")) {
         var retrievedObject = localStorage.getItem('usuarioActual');
         var objetoUsuario = JSON.parse(retrievedObject)
-        fetch('http://localhost:3050/delete_user/' + objetoUsuario.idPersona, {
+        fetch('http://54.159.11.0:3050/delete_user/' + objetoUsuario.idPersona, {
                 method: 'DELETE',
             })
             .then(res => res.text()) // or res.json()

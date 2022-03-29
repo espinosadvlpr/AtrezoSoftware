@@ -51,7 +51,7 @@ function crearBuscador() {
  */
 function cargarCategorias() {
     return new Promise((resolve, reject) => {
-        fetch('http://localhost:3050/categorias')
+        fetch('http://54.159.11.0:3050/categorias')
             .then(response => response.json())
             .then(data => {
                 console.log(data);
@@ -86,7 +86,7 @@ function cambiarANuevaCompra() {
  */
 function allProducts() {
     return new Promise((resolve, reject) => {
-        fetch('http://localhost:3050/product')
+        fetch('http://54.159.11.0:3050/product')
             .then(response => response.json())
             .then(data => {
                 console.log('Productos traidos del servidor');
@@ -255,7 +255,7 @@ function llenarTabla() {
  */
 function sendSelectProducts(tipoTransaccion) {
     if (selectedlList.length > 0 && getTotalProductsSelect() > 0) {
-        var url = `http://localhost:3050/add_transaction/${idPersona}/${tipoTransaccion}`;
+        var url = `http://54.159.11.0:3050/add_transaction/${idPersona}/${tipoTransaccion}`;
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(selectedlList),
@@ -353,7 +353,7 @@ function getTarget(nameProd, listTarget) {
 function cargarPersona(tipoPersona, elementToChange) {
     console.log('Cargando personas!!');
     return new Promise((resolve, reject) => {
-        fetch('http://localhost:3050/users/' + tipoPersona)
+        fetch('http://54.159.11.0:3050/users/' + tipoPersona)
             .then(response => response.json())
             .then(data => {
                 console.log(data);
