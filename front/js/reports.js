@@ -75,19 +75,26 @@ function getCategoryReport(reports){
       break;
   }
 
-    fetch(url, {
-            method: 'POST',
-            body: body_date,
-            headers: {
-                "Content-type": "application/json"
-            }
-        })
-    .then(data => {
+    
+    getReport(url,body_date).then(data => {
       for(let value of data) {
         console.log(value);
       }
     })
 }
+
+async function getReport(url, json){
+    const response = await fetch(url,{
+        method: 'POST',
+        body: (json),
+        headers: {
+            'Content-Type':'application/json'
+        }
+    });
+    const data = await response.json();
+    return data;
+}
+
 
 function getProductReport(reports){
   var url = ""
