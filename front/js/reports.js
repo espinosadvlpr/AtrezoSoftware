@@ -15,10 +15,18 @@ function getUser() {
     var h1 = document.getElementById("User")
     if (window.sessionStorage) {
         var user = sessionStorage.getItem("user");
-        var bienvenida = "Hola " + user + " ¿Que reportes deseas generar hoy?"
+        var bienvenida = "Hola " + user 
         h1.textContent = bienvenida
             //sessionStorage.removeItem("user");
     }
+}
+
+function openReport(){
+    document.getElementById("generated_report").style.display="block";
+}
+
+function closeReport(){
+    document.getElementById("generated_report").style.display="none";
 }
 
 // pendiente metodos para generar los reportes
@@ -37,20 +45,20 @@ function drawChart() {
 
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
+        data.addColumn('string', 'Producto');
+        data.addColumn('number', 'Cantidad');
         data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
+          ['Aceite liqui molly', 35],
+          ['Aceite 10w-40', 12],
+          ['Limpiador filtro de aire', 11],
+          ['Liquidos para motor', 16],
+          ['Liquidos refrigerantes', 22]
         ]);
 
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
+        var options = {'title':'Reporte productos febrero',
+                       'width':700,
+                       'height':400};
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));

@@ -8,12 +8,15 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/3f7779c4d5.js" crossorigin="anonymous"></script>
     <!--<link rel="stylesheet" href="../css/homedos.css" />-->
     <link rel="stylesheet" href="../css/app.css" />
+    <link rel="stylesheet" href="../css/listaReportes.css" />
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <body>
+
     <main>
         <div class="side-bar">
             <ul class="nav-links">
@@ -68,15 +71,56 @@
             <div class="create" data-view-active="true">
                 <font color="white" face="Lucida Bright">
                     <p>
-                        <h1 id="User" align="center"><b>Reportes</b></h1>
+                        <h1 id="User" align="center"></h1>
+                        <h1 align="center">¿Que reporte deseas generar hoy?</h1>
                     </p>
-                    <div id="generated_report" class="generated_report">
-                    <div id="chart_div"></div>
+                    <div id="time" class="options">
+                      <input type="radio" name="time" id="diario">
+                      <label for="diario">Diario</label>
+                      <input type="radio" name="time" id="semanal">
+                      <label for="semanal">Semanal</label>
+                      <input type="radio" name="time" id="mensual">
+                      <label for="mensual">Mensual</label>
+                      <input type="radio" name="time" id="anual">
+                      <label for="anual">Anual</label>
                     </div>
+                    <div id="element" class="options">
+                      <input type="radio" name="element" id="categoria">
+                      <label for="categoria">Categorias</label>
+
+                      <input type="radio" name="element" id="producto">
+                      <label for="producto">Productos</label>
+                      <input type="radio" name="element" id="venta">
+                      <label for="venta">Ventas</label>
+                      <input type="radio" name="element" id="gasto">
+                      <label for="gasto">Gastos</label>
+                    </div>
+                    <div id="diagram" class="options">
+                      <input type="radio" name="diagram" id="pie">
+                      <label for="pie">Circular</label>
+                      <input type="radio" name="diagram" id="bar">
+                      <label for="bar">Barras</label>
+                      <input type="radio" name="diagram" id="line">
+                      <label for="line">Lineas</label>
+                    </div>
+                    <button onclick="openReport()">Generar reporte</button>
                 </font>
             </div>
-        </div>
-    </main> 
+        </div>  
+    </main>
+    <div id="generated_report" class="generated_report">
+      <div id="cerrar" class="close_report">
+        <a href="javascript:closeReport()"><i class="fa-solid fa-circle-xmark"></i></a>
+      </div>
+      <h1 align="center">Reporte generado</h1>
+      <div class="report">
+                    <div class="charts" id="chart_div"></div>
+                    <div class="download-buttons">
+                      <button style="background:#27bf2e;">Descargar imagen</button>
+                      <button style="background:#ff4242">Descargar PDF</button>
+                    </div>
+      </div>
+      </div> 
     <script src="../js/reports.js"></script>
 
 </body>
