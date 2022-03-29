@@ -458,7 +458,8 @@ app.get('/ventas/:fecha', (req, res) => {
     FROM Facturas F, Producto P, DetalleFactura D
     WHERE F.idFactura = D.idFactura
     AND D.idProducto = P.codigoProducto
-    AND F.fecha = STR_TO_DATE('${fecha}', '%Y-%m-%d');`;
+    AND F.fecha = STR_TO_DATE('${fecha}', '%Y-%m-%d')
+    ORDER BY 2;`;
     connection.query(sql, (error, result) => {
         if (error) throw error;
         if (result.length > 0) {
