@@ -17,8 +17,8 @@ app.use(express.static(__dirname + "/front"));
 // Conexion MySql
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: '',
-    password: '',
+    user: 'Santiago',
+    password: 'a123',
     database: 'tcampo'
 });
 
