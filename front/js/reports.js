@@ -199,11 +199,16 @@ function getShopReport(reports) {
   }
 
   getReport(url, body_date).then(data => {
-    switch (reports) {
-      case reports[2]:
-        
+    switch (reports[2]) {
+      case "Pie":
+        console.log("uno")
         break;
-    
+      case "Bar":
+      console.log("otro")
+        break;
+      case "Line":
+
+        break;
       default:
         break;
     }
