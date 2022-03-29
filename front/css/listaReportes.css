@@ -12,6 +12,10 @@
   height: 19%;
 }
 
+input[type="date"]{
+  margin-left:15px;
+}
+
 .options input[type="radio"]{
     display: none;
 }

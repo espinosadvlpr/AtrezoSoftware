@@ -28,9 +28,197 @@ function openReport(){
     alert("El reporte no puede ser cargado debido a que se necesitan seleccionar las 3 opciones.")
   }else{
     document.getElementById("generated_report").style.display="block";
-  }
+    switch(reports[1]){
+        case "categoria":
+            getCategoryReport(reports);
+          break;
+        case "producto":
+          break;
+        case "venta":
+          break;
+        case "gasto":
+          break;
+      }
+    }
+  console.log(date.value)
+  var selected = categories.options[categories.selectedIndex].text;
+  console.log(selected)
   console.log(reports[0]+reports[1]+reports[2])
+  
 }
+
+function getCategoryReport(reports){
+  var url = ""
+  var body_date = {}
+  switch(reports[0]){
+    case "diario":
+        url="http://localhost:3050/category-report/"+date.value
+      body_date = JSON.stringify({
+                "end": "end"
+            })
+      break;
+    case "semanal":
+        console.log(date.value)
+      url="http://localhost:3050/category-report/"+date.value
+        body_date = JSON.stringify({
+                "end-date": end_date.value
+            })
+        console.log(body_date)
+      break;
+    case "mensual":
+      var month = date.value[5]+date.value[6]
+      url="http://localhost:3050/category-report/"+month
+      body_date = JSON.stringify({
+                "end": "end"
+            })
+
+      break;
+  }
+
+    fetch(url, {
+            method: 'POST',
+            body: body_date,
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+    .then(data => {
+      for(let value of data) {
+        console.log(value);
+      }
+    })
+}
+
+function getProductReport(reports){
+  var url = ""
+  var body_date = {}
+  switch(reports[0]){
+    case "diario":
+        url="http://localhost:3050/product-report/"+date.value
+      body_date = JSON.stringify({
+                "end": "end"
+            })
+      break;
+    case "semanal":
+        console.log(date.value)
+      url="http://localhost:3050/product-report/"+date.value
+        body_date = JSON.stringify({
+                "end-date": end_date.value
+            })
+        console.log(body_date)
+      break;
+    case "mensual":
+      var month = date.value[5]+date.value[6]
+      url="http://localhost:3050/product-report/"+month
+      body_date = JSON.stringify({
+                "end": "end"
+            })
+
+      break;
+  }
+
+    fetch(url, {
+            method: 'POST',
+            body: body_date,
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+    .then(data => {
+      for(let value of data) {
+        console.log(value);
+      }
+    })
+
+}
+
+function getSalesReport(reports){
+  var url = ""
+  var body_date = {}
+  switch(reports[0]){
+    case "diario":
+        url="http://localhost:3050/sale-report/"+date.value
+      body_date = JSON.stringify({
+                "end": "end"
+            })
+      break;
+    case "semanal":
+        console.log(date.value)
+      url="http://localhost:3050/sale-report/"+date.value
+        body_date = JSON.stringify({
+                "end-date": end_date.value
+            })
+        console.log(body_date)
+      break;
+    case "mensual":
+      var month = date.value[5]+date.value[6]
+      url="http://localhost:3050/sale-report/"+month
+      body_date = JSON.stringify({
+                "end": "end"
+            })
+
+      break;
+  }
+
+    fetch(url, {
+            method: 'POST',
+            body: body_date,
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+    .then(data => {
+      for(let value of data) {
+        console.log(value);
+      }
+    })
+
+}
+
+function getShopReport(reports){
+  var url = ""
+  var body_date = {}
+  switch(reports[0]){
+    case "diario":
+        url="http://localhost:3050/shop-report/"+date.value
+      body_date = JSON.stringify({
+                "end": "end"
+            })
+      break;
+    case "semanal":
+        console.log(date.value)
+      url="http://localhost:3050/shop-report/"+date.value
+        body_date = JSON.stringify({
+                "end-date": end_date.value
+            })
+        console.log(body_date)
+      break;
+    case "mensual":
+      var month = date.value[5]+date.value[6]
+      url="http://localhost:3050/shop-report/"+month
+      body_date = JSON.stringify({
+                "end": "end"
+            })
+
+      break;
+  }
+
+    fetch(url, {
+            method: 'POST',
+            body: body_date,
+            headers: {
+                "Content-type": "application/json"
+            }
+        })
+    .then(data => {
+      for(let value of data) {
+        console.log(value);
+      }
+    })
+
+}
+
+
 
 function closeReport(){
     document.getElementById("generated_report").style.display="none";
@@ -135,6 +323,7 @@ function getCategories(){
 const objetivo = document.querySelector("#chart_div"); 
 const categories_div = document.getElementById("choose-category")
 const date = document.createElement("input");
+const end_date = document.createElement("input");
 const categories = document.createElement("select");
 
 // Manejo de seleccion de reportes
@@ -154,30 +343,29 @@ $(document).ready(function(){
   $("#diario").click(function () {	 
 		  reports[0]="diario";
       date.remove()
+      end_date.remove()
+      end_date.setAttribute("type","date");
       date.setAttribute("type","date");
       document.getElementById("date-type").append(date);
     });
   $("#semanal").click(function () {	 
 			reports[0]="semanal";
       date.remove()
-      date.setAttribute("type","week");
+      end_date.remove()
+      end_date.setAttribute("type","date");
+      date.setAttribute("type","date");
       document.getElementById("date-type").append(date);
+      document.getElementById("date-type").append(end_date);
     });
   $("#mensual").click(function () {	 
 			reports[0]="mensual";
       date.remove()
       date.setAttribute("type","month");
-      document.getElementById("date-type").append(date);
-    });
-  $("#anual").click(function () {	 
-			reports[0]="anual";
-      date.remove()
-      date.setAttribute("type","year");
+      end_date.remove();
       document.getElementById("date-type").append(date);
     });
   $("#categoria").click(function () {	 
 		  reports[1]="categoria";
-      categories_div.appendChild(categories);
     });
   $("#producto").click(function () {	 
 			reports[1]="producto";
