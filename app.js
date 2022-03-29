@@ -227,7 +227,7 @@ app.post('/add_user', (req, res) => {
     };
     connection.query(sql, user_data, error => {
         if (error) throw error;
-        res.send('User created!');
+        res.redirect('/usuarios/lista_ususarios.html')
     });
 });
 
@@ -242,7 +242,7 @@ app.post('/update_user', (req, res) => {
         WHERE idPersona = ${req.body.userID}`;
     connection.query(sql, error => {
         if (error) throw error;
-        res.send('User updated!');
+        res.redirect('/usuarios/lista_ususarios.html');
     });
 });
 
@@ -260,7 +260,7 @@ app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => 
         WHERE codigoProducto = ${req.body.codigoProducto}`;
         connection.query(sql, error => {
             if (error) throw error;
-            res.send('Producto actualizado!');
+            res.redirect('/producto/productos/productos.html');
         });
     } else {
         var rutaImagen = req.file.path + '.' + req.file.mimetype.split('/')[1];
@@ -273,7 +273,7 @@ app.post('/actualizar_producto', upload.single('imagenProducto'), (req, res) => 
         WHERE codigoProducto = ${req.body.codigoProducto}`;
         connection.query(sql, error => {
             if (error) throw error;
-            res.send('Producto actualizado!');
+            res.redirect('/producto/productos/productos.html');
         });
     }
 
@@ -299,7 +299,7 @@ app.post('/add_product', upload.single('imagenProducto'), (req, res) => {
 
     connection.query(sql, product_data, error => {
         if (error) throw error;
-        res.send('Product creado!');
+        res.redirect('/producto/productos/productos.html');
     });
 });
 
@@ -312,7 +312,7 @@ app.delete('/delete_user/:id', (req, res) => {
 
     connection.query(sql, error => {
         if (error) throw error;
-        res.send('User deleted!');
+        res.redirect('/usuarios/lista_ususarios.html');
     });
 });
 

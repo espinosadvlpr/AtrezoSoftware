@@ -90,12 +90,15 @@ function chageToAddUser() {
  * @returns true si las contrasenas coinciden
  */
 function matchPassword() {
-    if(verifyPasswords() != true){
+    let verifyPasswords = verifyPasswords();
+    if(verifyPasswords != true){
         alert("Las contraseñas no conciden!!");
         event.preventDefault();
     }else {
-        return true;
+        alert("Usuario registrado.");
+        history.back();
     }
+    return verifyPasswords;
 }
 
 /**
